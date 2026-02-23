@@ -1,0 +1,11 @@
+C:\Projects\FinanceTracker\FinanceTracker.Domain\bin\Debug\net8.0\FinanceTracker.Domain.deps.json
+C:\Projects\FinanceTracker\FinanceTracker.Domain\bin\Debug\net8.0\FinanceTracker.Domain.dll
+C:\Projects\FinanceTracker\FinanceTracker.Domain\bin\Debug\net8.0\FinanceTracker.Domain.pdb
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net8.0\FinanceTracker.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net8.0\FinanceTracker.Domain.AssemblyInfoInputs.cache
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net8.0\FinanceTracker.Domain.AssemblyInfo.cs
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net8.0\FinanceTracker.Domain.csproj.CoreCompileInputs.cache
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net8.0\FinanceTracker.Domain.dll
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net8.0\refint\FinanceTracker.Domain.dll
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net8.0\FinanceTracker.Domain.pdb
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net8.0\ref\FinanceTracker.Domain.dll
