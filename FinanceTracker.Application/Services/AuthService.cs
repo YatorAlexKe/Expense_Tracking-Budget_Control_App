@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
-using AutoMapper;
 using FinanceTracker.Application.Common;
 using FinanceTracker.Application.DTOs;
 using FinanceTracker.Application.Interfaces;
@@ -15,23 +15,24 @@ public class AuthService : IAuthService
 {
     private readonly IUserRepository _users;
     private readonly IConfiguration _config;
+    private readonly IEmailService _email;
 
-    public AuthService(IUserRepository users, IConfiguration config)
+    public AuthService(IUserRepository users, IConfiguration config, IEmailService email)
     {
         _users = users;
         _config = config;
+        _email  = email;
     }
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
     {
-        // Check uniqueness
         var existing = await _users.GetByEmailAsync(request.Email);
         if (existing is not null)
             throw new ConflictException($"Email '{request.Email}' is already registered.");
 
         var user = new User
         {
-            Email = request.Email,
+            Email        = request.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password)
         };
 
@@ -50,12 +51,46 @@ public class AuthService : IAuthService
         return new AuthResponse(GenerateToken(user), user.Email, user.Id);
     }
 
-    // ── JWT generation ────────────────────────────────────────────────────────
+    public async Task ForgotPasswordAsync(ForgotPasswordRequest request)
+    {
+        var user = await _users.GetByEmailAsync(request.Email);
+
+        // Always return success even if email not found (security best practice)
+        if (user is null) return;
+
+        // Generate a secure random token
+        var token = Convert.ToHexString(RandomNumberGenerator.GetBytes(32));
+
+        user.PasswordResetToken        = token;
+        user.PasswordResetTokenExpiry  = DateTime.UtcNow.AddMinutes(30);
+
+        await _users.SaveChangesAsync();
+
+        // Build reset link
+        var clientUrl  = _config["ClientUrl"] ?? "http://localhost:5500";
+        var resetLink  = $"{clientUrl}/finance-tracker-ui.html?token={token}";
+
+        await _email.SendPasswordResetEmailAsync(user.Email, resetLink);
+    }
+
+    public async Task ResetPasswordAsync(ResetPasswordRequest request)
+    {
+        var user = await _users.GetByResetTokenAsync(request.Token);
+
+        if (user is null || user.PasswordResetTokenExpiry < DateTime.UtcNow)
+            throw new UnauthorizedAccessException("Invalid or expired reset token.");
+
+        user.PasswordHash             = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+        user.PasswordResetToken       = null;
+        user.PasswordResetTokenExpiry = null;
+
+        await _users.SaveChangesAsync();
+    }
 
     private string GenerateToken(User user)
     {
         var jwtSection = _config.GetSection("Jwt");
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection["Key"]!));
+        var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection["Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var claims = new[]
@@ -66,10 +101,10 @@ public class AuthService : IAuthService
         };
 
         var token = new JwtSecurityToken(
-            issuer:   jwtSection["Issuer"],
-            audience: jwtSection["Audience"],
-            claims:   claims,
-            expires:  DateTime.UtcNow.AddHours(8),
+            issuer:             jwtSection["Issuer"],
+            audience:           jwtSection["Audience"],
+            claims:             claims,
+            expires:            DateTime.UtcNow.AddHours(8),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

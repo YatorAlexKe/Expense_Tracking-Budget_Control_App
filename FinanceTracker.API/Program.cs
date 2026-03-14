@@ -38,7 +38,9 @@ builder.Services.AddScoped<IExpenseService,   ExpenseService>();
 builder.Services.AddScoped<IBudgetService,    BudgetService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<ICryptoService,    CryptoService>();
+// Mock price service — swap for a real HTTP client in production
 builder.Services.AddSingleton<ICryptoPriceService, MockCryptoPriceService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // JWT
 var jwt = builder.Configuration.GetSection("Jwt");

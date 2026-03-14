@@ -162,3 +162,7 @@ C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\tr\Microsoft.Cod
 C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Projects\FinanceTracker\FinanceTracker.API\obj\Debug\net10.0\FinanceTracker.API.sourcelink.json
+C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\appsettings.Example.json
+C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\Newtonsoft.Json.dll
+C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\SendGrid.dll
+C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\StarkbankEcdsa.dll

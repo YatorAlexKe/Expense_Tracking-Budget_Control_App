@@ -7,6 +7,10 @@ public class User
     public string PasswordHash { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    // Password Reset
+    public string? PasswordResetToken { get; set; }
+    public DateTime? PasswordResetTokenExpiry { get; set; }
+
     // Navigation
     public ICollection<Category> Categories { get; set; } = new List<Category>();
     public ICollection<Expense> Expenses { get; set; } = new List<Expense>();

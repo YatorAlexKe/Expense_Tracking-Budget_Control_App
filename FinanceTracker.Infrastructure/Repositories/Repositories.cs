@@ -18,6 +18,9 @@ public class UserRepository : IUserRepository
     public Task<User?> GetByIdAsync(Guid id) =>
         _db.Users.FindAsync(id).AsTask();
 
+    public Task<User?> GetByResetTokenAsync(string token) =>
+        _db.Users.FirstOrDefaultAsync(u => u.PasswordResetToken == token);
+
     public async Task AddAsync(User user) => await _db.Users.AddAsync(user);
 
     public Task SaveChangesAsync() => _db.SaveChangesAsync();

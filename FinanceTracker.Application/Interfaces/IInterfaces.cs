@@ -9,6 +9,7 @@ public interface IUserRepository
 {
     Task<User?> GetByEmailAsync(string email);
     Task<User?> GetByIdAsync(Guid id);
+    Task<User?> GetByResetTokenAsync(string token);
     Task AddAsync(User user);
     Task SaveChangesAsync();
 }
@@ -61,6 +62,8 @@ public interface IAuthService
 {
     Task<AuthResponse> RegisterAsync(RegisterRequest request);
     Task<AuthResponse> LoginAsync(LoginRequest request);
+    Task ForgotPasswordAsync(ForgotPasswordRequest request);
+    Task ResetPasswordAsync(ResetPasswordRequest request);
 }
 
 public interface ICategoryService
@@ -108,4 +111,9 @@ public interface ICryptoService
 public interface ICryptoPriceService
 {
     Task<decimal> GetCurrentPriceAsync(string symbol);
+}
+
+public interface IEmailService
+{
+    Task SendPasswordResetEmailAsync(string toEmail, string resetLink);
 }
