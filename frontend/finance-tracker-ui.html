@@ -52,6 +52,7 @@
   .btn-full { width: 100%; }
 
   .error-msg { background: var(--danger)18; border: 1px solid var(--danger)44; color: var(--danger); border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; }
+  .success-msg { background: var(--accent)18; border: 1px solid var(--accent)44; color: var(--accent); border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; }
 
   /* Layout */
   #app-screen { display: none; min-height: 100vh; }
@@ -101,9 +102,6 @@
   .badge-warning  { background: var(--warn)18; color: var(--warn); }
   .badge-exceeded { background: var(--danger)18; color: var(--danger); }
   .badge-income   { background: var(--accent2)18; color: var(--accent2); }
-  .badge-checking { background: #7c6af018; color: #a89cf0; }
-  .badge-savings  { background: var(--accent)18; color: var(--accent); }
-  .badge-invest   { background: var(--accent2)18; color: var(--accent2); }
 
   /* Progress */
   .progress-bar { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; margin-top: 8px; }
@@ -146,12 +144,10 @@
   .pl-negative { color: var(--danger); }
   .loading { color: var(--muted); font-size: 14px; padding: 40px; text-align: center; }
 
-  /* Net Worth specific */
+  /* Net Worth */
   .networth-hero { background: linear-gradient(135deg, #1a2a0a 0%, #0a1a2a 100%); border: 1px solid var(--border); border-radius: 20px; padding: 36px; margin-bottom: 24px; text-align: center; }
   .networth-label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
   .networth-value { font-family: var(--font-head); font-size: 3.5rem; color: var(--accent); margin-bottom: 8px; }
-  .networth-change { font-size: 14px; color: var(--muted); }
-
   .asset-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--border)55; }
   .asset-row:last-child { border-bottom: none; }
   .asset-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0; }
@@ -159,9 +155,6 @@
   .asset-name { font-weight: 600; font-size: 14px; }
   .asset-sub  { font-size: 12px; color: var(--muted); }
   .asset-value { font-weight: 700; font-size: 15px; }
-
-  /* Income specific */
-  .income-badge { background: var(--accent2)18; color: var(--accent2); }
 
   /* Account card */
   .account-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; position: relative; overflow: hidden; }
@@ -177,8 +170,15 @@
   .account-balance { font-family: var(--font-head); font-size: 1.8rem; margin-bottom: 4px; }
   .account-actions { display: flex; gap: 6px; margin-top: 16px; }
 
-  /* Demo banner */
   .demo-banner { background: var(--accent)15; border: 1px solid var(--accent)33; border-radius: 12px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--accent); }
+
+  /* Forgot password link */
+  .forgot-link { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; width: 100%; transition: color .2s; }
+  .forgot-link:hover { color: var(--accent); }
+
+  /* Back link */
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; margin-bottom: 20px; transition: color .2s; }
+  .back-link:hover { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -188,25 +188,59 @@
   <div class="auth-box">
     <div class="auth-logo">FinanceTracker</div>
     <div class="auth-sub">Track your money, own your future.</div>
-    <div class="auth-tabs">
-      <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
-      <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
-    </div>
-    <div id="auth-error" class="error-msg" style="display:none"></div>
-    <div id="login-form">
-      <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="you@example.com"/></div>
-      <div class="field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••"/></div>
-      <button class="btn btn-primary btn-full" onclick="login()">Sign In</button>
-      <div style="text-align:center;margin-top:16px">
-        <button class="btn btn-outline btn-full" onclick="loadDemo()" style="margin-top:8px;border-color:var(--accent)44;color:var(--accent)">
-          ✨ Try Demo Mode
-        </button>
+
+    <!-- Login / Register tabs -->
+    <div id="auth-main">
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+      </div>
+      <div id="auth-error" class="error-msg" style="display:none"></div>
+
+      <!-- Login -->
+      <div id="login-form">
+        <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="you@example.com"/></div>
+        <div class="field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••"/></div>
+        <button class="btn btn-primary btn-full" onclick="login()">Sign In</button>
+        <button class="forgot-link" onclick="showForgotPassword()">Forgot your password?</button>
+        <div style="text-align:center;margin-top:8px">
+          <button class="btn btn-outline btn-full" onclick="loadDemo()" style="border-color:var(--accent)44;color:var(--accent)">
+            ✨ Try Demo Mode
+          </button>
+        </div>
+      </div>
+
+      <!-- Register -->
+      <div id="register-form" style="display:none">
+        <div class="field"><label>Email</label><input type="email" id="reg-email" placeholder="you@example.com"/></div>
+        <div class="field"><label>Password</label><input type="password" id="reg-password" placeholder="Min 6 characters"/></div>
+        <button class="btn btn-primary btn-full" onclick="register()">Create Account</button>
       </div>
     </div>
-    <div id="register-form" style="display:none">
-      <div class="field"><label>Email</label><input type="email" id="reg-email" placeholder="you@example.com"/></div>
-      <div class="field"><label>Password</label><input type="password" id="reg-password" placeholder="Min 6 characters"/></div>
-      <button class="btn btn-primary btn-full" onclick="register()">Create Account</button>
+
+    <!-- Forgot Password -->
+    <div id="forgot-form" style="display:none">
+      <button class="back-link" onclick="showAuthMain()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Sign In
+      </button>
+      <div style="font-family:var(--font-head);font-size:1.4rem;margin-bottom:8px">Reset Password</div>
+      <div style="color:var(--muted);font-size:14px;margin-bottom:24px">Enter your email and we'll send you a reset link.</div>
+      <div id="forgot-error" class="error-msg" style="display:none"></div>
+      <div id="forgot-success" class="success-msg" style="display:none"></div>
+      <div class="field"><label>Email</label><input type="email" id="forgot-email" placeholder="you@example.com"/></div>
+      <button class="btn btn-primary btn-full" onclick="forgotPassword()">Send Reset Link</button>
+    </div>
+
+    <!-- Reset Password (from email link) -->
+    <div id="reset-form" style="display:none">
+      <div style="font-family:var(--font-head);font-size:1.4rem;margin-bottom:8px">New Password</div>
+      <div style="color:var(--muted);font-size:14px;margin-bottom:24px">Enter your new password below.</div>
+      <div id="reset-error" class="error-msg" style="display:none"></div>
+      <div id="reset-success" class="success-msg" style="display:none"></div>
+      <div class="field"><label>New Password</label><input type="password" id="reset-password" placeholder="Min 6 characters"/></div>
+      <div class="field"><label>Confirm Password</label><input type="password" id="reset-confirm" placeholder="Repeat password"/></div>
+      <button class="btn btn-primary btn-full" onclick="resetPassword()">Reset Password</button>
     </div>
   </div>
 </div>
@@ -273,40 +307,19 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         Demo mode — data is illustrative and not saved to any server.
       </div>
-
       <div class="networth-hero">
         <div class="networth-label">Total Net Worth</div>
         <div class="networth-value" id="nw-total">—</div>
-        <div class="networth-change" id="nw-sub">Assets minus Liabilities</div>
+        <div style="font-size:14px;color:var(--muted)" id="nw-sub">Assets minus Liabilities</div>
       </div>
-
       <div class="grid-3">
-        <div class="card">
-          <div class="card-title">Total Assets</div>
-          <div class="card-value green" id="nw-assets">—</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:4px">Cash + Investments + Crypto</div>
-        </div>
-        <div class="card">
-          <div class="card-title">Monthly Income</div>
-          <div class="card-value blue" id="nw-income">—</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:4px">This month</div>
-        </div>
-        <div class="card">
-          <div class="card-title">Monthly Expenses</div>
-          <div class="card-value red" id="nw-expenses">—</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:4px">This month</div>
-        </div>
+        <div class="card"><div class="card-title">Total Assets</div><div class="card-value green" id="nw-assets">—</div><div style="font-size:13px;color:var(--muted);margin-top:4px">Cash + Investments + Crypto</div></div>
+        <div class="card"><div class="card-title">Monthly Income</div><div class="card-value blue" id="nw-income">—</div><div style="font-size:13px;color:var(--muted);margin-top:4px">This month</div></div>
+        <div class="card"><div class="card-title">Monthly Expenses</div><div class="card-value red" id="nw-expenses">—</div><div style="font-size:13px;color:var(--muted);margin-top:4px">This month</div></div>
       </div>
-
       <div class="grid-2">
-        <div class="card">
-          <div class="section-header"><h2>Asset Breakdown</h2></div>
-          <div id="nw-asset-list"><div class="loading">Loading…</div></div>
-        </div>
-        <div class="card">
-          <div class="section-header"><h2>Cash Flow This Month</h2></div>
-          <div id="nw-cashflow"><div class="loading">Loading…</div></div>
-        </div>
+        <div class="card"><div class="section-header"><h2>Asset Breakdown</h2></div><div id="nw-asset-list"><div class="loading">Loading…</div></div></div>
+        <div class="card"><div class="section-header"><h2>Cash Flow This Month</h2></div><div id="nw-cashflow"><div class="loading">Loading…</div></div></div>
       </div>
     </div>
 
@@ -321,14 +334,8 @@
         <div class="card"><div class="card-title">Status</div><div class="card-value" id="dash-status">—</div></div>
       </div>
       <div class="grid-2">
-        <div class="card">
-          <div class="section-header"><h2>Top Spending Categories</h2></div>
-          <div id="dash-top-cats"><div class="loading">Loading…</div></div>
-        </div>
-        <div class="card">
-          <div class="section-header"><h2>Budget Utilization</h2></div>
-          <div id="dash-budgets-preview"><div class="loading">Loading…</div></div>
-        </div>
+        <div class="card"><div class="section-header"><h2>Top Spending Categories</h2></div><div id="dash-top-cats"><div class="loading">Loading…</div></div></div>
+        <div class="card"><div class="section-header"><h2>Budget Utilization</h2></div><div id="dash-budgets-preview"><div class="loading">Loading…</div></div></div>
       </div>
     </div>
 
@@ -341,9 +348,7 @@
         <div class="card"><div class="card-title">Last Month</div><div class="card-value" id="income-last-total">—</div></div>
         <div class="card"><div class="card-title">Avg Monthly</div><div class="card-value" id="income-avg-total">—</div></div>
       </div>
-      <div style="margin-bottom:16px">
-        <button class="btn btn-primary" onclick="openModal('income-modal')">+ Add Income</button>
-      </div>
+      <div style="margin-bottom:16px"><button class="btn btn-primary" onclick="openModal('income-modal')">+ Add Income</button></div>
       <div class="card">
         <div class="table-wrap">
           <table>
@@ -361,9 +366,7 @@
       <div class="filters">
         <div class="field"><label>From</label><input type="date" id="filter-from" onchange="loadExpenses()"/></div>
         <div class="field"><label>To</label><input type="date" id="filter-to" onchange="loadExpenses()"/></div>
-        <div class="field"><label>Category</label>
-          <select id="filter-cat" onchange="loadExpenses()"><option value="">All Categories</option></select>
-        </div>
+        <div class="field"><label>Category</label><select id="filter-cat" onchange="loadExpenses()"><option value="">All Categories</option></select></div>
         <div style="display:flex;align-items:flex-end;gap:8px">
           <button class="btn btn-primary" onclick="openModal('expense-modal')">+ Add Expense</button>
           <button class="btn btn-outline" onclick="exportCsv()">⬇ Export CSV</button>
@@ -386,20 +389,13 @@
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
         <div class="field" style="margin:0"><label>Month</label>
           <select id="budget-month" onchange="loadBudgets()">
-            <option value="1">January</option><option value="2">February</option>
-            <option value="3">March</option><option value="4">April</option>
-            <option value="5">May</option><option value="6">June</option>
-            <option value="7">July</option><option value="8">August</option>
-            <option value="9">September</option><option value="10">October</option>
-            <option value="11">November</option><option value="12">December</option>
+            <option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option>
+            <option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option>
+            <option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option>
           </select>
         </div>
-        <div class="field" style="margin:0"><label>Year</label>
-          <input type="number" id="budget-year" value="2026" style="width:90px" onchange="loadBudgets()"/>
-        </div>
-        <div style="margin-top:18px">
-          <button class="btn btn-primary" onclick="openModal('budget-modal')">+ Set Budget</button>
-        </div>
+        <div class="field" style="margin:0"><label>Year</label><input type="number" id="budget-year" value="2026" style="width:90px" onchange="loadBudgets()"/></div>
+        <div style="margin-top:18px"><button class="btn btn-primary" onclick="openModal('budget-modal')">+ Set Budget</button></div>
       </div>
       <div id="budgets-list"><div class="loading">Loading…</div></div>
     </div>
@@ -408,13 +404,8 @@
     <div class="page" id="page-accounts">
       <div class="page-title">Bank Accounts</div>
       <div class="page-sub">Track your cash across all accounts</div>
-      <div class="card" style="margin-bottom:24px">
-        <div class="card-title">Total Cash & Savings</div>
-        <div class="card-value green" id="accounts-total">—</div>
-      </div>
-      <div style="margin-bottom:16px">
-        <button class="btn btn-primary" onclick="openModal('account-modal')">+ Add Account</button>
-      </div>
+      <div class="card" style="margin-bottom:24px"><div class="card-title">Total Cash & Savings</div><div class="card-value green" id="accounts-total">—</div></div>
+      <div style="margin-bottom:16px"><button class="btn btn-primary" onclick="openModal('account-modal')">+ Add Account</button></div>
       <div class="grid-3" id="accounts-grid"><div class="loading">Loading…</div></div>
     </div>
 
@@ -427,9 +418,7 @@
         <div class="card"><div class="card-title">Current Value</div><div class="card-value" id="crypto-value">—</div></div>
         <div class="card"><div class="card-title">Profit / Loss</div><div class="card-value" id="crypto-pl">—</div></div>
       </div>
-      <div style="margin-bottom:16px">
-        <button class="btn btn-primary" onclick="openModal('crypto-modal')">+ Add Asset</button>
-      </div>
+      <div style="margin-bottom:16px"><button class="btn btn-primary" onclick="openModal('crypto-modal')">+ Add Asset</button></div>
       <div class="card">
         <div class="table-wrap">
           <table>
@@ -444,9 +433,7 @@
     <div class="page" id="page-categories">
       <div class="page-title">Categories</div>
       <div class="page-sub">Organise your expenses</div>
-      <div style="margin-bottom:20px">
-        <button class="btn btn-primary" onclick="openModal('category-modal')">+ New Category</button>
-      </div>
+      <div style="margin-bottom:20px"><button class="btn btn-primary" onclick="openModal('category-modal')">+ New Category</button></div>
       <div class="grid-3" id="categories-grid"><div class="loading">Loading…</div></div>
     </div>
 
@@ -454,8 +441,6 @@
 </div>
 
 <!-- MODALS -->
-
-<!-- Income Modal -->
 <div class="modal-overlay" id="income-modal">
   <div class="modal">
     <div class="modal-title">Add Income</div>
@@ -466,12 +451,9 @@
     <div class="field"><label>Source</label><input type="text" id="income-source" placeholder="e.g. Salary, Freelance, Dividends"/></div>
     <div class="field"><label>Type</label>
       <select id="income-type">
-        <option value="Salary">Salary</option>
-        <option value="Freelance">Freelance</option>
-        <option value="Investment">Investment</option>
-        <option value="Rental">Rental</option>
-        <option value="Business">Business</option>
-        <option value="Other">Other</option>
+        <option value="Salary">Salary</option><option value="Freelance">Freelance</option>
+        <option value="Investment">Investment</option><option value="Rental">Rental</option>
+        <option value="Business">Business</option><option value="Other">Other</option>
       </select>
     </div>
     <div class="modal-actions">
@@ -481,7 +463,6 @@
   </div>
 </div>
 
-<!-- Account Modal -->
 <div class="modal-overlay" id="account-modal">
   <div class="modal">
     <div class="modal-title" id="account-modal-title">Add Account</div>
@@ -490,9 +471,7 @@
     <div class="field"><label>Account Name</label><input type="text" id="account-name" placeholder="e.g. Chase Checking"/></div>
     <div class="field"><label>Type</label>
       <select id="account-type">
-        <option value="checking">Checking</option>
-        <option value="savings">Savings</option>
-        <option value="invest">Investment</option>
+        <option value="checking">Checking</option><option value="savings">Savings</option><option value="invest">Investment</option>
       </select>
     </div>
     <div class="field"><label>Current Balance ($)</label><input type="number" id="account-balance" step="0.01" placeholder="0.00"/></div>
@@ -503,7 +482,6 @@
   </div>
 </div>
 
-<!-- Expense Modal -->
 <div class="modal-overlay" id="expense-modal">
   <div class="modal">
     <div class="modal-title" id="expense-modal-title">Add Expense</div>
@@ -512,9 +490,7 @@
     <div class="field"><label>Amount ($)</label><input type="number" id="exp-amount" step="0.01" placeholder="0.00"/></div>
     <div class="field"><label>Date</label><input type="date" id="exp-date"/></div>
     <div class="field"><label>Description</label><input type="text" id="exp-desc" placeholder="What was this for?"/></div>
-    <div class="field"><label>Category</label>
-      <select id="exp-category"><option value="">Select category…</option></select>
-    </div>
+    <div class="field"><label>Category</label><select id="exp-category"><option value="">Select category…</option></select></div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('expense-modal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveExpense()">Save</button>
@@ -522,7 +498,6 @@
   </div>
 </div>
 
-<!-- Category Modal -->
 <div class="modal-overlay" id="category-modal">
   <div class="modal">
     <div class="modal-title" id="cat-modal-title">New Category</div>
@@ -536,23 +511,17 @@
   </div>
 </div>
 
-<!-- Budget Modal -->
 <div class="modal-overlay" id="budget-modal">
   <div class="modal">
     <div class="modal-title">Set Monthly Budget</div>
     <div id="budget-modal-error" class="error-msg" style="display:none"></div>
-    <div class="field"><label>Category</label>
-      <select id="budget-category"><option value="">Select category…</option></select>
-    </div>
+    <div class="field"><label>Category</label><select id="budget-category"><option value="">Select category…</option></select></div>
     <div class="field"><label>Budget Amount ($)</label><input type="number" id="budget-amount" step="0.01" placeholder="0.00"/></div>
     <div class="field"><label>Month</label>
       <select id="budget-modal-month">
-        <option value="1">January</option><option value="2">February</option>
-        <option value="3">March</option><option value="4">April</option>
-        <option value="5">May</option><option value="6">June</option>
-        <option value="7">July</option><option value="8">August</option>
-        <option value="9">September</option><option value="10">October</option>
-        <option value="11">November</option><option value="12">December</option>
+        <option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option>
+        <option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option>
+        <option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option>
       </select>
     </div>
     <div class="field"><label>Year</label><input type="number" id="budget-modal-year" value="2026"/></div>
@@ -563,7 +532,6 @@
   </div>
 </div>
 
-<!-- Crypto Modal -->
 <div class="modal-overlay" id="crypto-modal">
   <div class="modal">
     <div class="modal-title">Add Crypto Asset</div>
@@ -583,27 +551,25 @@
 <div id="toast"></div>
 
 <script>
-// ── Config ───────────────────────────────────────────────────
 const API = 'http://localhost:5000/api';
 let token     = localStorage.getItem('ft_token') || '';
 let userEmail = localStorage.getItem('ft_email') || '';
 let categories = [];
 let isDemoMode = false;
 
-// ── Demo Data ─────────────────────────────────────────────────
 const DEMO = {
   email: 'demo@financetracker.app',
   income: [
-    { id:'i1', date:'2026-02-01', source:'Monthly Salary', type:'Salary',     amount:5800 },
-    { id:'i2', date:'2026-02-10', source:'Freelance Project', type:'Freelance', amount:1200 },
-    { id:'i3', date:'2026-02-15', source:'Dividend Payout', type:'Investment', amount:320  },
-    { id:'i4', date:'2026-01-01', source:'Monthly Salary', type:'Salary',     amount:5800 },
-    { id:'i5', date:'2026-01-18', source:'Side Consulting', type:'Freelance', amount:850  },
+    { id:'i1', date:'2026-02-01', source:'Monthly Salary',    type:'Salary',     amount:5800 },
+    { id:'i2', date:'2026-02-10', source:'Freelance Project', type:'Freelance',  amount:1200 },
+    { id:'i3', date:'2026-02-15', source:'Dividend Payout',   type:'Investment', amount:320  },
+    { id:'i4', date:'2026-01-01', source:'Monthly Salary',    type:'Salary',     amount:5800 },
+    { id:'i5', date:'2026-01-18', source:'Side Consulting',   type:'Freelance',  amount:850  },
   ],
   accounts: [
-    { id:'a1', name:'Chase Checking',      type:'checking', balance:12450.80 },
-    { id:'a2', name:'Marcus Savings',      type:'savings',  balance:38200.00 },
-    { id:'a3', name:'Fidelity Brokerage',  type:'invest',   balance:54780.50 },
+    { id:'a1', name:'Chase Checking',     type:'checking', balance:12450.80 },
+    { id:'a2', name:'Marcus Savings',     type:'savings',  balance:38200.00 },
+    { id:'a3', name:'Fidelity Brokerage', type:'invest',   balance:54780.50 },
   ],
   crypto: [
     { symbol:'BTC', quantity:0.45, avgBuyPrice:52000, currentPrice:68500, currentValue:30825, profitLoss:7525 },
@@ -611,31 +577,27 @@ const DEMO = {
     { symbol:'SOL', quantity:25,   avgBuyPrice:120,   currentPrice:175,   currentValue:4375,  profitLoss:1375 },
   ],
   expenses: [
-    { id:'e1', date:'2026-02-01', description:'Whole Foods',     categoryName:'Groceries',    amount:143.50 },
-    { id:'e2', date:'2026-02-03', description:'Netflix',         categoryName:'Subscriptions',amount:15.99  },
-    { id:'e3', date:'2026-02-05', description:'Shell Gas',       categoryName:'Transport',    amount:62.40  },
-    { id:'e4', date:'2026-02-08', description:'Restaurant',      categoryName:'Dining Out',   amount:89.00  },
-    { id:'e5', date:'2026-02-10', description:'Electricity Bill',categoryName:'Utilities',    amount:120.00 },
-    { id:'e6', date:'2026-02-12', description:'Amazon',          categoryName:'Shopping',     amount:75.30  },
-    { id:'e7', date:'2026-02-14', description:'Gym Membership',  categoryName:'Health',       amount:49.99  },
-    { id:'e8', date:'2026-02-15', description:'Trader Joes',     categoryName:'Groceries',    amount:98.20  },
+    { id:'e1', date:'2026-02-01', description:'Whole Foods',      categoryName:'Groceries',     amount:143.50 },
+    { id:'e2', date:'2026-02-03', description:'Netflix',          categoryName:'Subscriptions', amount:15.99  },
+    { id:'e3', date:'2026-02-05', description:'Shell Gas',        categoryName:'Transport',     amount:62.40  },
+    { id:'e4', date:'2026-02-08', description:'Restaurant',       categoryName:'Dining Out',    amount:89.00  },
+    { id:'e5', date:'2026-02-10', description:'Electricity Bill', categoryName:'Utilities',     amount:120.00 },
+    { id:'e6', date:'2026-02-12', description:'Amazon',           categoryName:'Shopping',      amount:75.30  },
+    { id:'e7', date:'2026-02-14', description:'Gym Membership',   categoryName:'Health',        amount:49.99  },
+    { id:'e8', date:'2026-02-15', description:'Trader Joes',      categoryName:'Groceries',     amount:98.20  },
   ],
   budgets: [
-    { id:'b1', categoryName:'Groceries',    budgetAmount:400, amountSpent:241.70, utilizationPercent:60.4, status:'Ok' },
-    { id:'b2', categoryName:'Dining Out',   budgetAmount:200, amountSpent:89,     utilizationPercent:44.5, status:'Ok' },
-    { id:'b3', categoryName:'Transport',    budgetAmount:150, amountSpent:62.40,  utilizationPercent:41.6, status:'Ok' },
-    { id:'b4', categoryName:'Subscriptions',budgetAmount:50,  amountSpent:45.99,  utilizationPercent:92,   status:'Warning' },
-    { id:'b5', categoryName:'Shopping',     budgetAmount:100, amountSpent:75.30,  utilizationPercent:75.3, status:'Ok' },
+    { id:'b1', categoryName:'Groceries',     budgetAmount:400, amountSpent:241.70, utilizationPercent:60.4, status:'Ok' },
+    { id:'b2', categoryName:'Dining Out',    budgetAmount:200, amountSpent:89,     utilizationPercent:44.5, status:'Ok' },
+    { id:'b3', categoryName:'Transport',     budgetAmount:150, amountSpent:62.40,  utilizationPercent:41.6, status:'Ok' },
+    { id:'b4', categoryName:'Subscriptions', budgetAmount:50,  amountSpent:45.99,  utilizationPercent:92,   status:'Warning' },
+    { id:'b5', categoryName:'Shopping',      budgetAmount:100, amountSpent:75.30,  utilizationPercent:75.3, status:'Ok' },
   ]
 };
 
 // ── Utilities ────────────────────────────────────────────────
-function fmt(n) {
-  return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 });
-}
-function fmtDate(d) {
-  return new Date(d).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
-}
+function fmt(n) { return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 }); }
+function fmtDate(d) { return new Date(d).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }); }
 async function apiCall(method, path, body) {
   const res = await fetch(API + path, {
     method,
@@ -652,10 +614,25 @@ function toast(msg, type='ok') {
   el.textContent = msg; el.className = `show ${type}`;
   setTimeout(() => el.className = '', 3000);
 }
-function showError(id, msg) { const el=document.getElementById(id); el.textContent=msg; el.style.display='block'; }
-function hideError(id) { document.getElementById(id).style.display='none'; }
+function showError(id, msg)   { const el=document.getElementById(id); el.textContent=msg; el.style.display='block'; }
+function hideError(id)        { document.getElementById(id).style.display='none'; }
+function showSuccess(id, msg) { const el=document.getElementById(id); el.textContent=msg; el.style.display='block'; }
 
-// ── Auth ─────────────────────────────────────────────────────
+// ── Auth screens ─────────────────────────────────────────────
+function showAuthMain() {
+  document.getElementById('auth-main').style.display  = 'block';
+  document.getElementById('forgot-form').style.display = 'none';
+  document.getElementById('reset-form').style.display  = 'none';
+  document.querySelector('.auth-sub').style.display    = 'block';
+}
+function showForgotPassword() {
+  document.getElementById('auth-main').style.display  = 'none';
+  document.getElementById('forgot-form').style.display = 'block';
+  document.getElementById('reset-form').style.display  = 'none';
+  document.querySelector('.auth-sub').style.display    = 'none';
+  hideError('forgot-error');
+  document.getElementById('forgot-success').style.display = 'none';
+}
 function switchAuthTab(tab) {
   document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active',(i===0)===(tab==='login')));
   document.getElementById('login-form').style.display    = tab==='login'    ? 'block':'none';
@@ -663,6 +640,7 @@ function switchAuthTab(tab) {
   hideError('auth-error');
 }
 
+// ── Auth actions ─────────────────────────────────────────────
 async function login() {
   hideError('auth-error');
   try {
@@ -685,9 +663,43 @@ async function register() {
   } catch(e) { showError('auth-error', e.message); }
 }
 
-function loadDemo() {
-  setSession(null, DEMO.email, true);
+async function forgotPassword() {
+  hideError('forgot-error');
+  document.getElementById('forgot-success').style.display = 'none';
+  const email = document.getElementById('forgot-email').value.trim();
+  if (!email) { showError('forgot-error', 'Please enter your email address'); return; }
+  try {
+    await apiCall('POST', '/auth/forgot-password', { email });
+    showSuccess('forgot-success', '✅ Reset link sent! Check your inbox (and spam folder).');
+    document.getElementById('forgot-email').value = '';
+  } catch(e) { showError('forgot-error', e.message); }
 }
+
+async function resetPassword() {
+  hideError('reset-error');
+  document.getElementById('reset-success').style.display = 'none';
+  const password = document.getElementById('reset-password').value;
+  const confirm  = document.getElementById('reset-confirm').value;
+  const token    = new URLSearchParams(window.location.search).get('token');
+
+  if (!password || password.length < 6) { showError('reset-error', 'Password must be at least 6 characters'); return; }
+  if (password !== confirm)             { showError('reset-error', 'Passwords do not match'); return; }
+  if (!token)                           { showError('reset-error', 'Invalid reset link'); return; }
+
+  try {
+    await apiCall('POST', '/auth/reset-password', { token, newPassword: password });
+    showSuccess('reset-success', '✅ Password reset! You can now sign in.');
+    document.getElementById('reset-password').value = '';
+    document.getElementById('reset-confirm').value  = '';
+    // Redirect to login after 2 seconds
+    setTimeout(() => {
+      window.history.replaceState({}, document.title, window.location.pathname);
+      showAuthMain();
+    }, 2000);
+  } catch(e) { showError('reset-error', e.message); }
+}
+
+function loadDemo() { setSession(null, DEMO.email, true); }
 
 function setSession(tok, email, demo) {
   isDemoMode = demo;
@@ -711,6 +723,7 @@ function logout() {
   localStorage.removeItem('ft_token'); localStorage.removeItem('ft_email');
   document.getElementById('app-screen').style.display  = 'none';
   document.getElementById('auth-screen').style.display = 'flex';
+  showAuthMain();
 }
 
 // ── Navigation ───────────────────────────────────────────────
@@ -743,40 +756,30 @@ async function initApp() {
   document.getElementById('exp-date').value    = today;
   document.getElementById('crypto-date').value = today;
   document.getElementById('income-date').value = today;
-
   if (!isDemoMode) await loadCategoriesData();
   else categories = ['Groceries','Dining Out','Transport','Subscriptions','Shopping','Utilities','Health'].map((n,i) => ({id:'c'+i,name:n}));
   populateCategorySelects();
   loadNetWorth();
 }
 
-// ── Local Storage for demo/non-api data ──────────────────────
-function getLocal(key) {
-  try { return JSON.parse(localStorage.getItem('ft_' + key) || 'null'); } catch { return null; }
-}
+// ── Local Storage ─────────────────────────────────────────────
+function getLocal(key) { try { return JSON.parse(localStorage.getItem('ft_' + key) || 'null'); } catch { return null; } }
 function setLocal(key, val) { localStorage.setItem('ft_' + key, JSON.stringify(val)); }
-
 function getIncome()   { return isDemoMode ? DEMO.income   : (getLocal('income')   || []); }
 function getAccounts() { return isDemoMode ? DEMO.accounts : (getLocal('accounts') || []); }
-
 function saveIncomeLine(item) {
   if (isDemoMode) { toast('Demo mode — changes not saved', 'err'); return false; }
-  const list = getLocal('income') || [];
-  const idx  = list.findIndex(i => i.id === item.id);
-  if (idx >= 0) list[idx] = item; else list.unshift(item);
-  setLocal('income', list); return true;
+  const list = getLocal('income') || []; const idx = list.findIndex(i => i.id === item.id);
+  if (idx >= 0) list[idx] = item; else list.unshift(item); setLocal('income', list); return true;
 }
 function deleteIncomeLine(id) {
   if (isDemoMode) { toast('Demo mode — changes not saved', 'err'); return false; }
-  const list = (getLocal('income') || []).filter(i => i.id !== id);
-  setLocal('income', list); return true;
+  setLocal('income', (getLocal('income')||[]).filter(i => i.id !== id)); return true;
 }
 function saveAccountLocal(item) {
   if (isDemoMode) { toast('Demo mode — changes not saved', 'err'); return false; }
-  const list = getLocal('accounts') || [];
-  const idx  = list.findIndex(a => a.id === item.id);
-  if (idx >= 0) list[idx] = item; else list.push(item);
-  setLocal('accounts', list); return true;
+  const list = getLocal('accounts') || []; const idx = list.findIndex(a => a.id === item.id);
+  if (idx >= 0) list[idx] = item; else list.push(item); setLocal('accounts', list); return true;
 }
 function deleteAccountLocal(id) {
   if (isDemoMode) { toast('Demo mode — changes not saved', 'err'); return false; }
@@ -788,330 +791,177 @@ async function loadNetWorth() {
   try {
     const accounts = getAccounts();
     const cashTotal = accounts.reduce((s, a) => s + a.balance, 0);
-
-    let cryptoValue = 0;
-    let monthlyIncome = 0;
-    let monthlyExpenses = 0;
-
+    let cryptoValue=0, monthlyIncome=0, monthlyExpenses=0;
     if (isDemoMode) {
-      cryptoValue = DEMO.crypto.reduce((s, c) => s + c.currentValue, 0);
-      monthlyIncome = DEMO.income.filter(i => i.date.startsWith('2026-02')).reduce((s,i) => s+i.amount, 0);
+      cryptoValue     = DEMO.crypto.reduce((s,c) => s+c.currentValue, 0);
+      monthlyIncome   = DEMO.income.filter(i => i.date.startsWith('2026-02')).reduce((s,i) => s+i.amount, 0);
       monthlyExpenses = DEMO.expenses.reduce((s,e) => s+e.amount, 0);
     } else {
-      try {
-        const summary = await apiCall('GET', '/crypto/portfolio-summary');
-        cryptoValue = summary.currentValue || 0;
-      } catch {}
-      try {
-        const now = new Date();
-        const dash = await apiCall('GET', '/dashboard/monthly-summary');
-        monthlyExpenses = dash.totalSpending || 0;
-      } catch {}
-      const incomeList = getIncome();
-      const now = new Date();
-      const prefix = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
-      monthlyIncome = incomeList.filter(i => i.date.startsWith(prefix)).reduce((s,i) => s+i.amount, 0);
+      try { const s=await apiCall('GET','/crypto/portfolio-summary'); cryptoValue=s.currentValue||0; } catch {}
+      try { const d=await apiCall('GET','/dashboard/monthly-summary'); monthlyExpenses=d.totalSpending||0; } catch {}
+      const now=new Date(), prefix=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+      monthlyIncome = getIncome().filter(i=>i.date.startsWith(prefix)).reduce((s,i)=>s+i.amount,0);
     }
-
-    const totalAssets = cashTotal + cryptoValue;
-    const netWorth    = totalAssets;
-
-    document.getElementById('nw-total').textContent    = fmt(netWorth);
+    const totalAssets=cashTotal+cryptoValue;
+    document.getElementById('nw-total').textContent    = fmt(totalAssets);
     document.getElementById('nw-assets').textContent   = fmt(totalAssets);
     document.getElementById('nw-income').textContent   = fmt(monthlyIncome);
     document.getElementById('nw-expenses').textContent = fmt(monthlyExpenses);
-
-    // Asset breakdown
-    const assetList = document.getElementById('nw-asset-list');
     const assetItems = [
-      ...accounts.map(a => ({ name:a.name, sub:a.type, value:a.balance, color: a.type==='checking'?'#a89cf0': a.type==='savings'?'var(--accent)':'var(--accent2)' })),
+      ...accounts.map(a => ({ name:a.name, sub:a.type, value:a.balance, color:a.type==='checking'?'#a89cf0':a.type==='savings'?'var(--accent)':'var(--accent2)' })),
       { name:'Crypto Portfolio', sub:'BTC, ETH, SOL…', value:cryptoValue, color:'var(--warn)' }
-    ].sort((a,b) => b.value - a.value);
-
-    assetList.innerHTML = assetItems.map(a => `
+    ].sort((a,b) => b.value-a.value);
+    document.getElementById('nw-asset-list').innerHTML = assetItems.map(a => `
       <div class="asset-row">
-        <div class="asset-icon" style="background:${a.color}18">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${a.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        </div>
-        <div class="asset-info">
-          <div class="asset-name">${a.name}</div>
-          <div class="asset-sub">${a.sub}</div>
-        </div>
+        <div class="asset-icon" style="background:${a.color}18"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${a.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div class="asset-info"><div class="asset-name">${a.name}</div><div class="asset-sub">${a.sub}</div></div>
         <div class="asset-value">${fmt(a.value)}</div>
       </div>`).join('');
-
-    // Cash flow
-    const cashFlow = monthlyIncome - monthlyExpenses;
-    const cfColor  = cashFlow >= 0 ? 'var(--accent)' : 'var(--danger)';
+    const cashFlow=monthlyIncome-monthlyExpenses, cfColor=cashFlow>=0?'var(--accent)':'var(--danger)';
     document.getElementById('nw-cashflow').innerHTML = `
       <div style="display:flex;flex-direction:column;gap:16px">
-        <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)55">
-          <span style="color:var(--muted)">Income</span>
-          <span style="font-weight:700;color:var(--accent2)">${fmt(monthlyIncome)}</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)55">
-          <span style="color:var(--muted)">Expenses</span>
-          <span style="font-weight:700;color:var(--danger)">-${fmt(monthlyExpenses)}</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:14px 0">
-          <span style="font-weight:600">Net Cash Flow</span>
-          <span style="font-weight:700;color:${cfColor}">${cashFlow>=0?'+':''}${fmt(cashFlow)}</span>
-        </div>
-        <div style="background:var(--bg);border-radius:12px;padding:16px;text-align:center">
-          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Savings Rate</div>
-          <div style="font-family:var(--font-head);font-size:1.8rem;color:${cfColor}">${monthlyIncome>0?Math.round(cashFlow/monthlyIncome*100):0}%</div>
-        </div>
+        <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)55"><span style="color:var(--muted)">Income</span><span style="font-weight:700;color:var(--accent2)">${fmt(monthlyIncome)}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)55"><span style="color:var(--muted)">Expenses</span><span style="font-weight:700;color:var(--danger)">-${fmt(monthlyExpenses)}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:14px 0"><span style="font-weight:600">Net Cash Flow</span><span style="font-weight:700;color:${cfColor}">${cashFlow>=0?'+':''}${fmt(cashFlow)}</span></div>
+        <div style="background:var(--bg);border-radius:12px;padding:16px;text-align:center"><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Savings Rate</div><div style="font-family:var(--font-head);font-size:1.8rem;color:${cfColor}">${monthlyIncome>0?Math.round(cashFlow/monthlyIncome*100):0}%</div></div>
       </div>`;
   } catch(e) { console.error(e); }
 }
 
 // ── Income ───────────────────────────────────────────────────
 function loadIncome() {
-  const list = getIncome();
-  const now  = new Date();
-  const thisPrefix = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
-  const lastMonth  = new Date(now.getFullYear(), now.getMonth()-1, 1);
-  const lastPrefix = `${lastMonth.getFullYear()}-${String(lastMonth.getMonth()+1).padStart(2,'0')}`;
-
-  const thisTotal = list.filter(i=>i.date.startsWith(thisPrefix)).reduce((s,i)=>s+i.amount,0);
-  const lastTotal = list.filter(i=>i.date.startsWith(lastPrefix)).reduce((s,i)=>s+i.amount,0);
-  const avgTotal  = list.length ? list.reduce((s,i)=>s+i.amount,0)/Math.max(1, new Set(list.map(i=>i.date.slice(0,7))).size) : 0;
-
-  document.getElementById('income-month-total').textContent = fmt(thisTotal);
-  document.getElementById('income-last-total').textContent  = fmt(lastTotal);
-  document.getElementById('income-avg-total').textContent   = fmt(avgTotal);
-
-  const tbody = document.getElementById('income-tbody');
-  if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="5"><div class="empty"><div class="empty-icon">💰</div><p>No income logged yet.</p></div></td></tr>';
-    return;
-  }
-  tbody.innerHTML = list.map(i => `
-    <tr>
-      <td style="color:var(--muted)">${fmtDate(i.date)}</td>
-      <td style="font-weight:500">${i.source}</td>
-      <td><span class="badge badge-income">${i.type}</span></td>
-      <td style="font-weight:700;color:var(--accent2)">${fmt(i.amount)}</td>
-      <td style="text-align:right">
-        ${isDemoMode ? '' : `<button class="btn btn-danger btn-sm" onclick="deleteIncome('${i.id}')">Delete</button>`}
-      </td>
-    </tr>`).join('');
+  const list=getIncome(), now=new Date();
+  const thisPrefix=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  const lastMonth=new Date(now.getFullYear(),now.getMonth()-1,1);
+  const lastPrefix=`${lastMonth.getFullYear()}-${String(lastMonth.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('income-month-total').textContent=fmt(list.filter(i=>i.date.startsWith(thisPrefix)).reduce((s,i)=>s+i.amount,0));
+  document.getElementById('income-last-total').textContent=fmt(list.filter(i=>i.date.startsWith(lastPrefix)).reduce((s,i)=>s+i.amount,0));
+  document.getElementById('income-avg-total').textContent=fmt(list.length?list.reduce((s,i)=>s+i.amount,0)/Math.max(1,new Set(list.map(i=>i.date.slice(0,7))).size):0);
+  const tbody=document.getElementById('income-tbody');
+  if (!list.length) { tbody.innerHTML='<tr><td colspan="5"><div class="empty"><div class="empty-icon">💰</div><p>No income logged yet.</p></div></td></tr>'; return; }
+  tbody.innerHTML=list.map(i=>`<tr><td style="color:var(--muted)">${fmtDate(i.date)}</td><td style="font-weight:500">${i.source}</td><td><span class="badge badge-income">${i.type}</span></td><td style="font-weight:700;color:var(--accent2)">${fmt(i.amount)}</td><td style="text-align:right">${isDemoMode?'':`<button class="btn btn-danger btn-sm" onclick="deleteIncome('${i.id}')">Delete</button>`}</td></tr>`).join('');
 }
-
 function saveIncome() {
   hideError('income-modal-error');
-  const amount = parseFloat(document.getElementById('income-amount').value);
-  const date   = document.getElementById('income-date').value;
-  const source = document.getElementById('income-source').value.trim();
-  const type   = document.getElementById('income-type').value;
-  if (!amount || !date || !source) { showError('income-modal-error','Amount, date and source are required'); return; }
-  if (saveIncomeLine({ id:'i'+Date.now(), date, source, type, amount })) {
+  const amount=parseFloat(document.getElementById('income-amount').value), date=document.getElementById('income-date').value;
+  const source=document.getElementById('income-source').value.trim(), type=document.getElementById('income-type').value;
+  if (!amount||!date||!source) { showError('income-modal-error','Amount, date and source are required'); return; }
+  if (saveIncomeLine({id:'i'+Date.now(),date,source,type,amount})) {
     toast('Income added'); closeModal('income-modal');
-    document.getElementById('income-amount').value = '';
-    document.getElementById('income-source').value = '';
+    document.getElementById('income-amount').value=''; document.getElementById('income-source').value='';
     loadIncome(); loadNetWorth();
   }
 }
-
-function deleteIncome(id) {
-  if (!confirm('Delete this income entry?')) return;
-  if (deleteIncomeLine(id)) { toast('Deleted'); loadIncome(); loadNetWorth(); }
-}
+function deleteIncome(id) { if (!confirm('Delete?')) return; if (deleteIncomeLine(id)) { toast('Deleted'); loadIncome(); loadNetWorth(); } }
 
 // ── Accounts ─────────────────────────────────────────────────
 function loadAccounts() {
-  const list = getAccounts();
-  const total = list.reduce((s, a) => s + a.balance, 0);
-  document.getElementById('accounts-total').textContent = fmt(total);
-
-  const grid = document.getElementById('accounts-grid');
-  if (!list.length) {
-    grid.innerHTML = '<div class="empty"><div class="empty-icon">🏦</div><p>No accounts added yet.</p></div>';
-    return;
-  }
-  grid.innerHTML = list.map(a => `
+  const list=getAccounts();
+  document.getElementById('accounts-total').textContent=fmt(list.reduce((s,a)=>s+a.balance,0));
+  const grid=document.getElementById('accounts-grid');
+  if (!list.length) { grid.innerHTML='<div class="empty"><div class="empty-icon">🏦</div><p>No accounts added yet.</p></div>'; return; }
+  grid.innerHTML=list.map(a=>`
     <div class="account-card ${a.type}">
       <div class="account-type ${a.type}">${a.type.charAt(0).toUpperCase()+a.type.slice(1)}</div>
       <div class="account-name">${a.name}</div>
       <div class="account-balance">${fmt(a.balance)}</div>
       <div class="account-actions">
         <button class="btn btn-outline btn-sm" onclick="editAccount('${a.id}')">Edit</button>
-        ${isDemoMode ? '' : `<button class="btn btn-danger btn-sm" onclick="deleteAccount('${a.id}')">Delete</button>`}
+        ${isDemoMode?'':`<button class="btn btn-danger btn-sm" onclick="deleteAccount('${a.id}')">Delete</button>`}
       </div>
     </div>`).join('');
 }
-
 function editAccount(id) {
-  const acc = getAccounts().find(a => a.id === id);
-  if (!acc) return;
-  document.getElementById('account-id').value      = acc.id;
-  document.getElementById('account-name').value    = acc.name;
-  document.getElementById('account-type').value    = acc.type;
-  document.getElementById('account-balance').value = acc.balance;
-  document.getElementById('account-modal-title').textContent = 'Edit Account';
-  openModal('account-modal');
+  const acc=getAccounts().find(a=>a.id===id); if (!acc) return;
+  document.getElementById('account-id').value=acc.id; document.getElementById('account-name').value=acc.name;
+  document.getElementById('account-type').value=acc.type; document.getElementById('account-balance').value=acc.balance;
+  document.getElementById('account-modal-title').textContent='Edit Account'; openModal('account-modal');
 }
-
 function saveAccount() {
   hideError('account-modal-error');
-  const id      = document.getElementById('account-id').value;
-  const name    = document.getElementById('account-name').value.trim();
-  const type    = document.getElementById('account-type').value;
-  const balance = parseFloat(document.getElementById('account-balance').value);
-  if (!name || isNaN(balance)) { showError('account-modal-error','Name and balance are required'); return; }
-  const item = { id: id || 'a'+Date.now(), name, type, balance };
-  if (saveAccountLocal(item)) {
-    toast(id ? 'Account updated' : 'Account added');
-    document.getElementById('account-id').value = '';
-    document.getElementById('account-modal-title').textContent = 'Add Account';
-    closeModal('account-modal');
-    loadAccounts(); loadNetWorth();
+  const id=document.getElementById('account-id').value, name=document.getElementById('account-name').value.trim();
+  const type=document.getElementById('account-type').value, balance=parseFloat(document.getElementById('account-balance').value);
+  if (!name||isNaN(balance)) { showError('account-modal-error','Name and balance are required'); return; }
+  if (saveAccountLocal({id:id||'a'+Date.now(),name,type,balance})) {
+    toast(id?'Account updated':'Account added'); document.getElementById('account-id').value='';
+    document.getElementById('account-modal-title').textContent='Add Account'; closeModal('account-modal'); loadAccounts(); loadNetWorth();
   }
 }
-
-function deleteAccount(id) {
-  if (!confirm('Delete this account?')) return;
-  if (deleteAccountLocal(id)) { toast('Account deleted'); loadAccounts(); loadNetWorth(); }
-}
+function deleteAccount(id) { if (!confirm('Delete this account?')) return; if (deleteAccountLocal(id)) { toast('Deleted'); loadAccounts(); loadNetWorth(); } }
 
 // ── Categories ───────────────────────────────────────────────
-async function loadCategoriesData() {
-  try { categories = await apiCall('GET', '/categories'); populateCategorySelects(); }
-  catch { categories = []; }
-}
-
+async function loadCategoriesData() { try { categories=await apiCall('GET','/categories'); populateCategorySelects(); } catch { categories=[]; } }
 function populateCategorySelects() {
   ['filter-cat','exp-category','budget-category'].forEach(id => {
-    const sel = document.getElementById(id);
-    const cur = sel.value;
-    sel.innerHTML = id==='filter-cat' ? '<option value="">All Categories</option>' : '<option value="">Select category…</option>';
+    const sel=document.getElementById(id), cur=sel.value;
+    sel.innerHTML=id==='filter-cat'?'<option value="">All Categories</option>':'<option value="">Select category…</option>';
     categories.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.name; sel.appendChild(o); });
-    if (cur) sel.value = cur;
+    if (cur) sel.value=cur;
   });
 }
-
 async function loadCategories() {
   if (!isDemoMode) await loadCategoriesData();
-  const grid = document.getElementById('categories-grid');
-  if (!categories.length) { grid.innerHTML = '<div class="empty"><p>No categories yet.</p></div>'; return; }
-  grid.innerHTML = categories.map(c => `
+  const grid=document.getElementById('categories-grid');
+  if (!categories.length) { grid.innerHTML='<div class="empty"><p>No categories yet.</p></div>'; return; }
+  grid.innerHTML=categories.map(c=>`
     <div class="card" style="display:flex;align-items:center;justify-content:space-between">
       <div style="font-weight:600">${c.name}</div>
-      <div style="display:flex;gap:6px">
-        ${isDemoMode ? '' : `
-          <button class="btn btn-outline btn-sm" onclick="editCategory('${c.id}','${c.name}')">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button>`}
-      </div>
+      <div style="display:flex;gap:6px">${isDemoMode?'':`<button class="btn btn-outline btn-sm" onclick="editCategory('${c.id}','${c.name}')">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button>`}</div>
     </div>`).join('');
 }
-
-function editCategory(id, name) {
-  document.getElementById('category-id').value = id;
-  document.getElementById('cat-name').value = name;
-  document.getElementById('cat-modal-title').textContent = 'Edit Category';
-  openModal('category-modal');
-}
-
+function editCategory(id,name) { document.getElementById('category-id').value=id; document.getElementById('cat-name').value=name; document.getElementById('cat-modal-title').textContent='Edit Category'; openModal('category-modal'); }
 async function saveCategory() {
   hideError('cat-modal-error');
-  const id = document.getElementById('category-id').value;
-  const name = document.getElementById('cat-name').value.trim();
+  const id=document.getElementById('category-id').value, name=document.getElementById('cat-name').value.trim();
   if (!name) { showError('cat-modal-error','Name is required'); return; }
   try {
     if (id) await apiCall('PUT',`/categories/${id}`,{name}); else await apiCall('POST','/categories',{name});
-    toast(id ? 'Category updated' : 'Category created');
-    document.getElementById('category-id').value=''; document.getElementById('cat-name').value='';
+    toast(id?'Category updated':'Category created'); document.getElementById('category-id').value=''; document.getElementById('cat-name').value='';
     closeModal('category-modal'); loadCategories();
-  } catch(e) { showError('cat-modal-error', e.message); }
+  } catch(e) { showError('cat-modal-error',e.message); }
 }
-
-async function deleteCategory(id) {
-  if (!confirm('Delete this category?')) return;
-  try { await apiCall('DELETE',`/categories/${id}`); toast('Deleted'); loadCategories(); }
-  catch(e) { toast(e.message,'err'); }
-}
+async function deleteCategory(id) { if (!confirm('Delete?')) return; try { await apiCall('DELETE',`/categories/${id}`); toast('Deleted'); loadCategories(); } catch(e) { toast(e.message,'err'); } }
 
 // ── Expenses ─────────────────────────────────────────────────
 async function loadExpenses() {
   if (isDemoMode) {
-    const tbody = document.getElementById('expenses-tbody');
-    tbody.innerHTML = DEMO.expenses.map(e => `
-      <tr>
-        <td style="color:var(--muted)">${fmtDate(e.date)}</td>
-        <td>${e.description}</td>
-        <td><span class="badge badge-ok">${e.categoryName}</span></td>
-        <td style="font-weight:600">${fmt(e.amount)}</td>
-        <td></td>
-      </tr>`).join('');
+    document.getElementById('expenses-tbody').innerHTML=DEMO.expenses.map(e=>`<tr><td style="color:var(--muted)">${fmtDate(e.date)}</td><td>${e.description}</td><td><span class="badge badge-ok">${e.categoryName}</span></td><td style="font-weight:600">${fmt(e.amount)}</td><td></td></tr>`).join('');
     return;
   }
-
-  const from = document.getElementById('filter-from').value;
-  const to   = document.getElementById('filter-to').value;
-  const cat  = document.getElementById('filter-cat').value;
-  let url = '/expenses?';
-  if (from) url += `from=${from}&`;
-  if (to)   url += `to=${to}&`;
-  if (cat)  url += `categoryId=${cat}&`;
-
-  const tbody = document.getElementById('expenses-tbody');
-  tbody.innerHTML = '<tr><td colspan="5"><div class="loading">Loading…</div></td></tr>';
+  const from=document.getElementById('filter-from').value, to=document.getElementById('filter-to').value, cat=document.getElementById('filter-cat').value;
+  let url='/expenses?'; if (from) url+=`from=${from}&`; if (to) url+=`to=${to}&`; if (cat) url+=`categoryId=${cat}&`;
+  const tbody=document.getElementById('expenses-tbody');
+  tbody.innerHTML='<tr><td colspan="5"><div class="loading">Loading…</div></td></tr>';
   try {
-    const data = await apiCall('GET', url);
-    if (!data.length) { tbody.innerHTML = '<tr><td colspan="5"><div class="empty"><p>No expenses found.</p></div></td></tr>'; return; }
-    tbody.innerHTML = data.map(e => `
-      <tr>
-        <td style="color:var(--muted)">${fmtDate(e.date)}</td>
-        <td>${e.description||'—'}</td>
-        <td><span class="badge badge-ok">${e.categoryName}</span></td>
-        <td style="font-weight:600">${fmt(e.amount)}</td>
-        <td style="text-align:right">
-          <button class="btn btn-outline btn-sm" onclick="editExpense(${JSON.stringify(e).replace(/"/g,'&quot;')})">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteExpense('${e.id}')">Delete</button>
-        </td>
-      </tr>`).join('');
+    const data=await apiCall('GET',url);
+    if (!data.length) { tbody.innerHTML='<tr><td colspan="5"><div class="empty"><p>No expenses found.</p></div></td></tr>'; return; }
+    tbody.innerHTML=data.map(e=>`<tr><td style="color:var(--muted)">${fmtDate(e.date)}</td><td>${e.description||'—'}</td><td><span class="badge badge-ok">${e.categoryName}</span></td><td style="font-weight:600">${fmt(e.amount)}</td><td style="text-align:right"><button class="btn btn-outline btn-sm" onclick="editExpense(${JSON.stringify(e).replace(/"/g,'&quot;')})">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteExpense('${e.id}')">Delete</button></td></tr>`).join('');
   } catch(e) { toast(e.message,'err'); }
 }
-
 async function saveExpense() {
   hideError('expense-modal-error');
-  const id    = document.getElementById('expense-id').value;
-  const amount= parseFloat(document.getElementById('exp-amount').value);
-  const date  = document.getElementById('exp-date').value;
-  const desc  = document.getElementById('exp-desc').value;
-  const catId = document.getElementById('exp-category').value;
+  const id=document.getElementById('expense-id').value, amount=parseFloat(document.getElementById('exp-amount').value);
+  const date=document.getElementById('exp-date').value, desc=document.getElementById('exp-desc').value, catId=document.getElementById('exp-category').value;
   if (!amount||!date||!catId) { showError('expense-modal-error','Amount, date and category are required'); return; }
-  const body = { amount, date, description:desc, categoryId:catId };
   try {
-    if (id) { await apiCall('PUT',`/expenses/${id}`,body); toast('Expense updated'); }
-    else    { await apiCall('POST','/expenses',body);      toast('Expense added'); }
+    if (id) { await apiCall('PUT',`/expenses/${id}`,{amount,date,description:desc,categoryId:catId}); toast('Expense updated'); }
+    else    { await apiCall('POST','/expenses',{amount,date,description:desc,categoryId:catId}); toast('Expense added'); }
     closeModal('expense-modal'); loadExpenses(); loadDashboard(); loadNetWorth();
-  } catch(e) { showError('expense-modal-error', e.message); }
+  } catch(e) { showError('expense-modal-error',e.message); }
 }
-
 function editExpense(e) {
-  document.getElementById('expense-id').value    = e.id;
-  document.getElementById('exp-amount').value    = e.amount;
-  document.getElementById('exp-date').value      = e.date.split('T')[0];
-  document.getElementById('exp-desc').value      = e.description;
-  document.getElementById('exp-category').value  = e.categoryId;
-  document.getElementById('expense-modal-title').textContent = 'Edit Expense';
+  document.getElementById('expense-id').value=e.id; document.getElementById('exp-amount').value=e.amount;
+  document.getElementById('exp-date').value=e.date.split('T')[0]; document.getElementById('exp-desc').value=e.description;
+  document.getElementById('exp-category').value=e.categoryId; document.getElementById('expense-modal-title').textContent='Edit Expense';
   openModal('expense-modal');
 }
-
-async function deleteExpense(id) {
-  if (!confirm('Delete this expense?')) return;
-  try { await apiCall('DELETE',`/expenses/${id}`); toast('Deleted'); loadExpenses(); loadDashboard(); }
-  catch(e) { toast(e.message,'err'); }
-}
-
+async function deleteExpense(id) { if (!confirm('Delete?')) return; try { await apiCall('DELETE',`/expenses/${id}`); toast('Deleted'); loadExpenses(); loadDashboard(); } catch(e) { toast(e.message,'err'); } }
 async function exportCsv() {
   if (isDemoMode) { toast('Export not available in demo mode','err'); return; }
   const from=document.getElementById('filter-from').value, to=document.getElementById('filter-to').value, cat=document.getElementById('filter-cat').value;
-  let url=`${API}/expenses/export?`;
-  if (from) url+=`from=${from}&`; if (to) url+=`to=${to}&`; if (cat) url+=`categoryId=${cat}&`;
+  let url=`${API}/expenses/export?`; if (from) url+=`from=${from}&`; if (to) url+=`to=${to}&`; if (cat) url+=`categoryId=${cat}&`;
   const res=await fetch(url,{headers:{Authorization:`Bearer ${token}`}});
-  const blob=await res.blob(); const a=document.createElement('a');
+  const blob=await res.blob(), a=document.createElement('a');
   a.href=URL.createObjectURL(blob); a.download=`expenses_${new Date().toISOString().split('T')[0]}.csv`; a.click();
   toast('CSV downloaded');
 }
@@ -1119,102 +969,46 @@ async function exportCsv() {
 // ── Budgets ──────────────────────────────────────────────────
 async function loadBudgets() {
   if (isDemoMode) {
-    const container = document.getElementById('budgets-list');
-    container.innerHTML = DEMO.budgets.map(b => {
-      const pct=Math.min(b.utilizationPercent,100), cls=b.status.toLowerCase();
-      return `<div class="card" style="margin-bottom:12px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div style="font-weight:600">${b.categoryName}</div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <span class="badge badge-${cls}">${b.status}</span>
-            <span style="font-size:13px;color:var(--muted)">${fmt(b.amountSpent)} / ${fmt(b.budgetAmount)}</span>
-          </div>
-        </div>
-        <div style="font-size:13px;color:var(--muted);margin-bottom:6px">${b.utilizationPercent}% used</div>
-        <div class="progress-bar"><div class="progress-fill ${cls}" style="width:${pct}%"></div></div>
-      </div>`;
-    }).join('');
-    return;
+    document.getElementById('budgets-list').innerHTML=DEMO.budgets.map(b=>{
+      const pct=Math.min(b.utilizationPercent,100),cls=b.status.toLowerCase();
+      return `<div class="card" style="margin-bottom:12px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-weight:600">${b.categoryName}</div><div style="display:flex;align-items:center;gap:10px"><span class="badge badge-${cls}">${b.status}</span><span style="font-size:13px;color:var(--muted)">${fmt(b.amountSpent)} / ${fmt(b.budgetAmount)}</span></div></div><div style="font-size:13px;color:var(--muted);margin-bottom:6px">${b.utilizationPercent}% used</div><div class="progress-bar"><div class="progress-fill ${cls}" style="width:${pct}%"></div></div></div>`;
+    }).join(''); return;
   }
-
   const month=document.getElementById('budget-month').value, year=document.getElementById('budget-year').value;
   const container=document.getElementById('budgets-list');
   container.innerHTML='<div class="loading">Loading…</div>';
   try {
     const data=await apiCall('GET',`/budgets?month=${month}&year=${year}`);
     if (!data.length) { container.innerHTML='<div class="empty"><p>No budgets set for this month.</p></div>'; return; }
-    container.innerHTML=data.map(b => {
-      const pct=Math.min(b.utilizationPercent,100), cls=b.status.toLowerCase();
-      return `<div class="card" style="margin-bottom:12px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div style="font-weight:600">${b.categoryName}</div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <span class="badge badge-${cls}">${b.status}</span>
-            <span style="font-size:13px;color:var(--muted)">${fmt(b.amountSpent)} / ${fmt(b.budgetAmount)}</span>
-            <button class="btn btn-danger btn-sm" onclick="deleteBudget('${b.id}')">Delete</button>
-          </div>
-        </div>
-        <div style="font-size:13px;color:var(--muted);margin-bottom:6px">${b.utilizationPercent}% used</div>
-        <div class="progress-bar"><div class="progress-fill ${cls}" style="width:${pct}%"></div></div>
-      </div>`;
-    }).join('');
+    container.innerHTML=data.map(b=>{const pct=Math.min(b.utilizationPercent,100),cls=b.status.toLowerCase(); return `<div class="card" style="margin-bottom:12px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-weight:600">${b.categoryName}</div><div style="display:flex;align-items:center;gap:10px"><span class="badge badge-${cls}">${b.status}</span><span style="font-size:13px;color:var(--muted)">${fmt(b.amountSpent)} / ${fmt(b.budgetAmount)}</span><button class="btn btn-danger btn-sm" onclick="deleteBudget('${b.id}')">Delete</button></div></div><div style="font-size:13px;color:var(--muted);margin-bottom:6px">${b.utilizationPercent}% used</div><div class="progress-bar"><div class="progress-fill ${cls}" style="width:${pct}%"></div></div></div>`;}).join('');
   } catch(e) { toast(e.message,'err'); }
 }
-
 async function saveBudget() {
   hideError('budget-modal-error');
   const catId=document.getElementById('budget-category').value, amount=parseFloat(document.getElementById('budget-amount').value);
   const month=parseInt(document.getElementById('budget-modal-month').value), year=parseInt(document.getElementById('budget-modal-year').value);
   if (!catId||!amount) { showError('budget-modal-error','Category and amount are required'); return; }
-  try {
-    await apiCall('POST','/budgets',{categoryId:catId,budgetAmount:amount,month,year});
-    toast('Budget saved'); closeModal('budget-modal');
-    document.getElementById('budget-month').value=month; document.getElementById('budget-year').value=year;
-    loadBudgets();
-  } catch(e) { showError('budget-modal-error',e.message); }
+  try { await apiCall('POST','/budgets',{categoryId:catId,budgetAmount:amount,month,year}); toast('Budget saved'); closeModal('budget-modal'); document.getElementById('budget-month').value=month; document.getElementById('budget-year').value=year; loadBudgets(); } catch(e) { showError('budget-modal-error',e.message); }
 }
-
-async function deleteBudget(id) {
-  if (!confirm('Delete this budget?')) return;
-  try { await apiCall('DELETE',`/budgets/${id}`); toast('Deleted'); loadBudgets(); }
-  catch(e) { toast(e.message,'err'); }
-}
+async function deleteBudget(id) { if (!confirm('Delete?')) return; try { await apiCall('DELETE',`/budgets/${id}`); toast('Deleted'); loadBudgets(); } catch(e) { toast(e.message,'err'); } }
 
 // ── Dashboard ────────────────────────────────────────────────
 async function loadDashboard() {
   if (isDemoMode) {
     const now=new Date();
     document.getElementById('dash-month').textContent=now.toLocaleString('default',{month:'long',year:'numeric'})+' Overview';
-    const totalSpending=DEMO.expenses.reduce((s,e)=>s+e.amount,0);
-    const totalBudget=DEMO.budgets.reduce((s,b)=>s+b.budgetAmount,0);
-    const util=Math.round(totalSpending/totalBudget*100);
-    document.getElementById('dash-spending').textContent=fmt(totalSpending);
-    document.getElementById('dash-budget').textContent=fmt(totalBudget);
-    document.getElementById('dash-util').textContent=util+'%';
-    const statusEl=document.getElementById('dash-status');
-    statusEl.textContent='On Track'; statusEl.className='card-value green';
-
-    document.getElementById('dash-top-cats').innerHTML=
-      [['Groceries',241.70],['Utilities',120],['Shopping',75.30]].map((c,i)=>`
-        <div class="cat-item"><div class="cat-rank">${i+1}</div><div class="cat-name">${c[0]}</div><div class="cat-amount">${fmt(c[1])}</div></div>`).join('');
-
-    document.getElementById('dash-budgets-preview').innerHTML=DEMO.budgets.slice(0,4).map(b=>{
-      const pct=Math.min(b.utilizationPercent,100), cls=b.status.toLowerCase();
-      return `<div style="margin-bottom:16px">
-        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
-          <span style="font-weight:500">${b.categoryName}</span><span style="color:var(--muted)">${b.utilizationPercent}%</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill ${cls}" style="width:${pct}%"></div></div>
-      </div>`;}).join('');
+    const totalSpending=DEMO.expenses.reduce((s,e)=>s+e.amount,0), totalBudget=DEMO.budgets.reduce((s,b)=>s+b.budgetAmount,0);
+    document.getElementById('dash-spending').textContent=fmt(totalSpending); document.getElementById('dash-budget').textContent=fmt(totalBudget);
+    document.getElementById('dash-util').textContent=Math.round(totalSpending/totalBudget*100)+'%';
+    const statusEl=document.getElementById('dash-status'); statusEl.textContent='On Track'; statusEl.className='card-value green';
+    document.getElementById('dash-top-cats').innerHTML=[['Groceries',241.70],['Utilities',120],['Shopping',75.30]].map((c,i)=>`<div class="cat-item"><div class="cat-rank">${i+1}</div><div class="cat-name">${c[0]}</div><div class="cat-amount">${fmt(c[1])}</div></div>`).join('');
+    document.getElementById('dash-budgets-preview').innerHTML=DEMO.budgets.slice(0,4).map(b=>{const pct=Math.min(b.utilizationPercent,100),cls=b.status.toLowerCase(); return `<div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="font-weight:500">${b.categoryName}</span><span style="color:var(--muted)">${b.utilizationPercent}%</span></div><div class="progress-bar"><div class="progress-fill ${cls}" style="width:${pct}%"></div></div></div>`;}).join('');
     return;
   }
   try {
-    const d=await apiCall('GET','/dashboard/monthly-summary');
-    const now=new Date();
+    const d=await apiCall('GET','/dashboard/monthly-summary'), now=new Date();
     document.getElementById('dash-month').textContent=now.toLocaleString('default',{month:'long',year:'numeric'})+' Overview';
-    document.getElementById('dash-spending').textContent=fmt(d.totalSpending);
-    document.getElementById('dash-budget').textContent=fmt(d.totalBudget);
-    document.getElementById('dash-util').textContent=d.utilizationPercent+'%';
+    document.getElementById('dash-spending').textContent=fmt(d.totalSpending); document.getElementById('dash-budget').textContent=fmt(d.totalBudget); document.getElementById('dash-util').textContent=d.utilizationPercent+'%';
     const statusEl=document.getElementById('dash-status');
     if (d.utilizationPercent>100) { statusEl.textContent='Exceeded'; statusEl.className='card-value red'; }
     else if (d.utilizationPercent>=80) { statusEl.textContent='Warning'; statusEl.className='card-value yellow'; }
@@ -1232,70 +1026,45 @@ async function loadDashboard() {
 // ── Crypto ───────────────────────────────────────────────────
 async function loadCrypto() {
   if (isDemoMode) {
-    const total=DEMO.crypto.reduce((s,c)=>s+c.currentValue,0);
-    const invested=DEMO.crypto.reduce((s,c)=>s+c.avgBuyPrice*c.quantity,0);
-    const pl=total-invested;
-    document.getElementById('crypto-invested').textContent=fmt(invested);
-    document.getElementById('crypto-value').textContent=fmt(total);
-    const plEl=document.getElementById('crypto-pl');
-    plEl.textContent=(pl>=0?'+':'')+fmt(pl); plEl.className='card-value '+(pl>=0?'green':'red');
-    document.getElementById('crypto-tbody').innerHTML=DEMO.crypto.map(p=>`
-      <tr>
-        <td style="font-weight:700">${p.symbol}</td>
-        <td>${p.quantity}</td>
-        <td style="color:var(--muted)">${fmt(p.avgBuyPrice)}</td>
-        <td>${fmt(p.currentPrice)}</td>
-        <td style="font-weight:600">${fmt(p.currentValue)}</td>
-        <td class="${p.profitLoss>=0?'pl-positive':'pl-negative'}" style="font-weight:600">${(p.profitLoss>=0?'+':'')+fmt(p.profitLoss)}</td>
-        <td></td>
-      </tr>`).join('');
+    const total=DEMO.crypto.reduce((s,c)=>s+c.currentValue,0), invested=DEMO.crypto.reduce((s,c)=>s+c.avgBuyPrice*c.quantity,0), pl=total-invested;
+    document.getElementById('crypto-invested').textContent=fmt(invested); document.getElementById('crypto-value').textContent=fmt(total);
+    const plEl=document.getElementById('crypto-pl'); plEl.textContent=(pl>=0?'+':'')+fmt(pl); plEl.className='card-value '+(pl>=0?'green':'red');
+    document.getElementById('crypto-tbody').innerHTML=DEMO.crypto.map(p=>`<tr><td style="font-weight:700">${p.symbol}</td><td>${p.quantity}</td><td style="color:var(--muted)">${fmt(p.avgBuyPrice)}</td><td>${fmt(p.currentPrice)}</td><td style="font-weight:600">${fmt(p.currentValue)}</td><td class="${p.profitLoss>=0?'pl-positive':'pl-negative'}" style="font-weight:600">${(p.profitLoss>=0?'+':'')+fmt(p.profitLoss)}</td><td></td></tr>`).join('');
     return;
   }
   try {
     const summary=await apiCall('GET','/crypto/portfolio-summary');
-    document.getElementById('crypto-invested').textContent=fmt(summary.totalInvested);
-    document.getElementById('crypto-value').textContent=fmt(summary.currentValue);
+    document.getElementById('crypto-invested').textContent=fmt(summary.totalInvested); document.getElementById('crypto-value').textContent=fmt(summary.currentValue);
     const pl=summary.profitLoss, plEl=document.getElementById('crypto-pl');
     plEl.textContent=(pl>=0?'+':'')+fmt(pl)+` (${summary.profitLossPercent}%)`; plEl.className='card-value '+(pl>=0?'green':'red');
     const tbody=document.getElementById('crypto-tbody');
     if (!summary.positions?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty"><p>No assets yet.</p></div></td></tr>'; return; }
-    tbody.innerHTML=summary.positions.map(p=>`
-      <tr>
-        <td style="font-weight:700">${p.symbol}</td><td>${p.quantity}</td>
-        <td style="color:var(--muted)">${fmt(p.avgBuyPrice)}</td><td>${fmt(p.currentPrice)}</td>
-        <td style="font-weight:600">${fmt(p.currentValue)}</td>
-        <td class="${p.profitLoss>=0?'pl-positive':'pl-negative'}" style="font-weight:600">${(p.profitLoss>=0?'+':'')+fmt(p.profitLoss)}</td>
-        <td style="text-align:right"><button class="btn btn-danger btn-sm" onclick="deleteCryptoBySymbol('${p.symbol}')">Delete</button></td>
-      </tr>`).join('');
+    tbody.innerHTML=summary.positions.map(p=>`<tr><td style="font-weight:700">${p.symbol}</td><td>${p.quantity}</td><td style="color:var(--muted)">${fmt(p.avgBuyPrice)}</td><td>${fmt(p.currentPrice)}</td><td style="font-weight:600">${fmt(p.currentValue)}</td><td class="${p.profitLoss>=0?'pl-positive':'pl-negative'}" style="font-weight:600">${(p.profitLoss>=0?'+':'')+fmt(p.profitLoss)}</td><td style="text-align:right"><button class="btn btn-danger btn-sm" onclick="deleteCryptoBySymbol('${p.symbol}')">Delete</button></td></tr>`).join('');
   } catch(e) { console.error(e); }
 }
-
 async function saveCrypto() {
   hideError('crypto-modal-error');
-  const symbol=document.getElementById('crypto-symbol').value.trim().toUpperCase();
-  const qty=parseFloat(document.getElementById('crypto-qty').value);
-  const price=parseFloat(document.getElementById('crypto-price').value);
-  const date=document.getElementById('crypto-date').value;
+  const symbol=document.getElementById('crypto-symbol').value.trim().toUpperCase(), qty=parseFloat(document.getElementById('crypto-qty').value);
+  const price=parseFloat(document.getElementById('crypto-price').value), date=document.getElementById('crypto-date').value;
   if (!symbol||!qty||!price||!date) { showError('crypto-modal-error','All fields are required'); return; }
-  try {
-    await apiCall('POST','/crypto',{symbol,quantity:qty,averagePurchasePrice:price,purchaseDate:date});
-    toast('Asset added'); closeModal('crypto-modal'); loadCrypto(); loadNetWorth();
-  } catch(e) { showError('crypto-modal-error',e.message); }
+  try { await apiCall('POST','/crypto',{symbol,quantity:qty,averagePurchasePrice:price,purchaseDate:date}); toast('Asset added'); closeModal('crypto-modal'); loadCrypto(); loadNetWorth(); } catch(e) { showError('crypto-modal-error',e.message); }
 }
-
 async function deleteCryptoBySymbol(symbol) {
   if (!confirm(`Delete all ${symbol} positions?`)) return;
-  try {
-    const assets=await apiCall('GET','/crypto');
-    await Promise.all(assets.filter(a=>a.symbol===symbol).map(a=>apiCall('DELETE',`/crypto/${a.id}`)));
-    toast(`${symbol} deleted`); loadCrypto(); loadNetWorth();
-  } catch(e) { toast(e.message,'err'); }
+  try { const assets=await apiCall('GET','/crypto'); await Promise.all(assets.filter(a=>a.symbol===symbol).map(a=>apiCall('DELETE',`/crypto/${a.id}`))); toast(`${symbol} deleted`); loadCrypto(); loadNetWorth(); } catch(e) { toast(e.message,'err'); }
 }
 
 // ── Boot ─────────────────────────────────────────────────────
-if (token) {
-  document.getElementById('auth-screen').style.display='none';
-  document.getElementById('app-screen').style.display='block';
+// Check if opened from a reset link
+const resetToken = new URLSearchParams(window.location.search).get('token');
+if (resetToken) {
+  document.getElementById('auth-main').style.display  = 'none';
+  document.getElementById('forgot-form').style.display = 'none';
+  document.getElementById('reset-form').style.display  = 'block';
+  document.querySelector('.auth-sub').style.display    = 'none';
+} else if (token) {
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app-screen').style.display  = 'block';
   setSession(token, userEmail, false);
 }
 </script>
