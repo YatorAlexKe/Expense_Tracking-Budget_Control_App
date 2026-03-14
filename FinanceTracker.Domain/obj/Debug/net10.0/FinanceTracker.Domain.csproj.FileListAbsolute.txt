@@ -9,3 +9,4 @@ C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracke
 C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\refint\FinanceTracker.Domain.dll
 C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.pdb
 C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\ref\FinanceTracker.Domain.dll
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.sourcelink.json

@@ -161,3 +161,4 @@ C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\ru\Microsoft.Cod
 C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Projects\FinanceTracker\FinanceTracker.API\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Projects\FinanceTracker\FinanceTracker.API\obj\Debug\net10.0\FinanceTracker.API.sourcelink.json

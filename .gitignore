@@ -1,0 +1,29 @@
+# Build outputs
+bin/
+obj/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Sensitive config - API keys
+appsettings.json
+appsettings.Development.json
+
+# Visual Studio
+.vs/
+*.user
+
+# VS Code
+.vscode/
+
+# Migrations (keep these - remove comment to ignore)
+# */Migrations/
+
+# Node modules (if added later)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db

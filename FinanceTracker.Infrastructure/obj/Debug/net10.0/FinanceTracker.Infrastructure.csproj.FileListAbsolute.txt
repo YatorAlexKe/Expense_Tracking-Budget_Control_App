@@ -15,3 +15,4 @@ C:\Projects\FinanceTracker\FinanceTracker.Infrastructure\obj\Debug\net10.0\Finan
 C:\Projects\FinanceTracker\FinanceTracker.Infrastructure\obj\Debug\net10.0\refint\FinanceTracker.Infrastructure.dll
 C:\Projects\FinanceTracker\FinanceTracker.Infrastructure\obj\Debug\net10.0\FinanceTracker.Infrastructure.pdb
 C:\Projects\FinanceTracker\FinanceTracker.Infrastructure\obj\Debug\net10.0\ref\FinanceTracker.Infrastructure.dll
+C:\Projects\FinanceTracker\FinanceTracker.Infrastructure\obj\Debug\net10.0\FinanceTracker.Infrastructure.sourcelink.json
