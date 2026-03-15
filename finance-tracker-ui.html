@@ -616,6 +616,12 @@
     <div class="field" id="income-custom-type-field" style="display:none">
       <label>Specify Type</label>
       <input type="text" id="income-custom-type" placeholder="e.g. Prize, Inheritance, Bonus…"/>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+        <input type="checkbox" id="income-save-type" style="width:auto;accent-color:var(--accent)"/>
+        <label style="font-size:12px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400;margin:0;cursor:pointer" for="income-save-type">
+          Save as a permanent income type
+        </label>
+      </div>
     </div>
     <div class="field">
       <label>Deposit Into Account</label>
@@ -1055,11 +1061,23 @@ function saveIncome() {
   const source    = document.getElementById('income-source').value.trim();
   const typeSelect  = document.getElementById('income-type').value;
   const customType  = document.getElementById('income-custom-type').value.trim();
+  const saveType    = document.getElementById('income-save-type').checked;
   const type        = typeSelect === 'Other' && customType ? customType : typeSelect;
   const accountId   = document.getElementById('income-account').value;
 
   if (!amount || !date || !source) { showError('income-modal-error', 'Amount, date and source are required'); return; }
   if (typeSelect === 'Other' && !customType) { showError('income-modal-error', 'Please specify the income type'); return; }
+
+  // Save as permanent type if checkbox is checked
+  if (typeSelect === 'Other' && customType && saveType) {
+    const existing = getIncomeTypes().map(t => (t.name||t).toLowerCase());
+    if (!existing.includes(customType.toLowerCase())) {
+      const custom = getLocal('income_types') || [];
+      custom.push({ id: 'it' + Date.now(), name: customType });
+      setLocal('income_types', custom);
+      toast(`"${customType}" saved as a permanent income type ✅`);
+    }
+  }
 
   // Save income entry
   const saved = saveIncomeLine({ id:'i'+Date.now(), date, source, type, amount, accountId });
@@ -1085,6 +1103,7 @@ function saveIncome() {
   document.getElementById('income-type').value = 'Salary';
   document.getElementById('income-custom-type').value = '';
   document.getElementById('income-custom-type-field').style.display = 'none';
+  document.getElementById('income-save-type').checked = false;
   loadIncome();
   loadNetWorth();
 }
