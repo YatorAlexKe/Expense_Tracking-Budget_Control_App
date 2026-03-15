@@ -475,10 +475,22 @@
 
     <!-- CATEGORIES PAGE -->
     <div class="page" id="page-categories">
-      <div class="page-title">Categories</div>
-      <div class="page-sub">Organise your expenses</div>
-      <div style="margin-bottom:20px"><button class="btn btn-primary" onclick="openModal('category-modal')">+ New Category</button></div>
-      <div class="grid-3" id="categories-grid"><div class="loading">Loading…</div></div>
+      <div class="page-title">Manage</div>
+      <div class="page-sub">Organise your expense categories and income types</div>
+
+      <!-- Expense Categories -->
+      <div class="section-header" style="margin-bottom:12px">
+        <h2 style="font-size:1rem;font-weight:700">Expense Categories</h2>
+        <button class="btn btn-primary btn-sm" onclick="openModal('category-modal')">+ New Category</button>
+      </div>
+      <div class="grid-3" id="categories-grid" style="margin-bottom:32px"><div class="loading">Loading…</div></div>
+
+      <!-- Income Types -->
+      <div class="section-header" style="margin-bottom:12px">
+        <h2 style="font-size:1rem;font-weight:700">Income Types</h2>
+        <button class="btn btn-primary btn-sm" onclick="openModal('income-type-modal')">+ New Type</button>
+      </div>
+      <div class="grid-3" id="income-types-grid"><div class="loading">Loading…</div></div>
     </div>
 
     <!-- ABOUT PAGE -->
@@ -663,6 +675,20 @@
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('category-modal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveCategory()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Income Type Modal -->
+<div class="modal-overlay" id="income-type-modal">
+  <div class="modal">
+    <div class="modal-title" id="income-type-modal-title">New Income Type</div>
+    <div id="income-type-modal-error" class="error-msg" style="display:none"></div>
+    <input type="hidden" id="income-type-id"/>
+    <div class="field"><label>Income Type Name</label><input type="text" id="income-type-name" placeholder="e.g. Pension, Grant, Bonus…"/></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('income-type-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveIncomeType()">Save</button>
     </div>
   </div>
 </div>
@@ -894,7 +920,10 @@ function showPage(name, btn) {
 
 function openModal(id) {
   document.getElementById(id).classList.add('open');
-  if (id === 'income-modal') populateIncomeAccountSelect();
+  if (id === 'income-modal') {
+    populateIncomeAccountSelect();
+    populateIncomeTypeSelect();
+  }
 }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-overlay').forEach(o => {
@@ -1106,15 +1135,106 @@ function populateCategorySelects() {
     if (cur) sel.value=cur;
   });
 }
+// ── Income Types ─────────────────────────────────────────────
+const DEFAULT_INCOME_TYPES = ['Salary', 'Freelance', 'Investment', 'Rental', 'Business', 'Gift'];
+
+function getIncomeTypes() {
+  const custom = getLocal('income_types') || [];
+  return [...DEFAULT_INCOME_TYPES, ...custom];
+}
+
+function loadIncomeTypesGrid() {
+  const custom = getLocal('income_types') || [];
+  const grid   = document.getElementById('income-types-grid');
+
+  // Show defaults as read-only
+  const defaultItems = DEFAULT_INCOME_TYPES.map(t => `
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:600">${t}</div>
+      <span class="badge badge-ok" style="font-size:11px">Default</span>
+    </div>`).join('');
+
+  // Show custom as editable
+  const customItems = custom.length ? custom.map(t => `
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:600">${t.name}</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="editIncomeType('${t.id}','${t.name}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteIncomeType('${t.id}')">Delete</button>
+      </div>
+    </div>`).join('') : '';
+
+  grid.innerHTML = defaultItems + customItems;
+}
+
+function editIncomeType(id, name) {
+  document.getElementById('income-type-id').value = id;
+  document.getElementById('income-type-name').value = name;
+  document.getElementById('income-type-modal-title').textContent = 'Edit Income Type';
+  hideError('income-type-modal-error');
+  openModal('income-type-modal');
+}
+
+function saveIncomeType() {
+  hideError('income-type-modal-error');
+  const id   = document.getElementById('income-type-id').value;
+  const name = document.getElementById('income-type-name').value.trim();
+  if (!name) { showError('income-type-modal-error', 'Name is required'); return; }
+
+  // Check for duplicates
+  if (getIncomeTypes().map(t => (t.name||t).toLowerCase()).includes(name.toLowerCase()) && !id) {
+    showError('income-type-modal-error', 'This income type already exists'); return;
+  }
+
+  const custom = getLocal('income_types') || [];
+  if (id) {
+    const idx = custom.findIndex(t => t.id === id);
+    if (idx >= 0) custom[idx].name = name;
+  } else {
+    custom.push({ id: 'it' + Date.now(), name });
+  }
+  setLocal('income_types', custom);
+  toast(id ? 'Income type updated' : 'Income type added');
+  document.getElementById('income-type-id').value = '';
+  document.getElementById('income-type-name').value = '';
+  document.getElementById('income-type-modal-title').textContent = 'New Income Type';
+  closeModal('income-type-modal');
+  loadIncomeTypesGrid();
+  // Refresh income type dropdown if open
+  populateIncomeTypeSelect();
+}
+
+function deleteIncomeType(id) {
+  if (!confirm('Delete this income type?')) return;
+  const custom = (getLocal('income_types') || []).filter(t => t.id !== id);
+  setLocal('income_types', custom);
+  toast('Income type deleted');
+  loadIncomeTypesGrid();
+  populateIncomeTypeSelect();
+}
+
+function populateIncomeTypeSelect() {
+  const sel   = document.getElementById('income-type');
+  const types = getIncomeTypes();
+  const cur   = sel.value;
+  sel.innerHTML = types.map(t => {
+    const val = t.name || t;
+    return `<option value="${val}">${val}</option>`;
+  }).join('') + '<option value="Other">Other</option>';
+  if (cur) sel.value = cur;
+}
+
 async function loadCategories() {
   if (!isDemoMode) await loadCategoriesData();
   const grid=document.getElementById('categories-grid');
-  if (!categories.length) { grid.innerHTML='<div class="empty"><p>No categories yet.</p></div>'; return; }
-  grid.innerHTML=categories.map(c=>`
+  if (!categories.length) { grid.innerHTML='<div class="empty"><p>No categories yet.</p></div>'; }
+  else { grid.innerHTML=categories.map(c=>`
     <div class="card" style="display:flex;align-items:center;justify-content:space-between">
       <div style="font-weight:600">${c.name}</div>
       <div style="display:flex;gap:6px">${isDemoMode?'':`<button class="btn btn-outline btn-sm" onclick="editCategory('${c.id}','${c.name}')">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button>`}</div>
     </div>`).join('');
+  }
+  loadIncomeTypesGrid();
 }
 function editCategory(id,name) { document.getElementById('category-id').value=id; document.getElementById('cat-name').value=name; document.getElementById('cat-modal-title').textContent='Edit Category'; openModal('category-modal'); }
 async function saveCategory() {
