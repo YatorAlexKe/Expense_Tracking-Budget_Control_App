@@ -600,6 +600,13 @@
         <option value="Business">Business</option><option value="Other">Other</option>
       </select>
     </div>
+    <div class="field">
+      <label>Deposit Into Account</label>
+      <select id="income-account">
+        <option value="">— No account (track only) —</option>
+      </select>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Selecting an account will update its balance and reflect in Net Worth</div>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('income-modal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveIncome()">Save</button>
@@ -880,7 +887,10 @@ function showPage(name, btn) {
   if (loaders[name]) window[loaders[name]]();
 }
 
-function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  if (id === 'income-modal') populateIncomeAccountSelect();
+}
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-overlay').forEach(o => {
   o.addEventListener('click', e => { if (e.target===o) o.classList.remove('open'); });
@@ -985,16 +995,51 @@ function loadIncome() {
   if (!list.length) { tbody.innerHTML='<tr><td colspan="5"><div class="empty"><div class="empty-icon">💰</div><p>No income logged yet.</p></div></td></tr>'; return; }
   tbody.innerHTML=list.map(i=>`<tr><td style="color:var(--muted)">${fmtDate(i.date)}</td><td style="font-weight:500">${i.source}</td><td><span class="badge badge-income">${i.type}</span></td><td style="font-weight:700;color:var(--accent2)">${fmt(i.amount)}</td><td style="text-align:right">${isDemoMode?'':`<button class="btn btn-danger btn-sm" onclick="deleteIncome('${i.id}')">Delete</button>`}</td></tr>`).join('');
 }
+function populateIncomeAccountSelect() {
+  const sel = document.getElementById('income-account');
+  const accounts = getAccounts();
+  sel.innerHTML = '<option value="">— No account (track only) —</option>';
+  accounts.forEach(a => {
+    const o = document.createElement('option');
+    o.value = a.id;
+    o.textContent = `${a.name} (${fmt(a.balance)})`;
+    sel.appendChild(o);
+  });
+}
+
 function saveIncome() {
   hideError('income-modal-error');
-  const amount=parseFloat(document.getElementById('income-amount').value), date=document.getElementById('income-date').value;
-  const source=document.getElementById('income-source').value.trim(), type=document.getElementById('income-type').value;
-  if (!amount||!date||!source) { showError('income-modal-error','Amount, date and source are required'); return; }
-  if (saveIncomeLine({id:'i'+Date.now(),date,source,type,amount})) {
-    toast('Income added'); closeModal('income-modal');
-    document.getElementById('income-amount').value=''; document.getElementById('income-source').value='';
-    loadIncome(); loadNetWorth();
+  const amount    = parseFloat(document.getElementById('income-amount').value);
+  const date      = document.getElementById('income-date').value;
+  const source    = document.getElementById('income-source').value.trim();
+  const type      = document.getElementById('income-type').value;
+  const accountId = document.getElementById('income-account').value;
+
+  if (!amount || !date || !source) { showError('income-modal-error', 'Amount, date and source are required'); return; }
+
+  // Save income entry
+  const saved = saveIncomeLine({ id:'i'+Date.now(), date, source, type, amount, accountId });
+  if (!saved) return;
+
+  // If account selected, update its balance
+  if (accountId) {
+    const accounts = getLocal('accounts') || [];
+    const idx = accounts.findIndex(a => a.id === accountId);
+    if (idx >= 0) {
+      accounts[idx].balance = parseFloat((accounts[idx].balance + amount).toFixed(2));
+      setLocal('accounts', accounts);
+      toast(`Income added — ${accounts[idx].name} updated to ${fmt(accounts[idx].balance)}`);
+    }
+  } else {
+    toast('Income added');
   }
+
+  closeModal('income-modal');
+  document.getElementById('income-amount').value = '';
+  document.getElementById('income-source').value = '';
+  document.getElementById('income-account').value = '';
+  loadIncome();
+  loadNetWorth();
 }
 function deleteIncome(id) { if (!confirm('Delete?')) return; if (deleteIncomeLine(id)) { toast('Deleted'); loadIncome(); loadNetWorth(); } }
 
