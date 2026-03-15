@@ -14,3 +14,19 @@ C:\Projects\FinanceTracker\FinanceTracker.Application\obj\Debug\net10.0\refint\F
 C:\Projects\FinanceTracker\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.pdb
 C:\Projects\FinanceTracker\FinanceTracker.Application\obj\Debug\net10.0\ref\FinanceTracker.Application.dll
 C:\Projects\FinanceTracker\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.sourcelink.json
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\bin\Debug\net10.0\FinanceTracker.Application.deps.json
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\bin\Debug\net10.0\FinanceTracker.Application.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\bin\Debug\net10.0\FinanceTracker.Application.pdb
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\bin\Debug\net10.0\FinanceTracker.Domain.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\bin\Debug\net10.0\FinanceTracker.Domain.pdb
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.csproj.AssemblyReference.cache
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.AssemblyInfoInputs.cache
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.AssemblyInfo.cs
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.csproj.CoreCompileInputs.cache
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.sourcelink.json
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\FinanceT.00C3F739.Up2Date
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\refint\FinanceTracker.Application.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\FinanceTracker.Application.pdb
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Application\obj\Debug\net10.0\ref\FinanceTracker.Application.dll

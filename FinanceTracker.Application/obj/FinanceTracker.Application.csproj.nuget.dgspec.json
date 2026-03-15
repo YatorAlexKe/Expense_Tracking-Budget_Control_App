@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projects\\FinanceTracker\\FinanceTracker.Application\\FinanceTracker.Application.csproj": {}
+    "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Application\\FinanceTracker.Application.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\FinanceTracker\\FinanceTracker.Application\\FinanceTracker.Application.csproj": {
+    "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Application\\FinanceTracker.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\FinanceTracker\\FinanceTracker.Application\\FinanceTracker.Application.csproj",
+        "projectUniqueName": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Application\\FinanceTracker.Application.csproj",
         "projectName": "FinanceTracker.Application",
-        "projectPath": "C:\\Projects\\FinanceTracker\\FinanceTracker.Application\\FinanceTracker.Application.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\FinanceTracker\\FinanceTracker.Application\\obj\\",
+        "projectPath": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Application\\FinanceTracker.Application.csproj",
+        "packagesPath": "C:\\Users\\L A T I T U D E\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Application\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\L A T I T U D E\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -32,8 +28,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj": {
-                "projectPath": "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj"
+              "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj": {
+                "projectPath": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj"
               }
             }
           }
@@ -48,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
@@ -91,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -369,21 +365,17 @@
         }
       }
     },
-    "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj": {
+    "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj",
         "projectName": "FinanceTracker.Domain",
-        "projectPath": "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\obj\\",
+        "projectPath": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj",
+        "packagesPath": "C:\\Users\\L A T I T U D E\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\L A T I T U D E\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -409,7 +401,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
@@ -430,7 +422,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

@@ -185,6 +185,7 @@
 
 <!-- AUTH -->
 <div id="auth-screen">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;max-width:420px;padding:20px">
   <div class="auth-box">
     <div class="auth-logo">FinanceTracker</div>
     <div class="auth-sub">Track your money, own your future.</div>
@@ -243,6 +244,24 @@
       <button class="btn btn-primary btn-full" onclick="resetPassword()">Reset Password</button>
     </div>
   </div>
+
+  <!-- Brief About Card -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;width:100%;text-align:center">
+    <div style="font-family:var(--font-head);font-size:1rem;color:var(--accent);margin-bottom:6px">About FinanceTracker</div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:12px">
+      A secure, privacy-first personal finance app built to help you track expenses, manage budgets and grow your wealth. Your data stays on your machine — always.
+    </p>
+    <div style="display:flex;justify-content:center;gap:20px;font-size:12px;color:var(--muted)">
+      <span>🔒 Encrypted passwords</span>
+      <span>📊 Real-time tracking</span>
+      <span>🚫 No ads</span>
+    </div>
+    <div style="margin-top:12px;font-size:12px;color:var(--muted)">
+      Questions? <a href="mailto:Finance@track.com" style="color:var(--accent)">Finance@track.com</a>
+    </div>
+  </div>
+
+  </div>
 </div>
 
 <!-- APP -->
@@ -283,6 +302,9 @@
     <div class="nav-section">Manage</div>
     <button class="nav-item" onclick="showPage('categories', this)">
       <span class="nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span> Categories
+    </button>
+    <button class="nav-item" onclick="showPage('about', this)">
+      <span class="nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span> About
     </button>
 
     <div class="sidebar-footer">
@@ -435,6 +457,124 @@
       <div class="page-sub">Organise your expenses</div>
       <div style="margin-bottom:20px"><button class="btn btn-primary" onclick="openModal('category-modal')">+ New Category</button></div>
       <div class="grid-3" id="categories-grid"><div class="loading">Loading…</div></div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div class="page" id="page-about">
+      <div class="page-title">About FinanceTracker</div>
+      <div class="page-sub">Who we are and what we stand for</div>
+
+      <!-- Mission -->
+      <div class="card" style="margin-bottom:20px;background:linear-gradient(135deg,#1a2a0a 0%,#0a1a2a 100%)">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+          <div style="width:48px;height:48px;border-radius:14px;background:var(--accent)18;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <div style="font-family:var(--font-head);font-size:1.3rem;color:var(--accent)">Our Mission</div>
+            <div style="font-size:13px;color:var(--muted)">Why we built FinanceTracker</div>
+          </div>
+        </div>
+        <p style="color:var(--text);line-height:1.8;font-size:15px">
+          At <strong style="color:var(--accent)">FinanceTracker</strong>, we believe everyone deserves a clear picture of their financial health. 
+          Our mission is to make personal finance simple, transparent and accessible — giving you the tools to track your spending, 
+          manage your budgets and grow your wealth with confidence.
+        </p>
+        <p style="color:var(--muted);line-height:1.8;font-size:14px;margin-top:12px">
+          Built as a Cambrian College Capstone Project, FinanceTracker combines clean architecture, 
+          modern design and real-world financial features to help individuals take control of their money.
+        </p>
+      </div>
+
+      <!-- Features & Privacy grid -->
+      <div class="grid-2" style="margin-bottom:20px">
+
+        <!-- Key Features -->
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--accent2)18;display:flex;align-items:center;justify-content:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></polyline></svg>
+            </div>
+            <div style="font-weight:700;font-size:15px">What We Offer</div>
+          </div>
+          ${[
+            ['Expense Tracking', 'Log and categorise every transaction'],
+            ['Budget Management', 'Set monthly limits and track utilization'],
+            ['Income Tracking', 'Monitor all your income sources'],
+            ['Crypto Portfolio', 'Track your digital asset investments'],
+            ['Net Worth Dashboard', 'See your complete financial picture'],
+            ['Bank Accounts', 'Manage balances across all accounts'],
+            ['Password Security', 'Secure reset via email verification'],
+            ['Data Export', 'Download your data as CSV anytime'],
+          ].map(([title, desc]) => `
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)44">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:8px;flex-shrink:0"></div>
+              <div>
+                <div style="font-weight:600;font-size:13px">${title}</div>
+                <div style="font-size:12px;color:var(--muted)">${desc}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+
+        <!-- Privacy & Safety -->
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--accent)18;display:flex;align-items:center;justify-content:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div style="font-weight:700;font-size:15px">Privacy & Data Safety</div>
+          </div>
+          ${[
+            ['🔐', 'Passwords are hashed', 'We never store plain text passwords — all passwords are encrypted using BCrypt'],
+            ['🔑', 'JWT Authentication', 'Every session is secured with a signed token that expires automatically'],
+            ['📧', 'Secure Password Reset', 'Reset links are one-time use and expire after 30 minutes'],
+            ['💾', 'Your Data is Yours', 'We do not sell or share your financial data with any third parties'],
+            ['🏠', 'Local by Default', 'Your database lives on your own machine — not on shared cloud servers'],
+            ['🚫', 'No Ads Ever', 'FinanceTracker is completely ad-free — your attention is not our product'],
+          ].map(([icon, title, desc]) => `
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)44">
+              <div style="font-size:18px;flex-shrink:0">${icon}</div>
+              <div>
+                <div style="font-weight:600;font-size:13px">${title}</div>
+                <div style="font-size:12px;color:var(--muted)">${desc}</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--warn)18;display:flex;align-items:center;justify-content:center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div style="font-weight:700;font-size:15px">Contact Us</div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:16px">
+          <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:14px 20px;border-radius:12px;flex:1;min-width:200px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Email</div>
+              <a href="mailto:Finance@track.com" style="color:var(--accent);font-weight:600;font-size:14px">Finance@track.com</a>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:14px 20px;border-radius:12px;flex:1;min-width:200px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">GitHub</div>
+              <a href="https://github.com/YatorAlexKe/Expense_Tracking-Budget_Control_App" target="_blank" style="color:var(--accent2);font-weight:600;font-size:14px">View Source Code</a>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:14px 20px;border-radius:12px;flex:1;min-width:200px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Version</div>
+              <div style="color:var(--warn);font-weight:600;font-size:14px">v1.0.0 — Capstone 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </main>

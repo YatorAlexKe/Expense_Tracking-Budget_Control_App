@@ -10,3 +10,15 @@ C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\refint\Financ
 C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.pdb
 C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\ref\FinanceTracker.Domain.dll
 C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.sourcelink.json
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.deps.json
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.pdb
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.AssemblyInfoInputs.cache
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.AssemblyInfo.cs
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.csproj.CoreCompileInputs.cache
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.sourcelink.json
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\refint\FinanceTracker.Domain.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.pdb
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\ref\FinanceTracker.Domain.dll
