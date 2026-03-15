@@ -1623,19 +1623,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\L A T I T U D E\\.nuget\\packages\\": {}
+    "C:\\Users\\chery\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Infrastructure\\FinanceTracker.Infrastructure.csproj",
+      "projectUniqueName": "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Infrastructure\\FinanceTracker.Infrastructure.csproj",
       "projectName": "FinanceTracker.Infrastructure",
-      "projectPath": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Infrastructure\\FinanceTracker.Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\L A T I T U D E\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Infrastructure\\obj\\",
+      "projectPath": "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Infrastructure\\FinanceTracker.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\chery\\.nuget\\packages\\",
+      "outputPath": "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\L A T I T U D E\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\chery\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1643,14 +1648,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Application\\FinanceTracker.Application.csproj": {
-              "projectPath": "C:\\Users\\L A T I T U D E\\source\\repos\\sty1991capstone\\FinanceTracker.Application\\FinanceTracker.Application.csproj"
+            "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Application\\FinanceTracker.Application.csproj": {
+              "projectPath": "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Application\\FinanceTracker.Application.csproj"
             }
           }
         }

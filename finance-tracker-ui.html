@@ -594,11 +594,16 @@
     <div class="field"><label>Date</label><input type="date" id="income-date"/></div>
     <div class="field"><label>Source</label><input type="text" id="income-source" placeholder="e.g. Salary, Freelance, Dividends"/></div>
     <div class="field"><label>Type</label>
-      <select id="income-type">
+      <select id="income-type" onchange="toggleIncomeCustomType()">
         <option value="Salary">Salary</option><option value="Freelance">Freelance</option>
         <option value="Investment">Investment</option><option value="Rental">Rental</option>
-        <option value="Business">Business</option><option value="Other">Other</option>
+        <option value="Business">Business</option><option value="Gift">Gift</option>
+        <option value="Other">Other</option>
       </select>
+    </div>
+    <div class="field" id="income-custom-type-field" style="display:none">
+      <label>Specify Type</label>
+      <input type="text" id="income-custom-type" placeholder="e.g. Prize, Inheritance, Bonus…"/>
     </div>
     <div class="field">
       <label>Deposit Into Account</label>
@@ -995,6 +1000,13 @@ function loadIncome() {
   if (!list.length) { tbody.innerHTML='<tr><td colspan="5"><div class="empty"><div class="empty-icon">💰</div><p>No income logged yet.</p></div></td></tr>'; return; }
   tbody.innerHTML=list.map(i=>`<tr><td style="color:var(--muted)">${fmtDate(i.date)}</td><td style="font-weight:500">${i.source}</td><td><span class="badge badge-income">${i.type}</span></td><td style="font-weight:700;color:var(--accent2)">${fmt(i.amount)}</td><td style="text-align:right">${isDemoMode?'':`<button class="btn btn-danger btn-sm" onclick="deleteIncome('${i.id}')">Delete</button>`}</td></tr>`).join('');
 }
+function toggleIncomeCustomType() {
+  const type = document.getElementById('income-type').value;
+  const field = document.getElementById('income-custom-type-field');
+  field.style.display = type === 'Other' ? 'block' : 'none';
+  if (type !== 'Other') document.getElementById('income-custom-type').value = '';
+}
+
 function populateIncomeAccountSelect() {
   const sel = document.getElementById('income-account');
   const accounts = getAccounts();
@@ -1012,10 +1024,13 @@ function saveIncome() {
   const amount    = parseFloat(document.getElementById('income-amount').value);
   const date      = document.getElementById('income-date').value;
   const source    = document.getElementById('income-source').value.trim();
-  const type      = document.getElementById('income-type').value;
-  const accountId = document.getElementById('income-account').value;
+  const typeSelect  = document.getElementById('income-type').value;
+  const customType  = document.getElementById('income-custom-type').value.trim();
+  const type        = typeSelect === 'Other' && customType ? customType : typeSelect;
+  const accountId   = document.getElementById('income-account').value;
 
   if (!amount || !date || !source) { showError('income-modal-error', 'Amount, date and source are required'); return; }
+  if (typeSelect === 'Other' && !customType) { showError('income-modal-error', 'Please specify the income type'); return; }
 
   // Save income entry
   const saved = saveIncomeLine({ id:'i'+Date.now(), date, source, type, amount, accountId });
@@ -1038,6 +1053,9 @@ function saveIncome() {
   document.getElementById('income-amount').value = '';
   document.getElementById('income-source').value = '';
   document.getElementById('income-account').value = '';
+  document.getElementById('income-type').value = 'Salary';
+  document.getElementById('income-custom-type').value = '';
+  document.getElementById('income-custom-type-field').style.display = 'none';
   loadIncome();
   loadNetWorth();
 }
