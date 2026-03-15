@@ -951,7 +951,7 @@ async function initApp() {
   document.getElementById('crypto-date').value = today;
   document.getElementById('income-date').value = today;
   if (!isDemoMode) await loadCategoriesData();
-  else categories = ['Groceries','Dining Out','Transport','Subscriptions','Shopping','Utilities','Health'].map((n,i) => ({id:'c'+i,name:n}));
+  else categories = DEFAULT_EXPENSE_CATEGORIES.map((n,i) => ({id:'c'+i, name:n}));
   populateCategorySelects();
   loadNetWorth();
 }
@@ -1145,15 +1145,87 @@ function saveAccount() {
 function deleteAccount(id) { if (!confirm('Delete this account?')) return; if (deleteAccountLocal(id)) { toast('Deleted'); loadAccounts(); loadNetWorth(); } }
 
 // ── Categories ───────────────────────────────────────────────
-async function loadCategoriesData() { try { categories=await apiCall('GET','/categories'); populateCategorySelects(); } catch { categories=[]; } }
+// ── Default Expense Categories ────────────────────────────────
+const DEFAULT_EXPENSE_CATEGORIES = [
+  'Rent', 'Water Bill', 'Electricity Bill', 'Internet', 'Groceries',
+  'Dining Out', 'Transport', 'Fuel', 'Health', 'Subscriptions',
+  'Shopping', 'Education', 'Insurance', 'Entertainment', 'Clothing'
+];
+
+function getExpenseCategories() {
+  const custom = getLocal('custom_categories') || [];
+  return [
+    ...DEFAULT_EXPENSE_CATEGORIES.map((name, i) => ({ id: 'def_' + i, name, isDefault: true })),
+    ...custom.map(c => ({ ...c, isDefault: false })),
+    ...categories.filter(c => !DEFAULT_EXPENSE_CATEGORIES.map(d=>d.toLowerCase()).includes(c.name.toLowerCase()) && !custom.find(cu=>cu.name.toLowerCase()===c.name.toLowerCase())).map(c => ({ ...c, isDefault: false }))
+  ];
+}
+
+function loadExpenseCategoriesGrid() {
+  const grid   = document.getElementById('categories-grid');
+  const custom = getLocal('custom_categories') || [];
+
+  const defaultItems = DEFAULT_EXPENSE_CATEGORIES.map((name, i) => `
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:600">${name}</div>
+      <span class="badge badge-ok" style="font-size:11px">Default</span>
+    </div>`).join('');
+
+  const customItems = custom.map(c => `
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:600">${c.name}</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="editLocalCategory('${c.id}','${c.name}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteLocalCategory('${c.id}')">Delete</button>
+      </div>
+    </div>`).join('');
+
+  const apiItems = categories
+    .filter(c => !DEFAULT_EXPENSE_CATEGORIES.map(d=>d.toLowerCase()).includes(c.name.toLowerCase()) && !custom.find(cu=>cu.name.toLowerCase()===c.name.toLowerCase()))
+    .map(c => `
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:600">${c.name}</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="editCategory('${c.id}','${c.name}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button>
+      </div>
+    </div>`).join('');
+
+  grid.innerHTML = defaultItems + customItems + apiItems || '<div class="empty"><p>No categories yet.</p></div>';
+}
+
 function populateCategorySelects() {
+  const allCats = getExpenseCategories();
   ['filter-cat','exp-category','budget-category'].forEach(id => {
-    const sel=document.getElementById(id), cur=sel.value;
-    sel.innerHTML=id==='filter-cat'?'<option value="">All Categories</option>':'<option value="">Select category…</option>';
-    categories.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.name; sel.appendChild(o); });
-    if (cur) sel.value=cur;
+    const sel = document.getElementById(id), cur = sel.value;
+    sel.innerHTML = id==='filter-cat' ? '<option value="">All Categories</option>' : '<option value="">Select category\u2026</option>';
+    allCats.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.name; sel.appendChild(o); });
+    if (cur) sel.value = cur;
   });
 }
+
+async function loadCategoriesData() {
+  try { categories = await apiCall('GET', '/categories'); }
+  catch { categories = []; }
+  populateCategorySelects();
+}
+
+function editLocalCategory(id, name) {
+  document.getElementById('category-id').value = id;
+  document.getElementById('cat-name').value = name;
+  document.getElementById('cat-modal-title').textContent = 'Edit Category';
+  hideError('cat-modal-error');
+  openModal('category-modal');
+}
+
+function deleteLocalCategory(id) {
+  if (!confirm('Delete this category?')) return;
+  const custom = (getLocal('custom_categories') || []).filter(c => c.id !== id);
+  setLocal('custom_categories', custom);
+  toast('Category deleted');
+  loadCategories();
+}
+
 // ── Income Types ─────────────────────────────────────────────
 const DEFAULT_INCOME_TYPES = ['Salary', 'Freelance', 'Investment', 'Rental', 'Business', 'Gift'];
 
@@ -1165,15 +1237,11 @@ function getIncomeTypes() {
 function loadIncomeTypesGrid() {
   const custom = getLocal('income_types') || [];
   const grid   = document.getElementById('income-types-grid');
-
-  // Show defaults as read-only
   const defaultItems = DEFAULT_INCOME_TYPES.map(t => `
     <div class="card" style="display:flex;align-items:center;justify-content:space-between">
       <div style="font-weight:600">${t}</div>
       <span class="badge badge-ok" style="font-size:11px">Default</span>
     </div>`).join('');
-
-  // Show custom as editable
   const customItems = custom.length ? custom.map(t => `
     <div class="card" style="display:flex;align-items:center;justify-content:space-between">
       <div style="font-weight:600">${t.name}</div>
@@ -1182,7 +1250,6 @@ function loadIncomeTypesGrid() {
         <button class="btn btn-danger btn-sm" onclick="deleteIncomeType('${t.id}')">Delete</button>
       </div>
     </div>`).join('') : '';
-
   grid.innerHTML = defaultItems + customItems;
 }
 
@@ -1199,19 +1266,12 @@ function saveIncomeType() {
   const id   = document.getElementById('income-type-id').value;
   const name = document.getElementById('income-type-name').value.trim();
   if (!name) { showError('income-type-modal-error', 'Name is required'); return; }
-
-  // Check for duplicates
   if (getIncomeTypes().map(t => (t.name||t).toLowerCase()).includes(name.toLowerCase()) && !id) {
     showError('income-type-modal-error', 'This income type already exists'); return;
   }
-
   const custom = getLocal('income_types') || [];
-  if (id) {
-    const idx = custom.findIndex(t => t.id === id);
-    if (idx >= 0) custom[idx].name = name;
-  } else {
-    custom.push({ id: 'it' + Date.now(), name });
-  }
+  if (id) { const idx = custom.findIndex(t => t.id === id); if (idx >= 0) custom[idx].name = name; }
+  else { custom.push({ id: 'it' + Date.now(), name }); }
   setLocal('income_types', custom);
   toast(id ? 'Income type updated' : 'Income type added');
   document.getElementById('income-type-id').value = '';
@@ -1219,7 +1279,6 @@ function saveIncomeType() {
   document.getElementById('income-type-modal-title').textContent = 'New Income Type';
   closeModal('income-type-modal');
   loadIncomeTypesGrid();
-  // Refresh income type dropdown if open
   populateIncomeTypeSelect();
 }
 
@@ -1236,37 +1295,63 @@ function populateIncomeTypeSelect() {
   const sel   = document.getElementById('income-type');
   const types = getIncomeTypes();
   const cur   = sel.value;
-  sel.innerHTML = types.map(t => {
-    const val = t.name || t;
-    return `<option value="${val}">${val}</option>`;
-  }).join('') + '<option value="Other">Other</option>';
+  sel.innerHTML = types.map(t => { const val = t.name || t; return `<option value="${val}">${val}</option>`; }).join('') + '<option value="Other">Other</option>';
   if (cur) sel.value = cur;
 }
 
 async function loadCategories() {
   if (!isDemoMode) await loadCategoriesData();
-  const grid=document.getElementById('categories-grid');
-  if (!categories.length) { grid.innerHTML='<div class="empty"><p>No categories yet.</p></div>'; }
-  else { grid.innerHTML=categories.map(c=>`
-    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
-      <div style="font-weight:600">${c.name}</div>
-      <div style="display:flex;gap:6px">${isDemoMode?'':`<button class="btn btn-outline btn-sm" onclick="editCategory('${c.id}','${c.name}')">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button>`}</div>
-    </div>`).join('');
+  else {
+    categories = DEFAULT_EXPENSE_CATEGORIES.map((n,i) => ({id:'c'+i, name:n}));
+    populateCategorySelects();
   }
+  loadExpenseCategoriesGrid();
   loadIncomeTypesGrid();
 }
-function editCategory(id,name) { document.getElementById('category-id').value=id; document.getElementById('cat-name').value=name; document.getElementById('cat-modal-title').textContent='Edit Category'; openModal('category-modal'); }
+
+function editCategory(id, name) {
+  document.getElementById('category-id').value = id;
+  document.getElementById('cat-name').value = name;
+  document.getElementById('cat-modal-title').textContent = 'Edit Category';
+  hideError('cat-modal-error');
+  openModal('category-modal');
+}
+
 async function saveCategory() {
   hideError('cat-modal-error');
-  const id=document.getElementById('category-id').value, name=document.getElementById('cat-name').value.trim();
-  if (!name) { showError('cat-modal-error','Name is required'); return; }
-  try {
-    if (id) await apiCall('PUT',`/categories/${id}`,{name}); else await apiCall('POST','/categories',{name});
-    toast(id?'Category updated':'Category created'); document.getElementById('category-id').value=''; document.getElementById('cat-name').value='';
-    closeModal('category-modal'); loadCategories();
-  } catch(e) { showError('cat-modal-error',e.message); }
+  const id   = document.getElementById('category-id').value;
+  const name = document.getElementById('cat-name').value.trim();
+  if (!name) { showError('cat-modal-error', 'Name is required'); return; }
+
+  const custom = getLocal('custom_categories') || [];
+  const isLocal = id && (id.startsWith('cc') || custom.find(c => c.id === id));
+
+  if (isLocal) {
+    const idx = custom.findIndex(c => c.id === id);
+    if (idx >= 0) custom[idx].name = name;
+    setLocal('custom_categories', custom);
+    toast('Category updated');
+  } else if (id && !id.startsWith('def_')) {
+    try { await apiCall('PUT', `/categories/${id}`, { name }); toast('Category updated'); }
+    catch(e) { showError('cat-modal-error', e.message); return; }
+  } else {
+    custom.push({ id: 'cc' + Date.now(), name });
+    setLocal('custom_categories', custom);
+    toast('Category created');
+  }
+  document.getElementById('category-id').value = '';
+  document.getElementById('cat-name').value = '';
+  closeModal('category-modal');
+  loadCategories();
+  populateCategorySelects();
 }
-async function deleteCategory(id) { if (!confirm('Delete?')) return; try { await apiCall('DELETE',`/categories/${id}`); toast('Deleted'); loadCategories(); } catch(e) { toast(e.message,'err'); } }
+
+async function deleteCategory(id) {
+  if (!confirm('Delete this category?')) return;
+  if (id.startsWith('def_') || id.startsWith('cc')) { deleteLocalCategory(id); return; }
+  try { await apiCall('DELETE', `/categories/${id}`); toast('Deleted'); loadCategories(); }
+  catch(e) { toast(e.message, 'err'); }
+}
 
 // ── Expenses ─────────────────────────────────────────────────
 async function loadExpenses() {
