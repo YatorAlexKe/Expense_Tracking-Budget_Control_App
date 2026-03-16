@@ -293,7 +293,7 @@ The user visits the **Net Worth** page to see total assets, monthly income vs ex
 ║  Savings Rate            91%            ║
 ╚═════════════════════════════════════════╝
 ```
-## 🏗 Project Structure
+##  Project Structure
 
 ```
 FinanceTracker/
