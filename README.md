@@ -175,3 +175,38 @@ The user visits the **Net Worth** page to see total assets, monthly income vs ex
 | Deploy application to production | 📋 To Do | 3 |
 
 ---
+## 🖥 Console UI Mockups
+
+### Screen 1 — Login / Auth Screen
+```
+╔═════════════════════════════════════════╗
+║           FinanceTracker                ║
+║   Track your money, own your future.    ║
+╠═════════════════════════════════════════╣
+║  [ Sign In ]        [ Register ]        ║
+╠═════════════════════════════════════════╣
+║                                         ║
+║  EMAIL                                  ║
+║  ┌───────────────────────────────────┐  ║
+║  │  you@example.com                  │  ║
+║  └───────────────────────────────────┘  ║
+║                                         ║
+║  PASSWORD                               ║
+║  ┌───────────────────────────────────┐  ║
+║  │  ••••••••                    👁   │  ║
+║  └───────────────────────────────────┘  ║
+║                                         ║
+║  ┌───────────────────────────────────┐  ║
+║  │            Sign In                │  ║
+║  └───────────────────────────────────┘  ║
+║                                         ║
+║         Forgot your password?           ║
+║                                         ║
+║  ┌───────────────────────────────────┐  ║
+║  │        ✨ Try Demo Mode           │  ║
+║  └───────────────────────────────────┘  ║
+╠═════════════════════════════════════════╣
+║  FinanceTracker  •  Finance@track.com   ║
+║  🔒 Encrypted  📊 Real-time  🚫 No Ads  ║
+╚═════════════════════════════════════════╝
+```
