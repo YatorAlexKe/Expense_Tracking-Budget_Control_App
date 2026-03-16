@@ -158,7 +158,7 @@ The user visits the **Net Worth** page to see total assets, monthly income vs ex
 | Build monthly budget endpoints with utilization |  Done | 1 |
 | Build dashboard monthly summary endpoint |  Done | 1 |
 | Build crypto portfolio endpoints |  Done | 1 |
-| CSV export for expenses |  Done | Audrey Goudi | 1 |
+| CSV export for expenses |  Done | 1 |
 | Migrate from InMemory to SQLite database |  Done | 2 |
 | Frontend HTML/CSS/JS single-file UI |  Done | 2 |
 | Net Worth dashboard with accounts & income |  Done | 2 |
@@ -337,4 +337,20 @@ FinanceTracker/
     ├── Program.cs
     ├── appsettings.Example.json         ← Safe to commit
     └── appsettings.json                 ← Gitignored (contains secrets)
+```
+
+---
+
+## Setup & Installation
+
+### Prerequisites
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- [Git](https://git-scm.com/download/win)
+- [VS Code](https://code.visualstudio.com) or Visual Studio 2022
+- [Live Server Extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) for VS Code
+
+### Step 1 — Clone the repository
+```bash
+git clone https://github.com/YatorAlexKe/Expense_Tracking-Budget_Control_App.git
+cd Expense_Tracking-Budget_Control_App
 ```
