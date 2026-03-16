@@ -265,3 +265,31 @@ The user visits the **Net Worth** page to see total assets, monthly income vs ex
 ║       [Cancel]          [Save]          ║
 ╚═════════════════════════════════════════╝
 ```
+### Screen 4 — Net Worth
+```
+╔═════════════════════════════════════════╗
+║  Net Worth                              ║
+║  Your complete financial picture        ║
+╠═════════════════════════════════════════╣
+║                                         ║
+║           TOTAL NET WORTH               ║
+║            $105,431.30                  ║
+║                                         ║
+╠══════════════╦══════════╦═══════════════╣
+║ Total Assets ║ Monthly  ║   Monthly     ║
+║ $105,431.30  ║ Income   ║   Expenses    ║
+║              ║$7,320.00 ║   $654.38     ║
+╠══════════════╩══════════╩═══════════════╣
+║          ASSET BREAKDOWN                ║
+║     Fidelity Brokerage   $54,780.50     ║
+║     Marcus Savings        $38,200.00    ║
+║     Chase Checking        $12,450.80    ║
+╠═════════════════════════════════════════╣
+║  CASH FLOW THIS MONTH                   ║
+║  Income             +$7,320.00          ║
+║  Expenses            -$654.38           ║
+║  ─────────────────────────────          ║
+║  Net Cash Flow      +$6,665.62          ║
+║  Savings Rate            91%            ║
+╚═════════════════════════════════════════╝
+```
