@@ -95,3 +95,27 @@ The user navigates to **Manage** to review default expense categories (Rent, Gro
 │  └──────────────┘ └──────────────┘  │
 └─────────────────────────────────────┘
 ```
+### Step 3 — Log Income & Expenses
+The user logs their income specifying the source, type and which bank account to deposit into — automatically updating their Net Worth. They then log daily expenses assigning each to a category.
+
+```
+┌─────────────────────────────────────┐
+│  Add Income                         │
+├─────────────────────────────────────┤
+│  AMOUNT ($)                         │
+│  ┌─────────────────────────────┐    │
+│  │ 5800.00                     │    │
+│  └─────────────────────────────┘    │
+│  SOURCE                             │
+│  ┌─────────────────────────────┐    │
+│  │ Monthly Salary              │    │
+│  └─────────────────────────────┘    │
+│  TYPE          DEPOSIT INTO         │
+│  ┌──────────┐  ┌───────────────┐    │
+│  │ Salary ▼ │  │Chase Checking │    │
+│  └──────────┘  └───────────────┘    │
+│                                     │
+│  [Cancel]          [Save]           │
+└─────────────────────────────────────┘
+```
+
