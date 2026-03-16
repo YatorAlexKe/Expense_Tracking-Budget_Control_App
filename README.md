@@ -31,7 +31,7 @@ FinanceTracker is a full-stack personal finance application built with a modern 
 Most people have no clear picture of their financial health. They don't know how much they spend on groceries vs dining out, whether they're on track with their budget, or what their total net worth looks like across all their accounts. FinanceTracker solves this by putting all that information in one place — clearly, securely and without ads.
 
 ---
-## ✨ Features
+##  Features
 
 | # | Feature | Description | Primary | Secondary |
 |---|---------|-------------|---------|-----------|
@@ -147,35 +147,35 @@ The user visits the **Net Worth** page to see total assets, monthly income vs ex
 
 ---
 
-## 📋 Task Board (Agile)
+##  Task Board (Agile)
 
 | Task | Status | Sprint |
 |------|--------|--------|
-| Set up Clean Architecture project structure | ✅ Done | 1 |
-| Implement JWT authentication & registration | ✅ Done | 1 |
-| Build expense CRUD endpoints | ✅ Done | 1 |
-| Build category management endpoints | ✅ Done | 1 |
-| Build monthly budget endpoints with utilization | ✅ Done | 1 |
-| Build dashboard monthly summary endpoint | ✅ Done | 1 |
-| Build crypto portfolio endpoints | ✅ Done | 1 |
-| CSV export for expenses | ✅ Done | Audrey Goudi | 1 |
-| Migrate from InMemory to SQLite database | ✅ Done | 2 |
-| Frontend HTML/CSS/JS single-file UI | ✅ Done | 2 |
-| Net Worth dashboard with accounts & income | ✅ Done | 2 |
-| Forgot password flow with SendGrid email | ✅ Done | 2 |
-| Income tracking with account balance update | ✅ Done | 2 |
-| Default expense categories & income types | ✅ Done | 2 |
-| About page with mission & privacy policy | ✅ Done | 2 |
-| Password visibility toggle (eye icon) | ✅ Done | 2 |
-| Password strength validation on register | ✅ Done | 3 |
-| Last login timestamp tracking | ✅ Done | 3 |
-| Custom income type from income form | ✅ Done | 3 |
-| README documentation | 🔄 In Progress | 3 |
-| Notifications (budget warnings, monthly summary) | 📋 To Do | 3 |
-| Deploy application to production | 📋 To Do | 3 |
+| Set up Clean Architecture project structure |  Done | 1 |
+| Implement JWT authentication & registration |  Done | 1 |
+| Build expense CRUD endpoints |  Done | 1 |
+| Build category management endpoints |  Done | 1 |
+| Build monthly budget endpoints with utilization |  Done | 1 |
+| Build dashboard monthly summary endpoint |  Done | 1 |
+| Build crypto portfolio endpoints |  Done | 1 |
+| CSV export for expenses |  Done | Audrey Goudi | 1 |
+| Migrate from InMemory to SQLite database |  Done | 2 |
+| Frontend HTML/CSS/JS single-file UI |  Done | 2 |
+| Net Worth dashboard with accounts & income |  Done | 2 |
+| Forgot password flow with SendGrid email |  Done | 2 |
+| Income tracking with account balance update |  Done | 2 |
+| Default expense categories & income types |  Done | 2 |
+| About page with mission & privacy policy |  Done | 2 |
+| Password visibility toggle (eye icon) |  Done | 2 |
+| Password strength validation on register |  Done | 3 |
+| Last login timestamp tracking |  Done | 3 |
+| Custom income type from income form |  Done | 3 |
+| README documentation |  In Progress | 3 |
+| Notifications (budget warnings, monthly summary) |  To Do | 3 |
+| Deploy application to production |  To Do | 3 |
 
 ---
-## 🖥 Console UI Mockups
+##  Console UI Mockups
 
 ### Screen 1 — Login / Auth Screen
 ```
