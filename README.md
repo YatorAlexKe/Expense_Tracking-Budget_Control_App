@@ -293,3 +293,48 @@ The user visits the **Net Worth** page to see total assets, monthly income vs ex
 ║  Savings Rate            91%            ║
 ╚═════════════════════════════════════════╝
 ```
+## 🏗 Project Structure
+
+```
+FinanceTracker/
+│
+├── FinanceTracker.sln
+├── README.md
+├── finance-tracker-ui.html              ← Single-file frontend
+│
+├── FinanceTracker.Domain/               ← Entities only. No dependencies.
+│   └── Entities/
+│       ├── User.cs
+│       ├── Category.cs
+│       ├── Expense.cs
+│       ├── MonthlyBudget.cs
+│       └── CryptoAsset.cs
+│
+├── FinanceTracker.Application/          ← Business logic. Depends on Domain only.
+│   ├── DTOs/           Dtos.cs
+│   ├── Interfaces/     IInterfaces.cs
+│   ├── Mappings/       MappingProfile.cs
+│   ├── Common/         Exceptions.cs
+│   └── Services/
+│       ├── AuthService.cs
+│       ├── CategoryService.cs
+│       ├── ExpenseService.cs
+│       ├── BudgetService.cs
+│       ├── DashboardService.cs
+│       └── CryptoService.cs
+│
+├── FinanceTracker.Infrastructure/       ← EF Core, Repositories, SendGrid
+│   ├── Data/           AppDbContext.cs
+│   ├── Migrations/
+│   ├── Repositories/   Repositories.cs
+│   └── Services/
+│       ├── EmailService.cs
+│       └── MockCryptoPriceService.cs
+│
+└── FinanceTracker.API/                  ← ASP.NET Core host
+    ├── Controllers/
+    ├── Middleware/      ExceptionMiddleware.cs
+    ├── Program.cs
+    ├── appsettings.Example.json         ← Safe to commit
+    └── appsettings.json                 ← Gitignored (contains secrets)
+```
