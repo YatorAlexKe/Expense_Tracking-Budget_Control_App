@@ -2,13 +2,13 @@ FinanceTracker
 Track your money. Own your future.
 
 FinanceTracker is a secure, privacy-first personal finance web application that helps individuals take full control of their financial health. Whether you want to track daily expenses, set monthly budgets, monitor your crypto portfolio or get a clear picture of your net worth — FinanceTracker brings it all together in one clean, intuitive interface.
-👥 Team Members
+Team Members
 Name	Student Number	Role
 Alex Yator	A00335392	Backend Developer / Frontend Developer
 Cherylpreet Bansal	A00336894	Backend Developer / Frontend Developer
 Noble Udecchukwu	A00335177	Backend Developer / Frontend Developer
 Audrey Goudi	A00335177	Backend Developer / Frontend Developer
-🎯 Project Overview
+Project Overview
 FinanceTracker is a full-stack personal finance application built with a modern ASP.NET Core Web API backend and a responsive HTML/CSS/JavaScript frontend. It was developed as a Cambrian College Software Engineering Capstone Project and is designed to be simple enough for everyday users while being powerful enough to give real financial insight.
 
 Who is it for?
