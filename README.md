@@ -43,3 +43,33 @@ Most people have no clear picture of their financial health. They don't know how
 | 6 | **Password Reset via Email** | Secure forgot-password flow using SendGrid. One-time reset links expire after 30 minutes. Password strength enforced on register and reset. | Cherylpreet Bansal | Audrey Goudi |
 
 ---
+
+## 🔄 Application Flow
+
+### Step 1 — Register & Login
+The user creates an account with a valid email and a strong password (min 8 characters, uppercase, lowercase and a number). On successful registration the user is automatically logged in and a JWT token is issued for the session.
+
+```
+┌─────────────────────────────────────┐
+│         FinanceTracker              │
+│   Track your money, own your future │
+├─────────────────────────────────────┤
+│  [ Sign In ]     [ Register ]       │
+│                                     │
+│  EMAIL                              │
+│  ┌─────────────────────────────┐    │
+│  │ you@example.com             │    │
+│  └─────────────────────────────┘    │
+│  PASSWORD                           │
+│  ┌─────────────────────────────┐    │
+│  │ ••••••••               👁   │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│  ┌─────────────────────────────┐    │
+│  │         Sign In             │    │
+│  └─────────────────────────────┘    │
+│                                     │
+│      Forgot your password?          │
+│         Try Demo Mode               │
+└─────────────────────────────────────┘
+```
