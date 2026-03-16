@@ -118,4 +118,29 @@ The user logs their income specifying the source, type and which bank account to
 │  [Cancel]          [Save]           │
 └─────────────────────────────────────┘
 ```
+### Step 4 — Monitor Net Worth & Dashboard
+The user visits the **Net Worth** page to see total assets, monthly income vs expenses and savings rate. The **Dashboard** shows budget utilization per category with progress bars and status badges.
 
+```
+┌─────────────────────────────────────┐
+│  Net Worth                          │
+├─────────────────────────────────────┤
+│        TOTAL NET WORTH              │
+│          $105,431.30                │
+│                                     │
+│  Total Assets    $105,431.30        │
+│  Monthly Income  $7,320.00          │
+│  Monthly Expenses $654.38           │
+│                                     │
+│  ASSET BREAKDOWN                    │
+│  Fidelity Brokerage   $54,780.50    │
+│  Marcus Savings       $38,200.00    │
+│  Chase Checking       $12,450.80    │
+│                                     │
+│  CASH FLOW                          │
+│  Income      $7,320.00              │
+│  Expenses   -$654.38                │
+│  Net Flow   +$6,665.62              │
+│  Savings Rate    91%                │
+└─────────────────────────────────────┘
+```
