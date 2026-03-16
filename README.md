@@ -1,4 +1,4 @@
-# 💰 FinanceTracker
+# FinanceTracker
 
 > **Track your money. Own your future.**
 
@@ -6,7 +6,7 @@ FinanceTracker is a secure, privacy-first personal finance web application that 
 
 ---
 
-## 👥 Team Members
+## Team Members
 
 | Name | Student Number | Role |
 |------|---------------|------|
@@ -17,7 +17,7 @@ FinanceTracker is a secure, privacy-first personal finance web application that 
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 FinanceTracker is a full-stack personal finance application built with a modern **ASP.NET Core Web API** backend and a responsive **HTML/CSS/JavaScript** frontend. It was developed as a **Cambrian College Software Engineering Capstone Project** and is designed to be simple enough for everyday users while being powerful enough to give real financial insight.
 
@@ -29,5 +29,17 @@ FinanceTracker is a full-stack personal finance application built with a modern 
 
 ### What problem does it solve?
 Most people have no clear picture of their financial health. They don't know how much they spend on groceries vs dining out, whether they're on track with their budget, or what their total net worth looks like across all their accounts. FinanceTracker solves this by putting all that information in one place — clearly, securely and without ads.
+
+---
+## ✨ Features
+
+| # | Feature | Description | Primary | Secondary |
+|---|---------|-------------|---------|-----------|
+| 1 | **Expense Tracking** | Log and categorise every transaction with default or custom categories. Filter by date range and category. Export to CSV. | Alex Yator | Cherylpreet Bansal |
+| 2 | **Monthly Budgets & Alerts** | Set monthly spending limits per category. Real-time utilization tracking with Ok / Warning / Exceeded status badges and progress bars. | Cherylpreet Bansal | Noble Udecchukwu |
+| 3 | **Income Tracking** | Log income by type (Salary, Freelance, Investment, etc.). Custom income types supported. Income deposited into accounts updates Net Worth automatically. | Noble Udecchukwu | Audrey Goudi |
+| 4 | **Net Worth Dashboard** | Aggregates bank accounts, crypto portfolio and income into a single net worth figure. Displays monthly cash flow and savings rate. | Audrey Goudi | Alex Yator |
+| 5 | **Crypto Portfolio** | Manually track digital assets (BTC, ETH, SOL, etc.) with average buy price, current mock price, total value and profit/loss calculation. | Alex Yator | Noble Udecchukwu |
+| 6 | **Password Reset via Email** | Secure forgot-password flow using SendGrid. One-time reset links expire after 30 minutes. Password strength enforced on register and reset. | Cherylpreet Bansal | Audrey Goudi |
 
 ---
