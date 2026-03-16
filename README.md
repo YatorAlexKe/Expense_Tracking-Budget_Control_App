@@ -354,3 +354,68 @@ FinanceTracker/
 git clone https://github.com/YatorAlexKe/Expense_Tracking-Budget_Control_App.git
 cd Expense_Tracking-Budget_Control_App
 ```
+### Step 2 — Configure appsettings.json
+Copy the example config and fill in your values:
+```bash
+copy FinanceTracker.API/appsettings.Example.json FinanceTracker.API/appsettings.json
+```
+
+Then open `appsettings.json` and add your SendGrid API key and verified sender email.
+
+### Step 3 — Install EF Core tools
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+### Step 4 — Restore packages and run migrations
+```bash
+dotnet restore
+cd FinanceTracker.API
+dotnet ef database update --project ../FinanceTracker.Infrastructure --startup-project .
+```
+
+### Step 5 — Run the API
+```bash
+dotnet run
+```
+API is available at: `http://localhost:5000`
+Swagger UI is available at: `http://localhost:5000/swagger`
+
+### Step 6 — Open the frontend
+Right click `finance-tracker-ui.html` in VS Code → **Open with Live Server**
+
+---
+
+## Environment Variables
+
+| Key | Description |
+|-----|-------------|
+| `SendGrid:ApiKey` | Your SendGrid API key (starts with SG.) |
+| `SendGrid:FromEmail` | Your verified sender email address |
+| `SendGrid:FromName` | Display name for outgoing emails |
+| `ClientUrl` | Frontend base URL e.g. http://localhost:5500 |
+| `Jwt:Key` | Secret key for JWT token signing (min 32 chars) |
+
+---
+
+## Sources
+
+| # | Source | Used For |
+|---|--------|----------|
+| 1 | [Microsoft ASP.NET Core Documentation](https://docs.microsoft.com/en-us/aspnet/core) | Clean Architecture setup, JWT authentication, EF Core migrations |
+| 2 | [SendGrid C# Documentation](https://docs.sendgrid.com/for-developers/sending-email/v3-csharp-code-example) | Email service integration for password reset |
+| 3 | [Entity Framework Core Docs](https://learn.microsoft.com/en-us/ef/core) | SQLite database setup, migrations, repository pattern |
+| 4 | [BCrypt.Net-Next NuGet Package](https://github.com/BcryptNet/bcrypt.net) | Secure password hashing on register and reset |
+| 5 | [JWT.io](https://jwt.io/introduction) | Understanding JWT structure and claims for authentication |
+| 6 | [Lucide Icons](https://lucide.dev) | SVG icons used throughout the frontend UI |
+| 7 | Claude AI (Anthropic) | Used to assist with code generation, architecture decisions, debugging and UI design throughout the project |
+
+---
+
+## License
+
+This project was built for educational purposes as part of the Cambrian College Software Engineering program — Capstone 2026.
+
+---
+
+*Built by the FinanceTracker Team — Cambrian College, Sudbury, Ontario 🇨🇦*
