@@ -73,3 +73,25 @@ The user creates an account with a valid email and a strong password (min 8 char
 │         Try Demo Mode               │
 └─────────────────────────────────────┘
 ```
+
+### Step 2 — Set Up Categories & Budgets
+The user navigates to **Manage** to review default expense categories (Rent, Groceries, Transport, etc.) and add custom ones. They then go to **Budgets** to set monthly spending limits per category.
+
+```
+┌─────────────────────────────────────┐
+│  Manage                             │
+├─────────────────────────────────────┤
+│  EXPENSE CATEGORIES    [+ New]      │
+│  ┌──────────────┐ ┌──────────────┐  │
+│  │ Rent Default │ │Groceries Def │  │
+│  └──────────────┘ └──────────────┘  │
+│  ┌──────────────┐ ┌──────────────┐  │
+│  │Transport Def │ │ Fuel  Default│  │
+│  └──────────────┘ └──────────────┘  │
+│                                     │
+│  INCOME TYPES          [+ New]      │
+│  ┌──────────────┐ ┌──────────────┐  │
+│  │ Salary  Def  │ │Freelance Def │  │
+│  └──────────────┘ └──────────────┘  │
+└─────────────────────────────────────┘
+```
