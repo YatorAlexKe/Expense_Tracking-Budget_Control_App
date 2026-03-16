@@ -203,10 +203,35 @@ The user visits the **Net Worth** page to see total assets, monthly income vs ex
 ║         Forgot your password?           ║
 ║                                         ║
 ║  ┌───────────────────────────────────┐  ║
-║  │        ✨ Try Demo Mode           │  ║
+║  │         Try Demo Mode             │  ║
 ║  └───────────────────────────────────┘  ║
 ╠═════════════════════════════════════════╣
 ║  FinanceTracker  •  Finance@track.com   ║
-║  🔒 Encrypted  📊 Real-time  🚫 No Ads  ║
+║   Encrypted     Real-time     No Ads    ║
+╚═════════════════════════════════════════╝
+```
+### Screen 2 — Dashboard
+```
+╔═════════════════════════════════════════╗
+║   Finance    [Net Worth] [Dashboard]    ║
+║               [Income]   [Expenses]     ║
+║               [Budgets]  [Accounts]     ║
+║               [Crypto]   [Categories]   ║
+╠═════════════════════════════════════════╣
+║  Dashboard        March 2026 Overview   ║
+╠══════════════╦══════════╦═══════════════╣
+║Total Spending║Tot Budget║  Utilization  ║
+║   $654.38    ║ $1,050   ║    62.3%      ║
+╠══════════════╩══════════╩═══════════════╣
+║  TOP SPENDING CATEGORIES                ║
+║  1. Groceries           $241.70         ║
+║  2. Utilities           $120.00         ║
+║  3. Shopping             $75.30         ║
+╠═════════════════════════════════════════╣
+║  BUDGET UTILIZATION                     ║
+║  Groceries   ████████░░░░  60%      Ok  ║
+║  Dining Out  ████░░░░░░░░  44%      Ok  ║
+║  Transport   ████░░░░░░░░  41%      Ok  ║
+║  Subscript.  █████████░░░  92%     Warn ║
 ╚═════════════════════════════════════════╝
 ```
