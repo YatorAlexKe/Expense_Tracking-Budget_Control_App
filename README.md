@@ -40,7 +40,7 @@ Most people have no clear picture of their financial health. They don't know how
 | 3 | **Income Tracking** | Log income by type (Salary, Freelance, Investment, etc.). Custom income types supported. Income deposited into accounts updates Net Worth automatically. | Noble Udecchukwu | Audrey Goudi |
 | 4 | **Net Worth Dashboard** | Aggregates bank accounts, crypto portfolio and income into a single net worth figure. Displays monthly cash flow and savings rate. | Audrey Goudi | Alex Yator |
 | 5 | **Crypto Portfolio** | Manually track digital assets (BTC, ETH, SOL, etc.) with average buy price, current mock price, total value and profit/loss calculation. | Alex Yator | Noble Udecchukwu |
-| 6 | **Password Reset via Email** | Secure forgot-password flow using SendGrid. One-time reset links expire after 30 minutes. Password strength enforced on register and reset. | Cherylpreet Bansal | Audrey Goudi |
+| 6 | **Password Reset via Email** | Secure forgot-password flow using SendGrid. One-time reset links expire after 30 minutes. Password strength enforced on register and reset. | Alex Yator | Audrey Goudi |
 
 ---
 
