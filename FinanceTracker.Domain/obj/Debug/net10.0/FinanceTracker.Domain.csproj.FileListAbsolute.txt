@@ -1,0 +1,36 @@
+C:\Projects\FinanceTracker\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.deps.json
+C:\Projects\FinanceTracker\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.dll
+C:\Projects\FinanceTracker\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.pdb
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.AssemblyInfoInputs.cache
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.AssemblyInfo.cs
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.csproj.CoreCompileInputs.cache
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.dll
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\refint\FinanceTracker.Domain.dll
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.pdb
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\ref\FinanceTracker.Domain.dll
+C:\Projects\FinanceTracker\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.sourcelink.json
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.deps.json
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.pdb
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.AssemblyInfoInputs.cache
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.AssemblyInfo.cs
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.csproj.CoreCompileInputs.cache
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.sourcelink.json
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\refint\FinanceTracker.Domain.dll
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.pdb
+C:\Users\L A T I T U D E\source\repos\sty1991capstone\FinanceTracker.Domain\obj\Debug\net10.0\ref\FinanceTracker.Domain.dll
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.deps.json
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.dll
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\bin\Debug\net10.0\FinanceTracker.Domain.pdb
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.AssemblyInfoInputs.cache
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.AssemblyInfo.cs
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.csproj.CoreCompileInputs.cache
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.sourcelink.json
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.dll
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\obj\Debug\net10.0\refint\FinanceTracker.Domain.dll
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\obj\Debug\net10.0\FinanceTracker.Domain.pdb
+D:\Cambrian College - IT Buisness Analysis\Software engineering concepts\Capstone\Expense_Tracking-Budget_Control_App\FinanceTracker.Domain\obj\Debug\net10.0\ref\FinanceTracker.Domain.dll
