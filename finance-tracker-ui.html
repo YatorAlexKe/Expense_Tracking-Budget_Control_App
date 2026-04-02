@@ -26,7 +26,7 @@
   input, select, textarea { font-family: var(--font-body); }
 
   /* Auth */
-  #auth-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at 60% 40%, #1a2a0a 0%, #0f0f13 60%); }
+  #auth-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at 60% 40%, #1a2a0a 0%, #0f0f13 60%); padding: 40px 20px; }
   .auth-box { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 48px; width: 100%; max-width: 420px; box-shadow: 0 40px 80px #00000080; }
   .auth-logo { font-family: var(--font-head); font-size: 2rem; color: var(--accent); margin-bottom: 8px; }
   .auth-sub  { color: var(--muted); margin-bottom: 36px; font-size: 14px; }
@@ -172,6 +172,14 @@
 
   .demo-banner { background: var(--accent)15; border: 1px solid var(--accent)33; border-radius: 12px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--accent); }
 
+  /* About page */
+  .about-feature-item { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--border)44; }
+  .about-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); margin-top:7px; flex-shrink:0; }
+  .about-feature-title { font-weight:600; font-size:13px; margin-bottom:2px; }
+  .about-feature-desc { font-size:12px; color:var(--muted); line-height:1.5; }
+  .about-privacy-item { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--border)44; }
+  .about-privacy-icon { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
   /* Forgot password link */
   .forgot-link { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; width: 100%; transition: color .2s; }
   .forgot-link:hover { color: var(--accent); }
@@ -185,7 +193,8 @@
 
 <!-- AUTH -->
 <div id="auth-screen">
-  <div class="auth-box">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:24px;width:100%;max-width:700px;padding:20px">
+  <div class="auth-box" style="width:100%;max-width:420px">
     <div class="auth-logo">FinanceTracker</div>
     <div class="auth-sub">Track your money, own your future.</div>
 
@@ -243,6 +252,38 @@
       <button class="btn btn-primary btn-full" onclick="resetPassword()">Reset Password</button>
     </div>
   </div>
+
+  <!-- Brief About Footer -->
+  <div style="width:100%;max-width:700px;text-align:center;padding:12px 0 4px;border-top:1px solid var(--border)44;margin-top:8px">
+    <div style="font-family:var(--font-head);font-size:0.95rem;color:var(--muted);margin-bottom:8px;letter-spacing:.02em">FinanceTracker</div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px;max-width:500px;margin-left:auto;margin-right:auto">
+      A secure, privacy-first personal finance app. Track expenses, manage budgets and grow your wealth — your data stays on your machine, always.
+    </p>
+    <div style="display:flex;justify-content:center;gap:36px;margin-bottom:16px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Encrypted Passwords
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="8" width="4" height="13"/><rect x="17" y="4" width="4" height="17"/></svg>
+        Real-time Tracking
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        JWT Secured Sessions
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        No Ads
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--muted)">
+      Questions? <a href="mailto:Finance@track.com" style="color:var(--accent);text-decoration:none">Finance@track.com</a>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:8px;opacity:0.4">© 2026 FinanceTracker. All rights reserved.</div>
+  </div>
+
+  </div>
 </div>
 
 <!-- APP -->
@@ -283,6 +324,9 @@
     <div class="nav-section">Manage</div>
     <button class="nav-item" onclick="showPage('categories', this)">
       <span class="nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span> Categories
+    </button>
+    <button class="nav-item" onclick="showPage('about', this)">
+      <span class="nav-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span> About
     </button>
 
     <div class="sidebar-footer">
@@ -431,10 +475,122 @@
 
     <!-- CATEGORIES PAGE -->
     <div class="page" id="page-categories">
-      <div class="page-title">Categories</div>
-      <div class="page-sub">Organise your expenses</div>
-      <div style="margin-bottom:20px"><button class="btn btn-primary" onclick="openModal('category-modal')">+ New Category</button></div>
-      <div class="grid-3" id="categories-grid"><div class="loading">Loading…</div></div>
+      <div class="page-title">Manage</div>
+      <div class="page-sub">Organise your expense categories and income types</div>
+
+      <!-- Expense Categories -->
+      <div class="section-header" style="margin-bottom:12px">
+        <h2 style="font-size:1rem;font-weight:700">Expense Categories</h2>
+        <button class="btn btn-primary btn-sm" onclick="openModal('category-modal')">+ New Category</button>
+      </div>
+      <div class="grid-3" id="categories-grid" style="margin-bottom:32px"><div class="loading">Loading…</div></div>
+
+      <!-- Income Types -->
+      <div class="section-header" style="margin-bottom:12px">
+        <h2 style="font-size:1rem;font-weight:700">Income Types</h2>
+        <button class="btn btn-primary btn-sm" onclick="openModal('income-type-modal')">+ New Type</button>
+      </div>
+      <div class="grid-3" id="income-types-grid"><div class="loading">Loading…</div></div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div class="page" id="page-about">
+      <div class="page-title">About FinanceTracker</div>
+      <div class="page-sub">Who we are and what we stand for</div>
+
+      <!-- Mission -->
+      <div class="card" style="margin-bottom:20px;background:linear-gradient(135deg,#1a2a0a 0%,#0a1a2a 100%)">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+          <div style="width:48px;height:48px;border-radius:14px;background:var(--accent)18;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <div style="font-family:var(--font-head);font-size:1.3rem;color:var(--accent)">Our Mission</div>
+            <div style="font-size:13px;color:var(--muted)">Why we built FinanceTracker</div>
+          </div>
+        </div>
+        <p style="color:var(--text);line-height:1.8;font-size:15px">
+          At <strong style="color:var(--accent)">FinanceTracker</strong>, we believe everyone deserves a clear picture of their financial health.
+          Our mission is to make personal finance simple, transparent and accessible — giving you the tools to track your spending,
+          manage your budgets and grow your wealth with confidence.
+        </p>
+        <p style="color:var(--muted);line-height:1.8;font-size:14px;margin-top:12px">
+          Built as a Cambrian College Capstone Project, FinanceTracker combines clean architecture,
+          modern design and real-world financial features to help individuals take control of their money.
+        </p>
+      </div>
+
+      <!-- Features & Privacy grid -->
+      <div class="grid-2" style="margin-bottom:20px">
+
+        <!-- Key Features -->
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--accent2)18;display:flex;align-items:center;justify-content:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div style="font-weight:700;font-size:15px">What We Offer</div>
+          </div>
+          <div class="about-feature-item"><div class="about-dot"></div><div><div class="about-feature-title">Expense Tracking</div><div class="about-feature-desc">Log and categorise every transaction with ease</div></div></div>
+          <div class="about-feature-item"><div class="about-dot"></div><div><div class="about-feature-title">Budget Management</div><div class="about-feature-desc">Set monthly limits and monitor utilization in real time</div></div></div>
+          <div class="about-feature-item"><div class="about-dot"></div><div><div class="about-feature-title">Income Tracking</div><div class="about-feature-desc">Monitor salaries, freelance income and investments</div></div></div>
+          <div class="about-feature-item"><div class="about-dot"></div><div><div class="about-feature-title">Crypto Portfolio</div><div class="about-feature-desc">Track digital asset holdings and performance</div></div></div>
+          <div class="about-feature-item"><div class="about-dot"></div><div><div class="about-feature-title">Net Worth Dashboard</div><div class="about-feature-desc">See your complete financial picture at a glance</div></div></div>
+          <div class="about-feature-item"><div class="about-dot"></div><div><div class="about-feature-title">Bank Accounts</div><div class="about-feature-desc">Manage balances across all your accounts</div></div></div>
+          <div class="about-feature-item"><div class="about-dot"></div><div><div class="about-feature-title">Secure Password Reset</div><div class="about-feature-desc">Account recovery via verified email link</div></div></div>
+          <div class="about-feature-item" style="border-bottom:none"><div class="about-dot"></div><div><div class="about-feature-title">Data Export</div><div class="about-feature-desc">Download your expenses as CSV anytime</div></div></div>
+        </div>
+
+        <!-- Privacy & Safety -->
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--accent)18;display:flex;align-items:center;justify-content:center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div style="font-weight:700;font-size:15px">Privacy & Data Safety</div>
+          </div>
+          <div class="about-privacy-item"><div class="about-privacy-icon" style="background:var(--accent)18"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="about-feature-title">Encrypted Passwords</div><div class="about-feature-desc">All passwords are hashed with BCrypt — never stored in plain text</div></div></div>
+          <div class="about-privacy-item"><div class="about-privacy-icon" style="background:var(--accent2)18"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="about-feature-title">JWT Authentication</div><div class="about-feature-desc">Every session uses a signed token that expires automatically</div></div></div>
+          <div class="about-privacy-item"><div class="about-privacy-icon" style="background:var(--warn)18"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="about-feature-title">Secure Password Reset</div><div class="about-feature-desc">Reset links are single-use and expire after 30 minutes</div></div></div>
+          <div class="about-privacy-item"><div class="about-privacy-icon" style="background:var(--accent)18"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="about-feature-title">Your Data is Yours</div><div class="about-feature-desc">We never sell or share your financial data with third parties</div></div></div>
+          <div class="about-privacy-item"><div class="about-privacy-icon" style="background:var(--accent2)18"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div><div class="about-feature-title">Local by Default</div><div class="about-feature-desc">Your database runs on your own machine, not shared cloud servers</div></div></div>
+          <div class="about-privacy-item" style="border-bottom:none"><div class="about-privacy-icon" style="background:var(--danger)18"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div><div><div class="about-feature-title">No Ads, Ever</div><div class="about-feature-desc">FinanceTracker is completely ad-free — your attention is not our product</div></div></div>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--warn)18;display:flex;align-items:center;justify-content:center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div style="font-weight:700;font-size:15px">Contact Us</div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:16px">
+          <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:14px 20px;border-radius:12px;flex:1;min-width:200px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Email</div>
+              <a href="mailto:Finance@track.com" style="color:var(--accent);font-weight:600;font-size:14px">Finance@track.com</a>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:14px 20px;border-radius:12px;flex:1;min-width:200px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            <div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">GitHub</div>
+              <a href="https://github.com/YatorAlexKe/Expense_Tracking-Budget_Control_App" target="_blank" style="color:var(--accent2);font-weight:600;font-size:14px">View Source Code</a>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;background:var(--bg);padding:14px 20px;border-radius:12px;flex:1;min-width:200px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Version</div>
+              <div style="color:var(--warn);font-weight:600;font-size:14px">v1.0.0 — Capstone 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </main>
@@ -450,11 +606,29 @@
     <div class="field"><label>Date</label><input type="date" id="income-date"/></div>
     <div class="field"><label>Source</label><input type="text" id="income-source" placeholder="e.g. Salary, Freelance, Dividends"/></div>
     <div class="field"><label>Type</label>
-      <select id="income-type">
+      <select id="income-type" onchange="toggleIncomeCustomType()">
         <option value="Salary">Salary</option><option value="Freelance">Freelance</option>
         <option value="Investment">Investment</option><option value="Rental">Rental</option>
-        <option value="Business">Business</option><option value="Other">Other</option>
+        <option value="Business">Business</option><option value="Gift">Gift</option>
+        <option value="Other">Other</option>
       </select>
+    </div>
+    <div class="field" id="income-custom-type-field" style="display:none">
+      <label>Specify Type</label>
+      <input type="text" id="income-custom-type" placeholder="e.g. Prize, Inheritance, Bonus…"/>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+        <input type="checkbox" id="income-save-type" style="width:auto;accent-color:var(--accent)"/>
+        <label style="font-size:12px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:400;margin:0;cursor:pointer" for="income-save-type">
+          Save as a permanent income type
+        </label>
+      </div>
+    </div>
+    <div class="field">
+      <label>Deposit Into Account</label>
+      <select id="income-account">
+        <option value="">— No account (track only) —</option>
+      </select>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Selecting an account will update its balance and reflect in Net Worth</div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('income-modal')">Cancel</button>
@@ -507,6 +681,20 @@
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('category-modal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveCategory()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Income Type Modal -->
+<div class="modal-overlay" id="income-type-modal">
+  <div class="modal">
+    <div class="modal-title" id="income-type-modal-title">New Income Type</div>
+    <div id="income-type-modal-error" class="error-msg" style="display:none"></div>
+    <input type="hidden" id="income-type-id"/>
+    <div class="field"><label>Income Type Name</label><input type="text" id="income-type-name" placeholder="e.g. Pension, Grant, Bonus…"/></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('income-type-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveIncomeType()">Save</button>
     </div>
   </div>
 </div>
@@ -736,7 +924,13 @@ function showPage(name, btn) {
   if (loaders[name]) window[loaders[name]]();
 }
 
-function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  if (id === 'income-modal') {
+    populateIncomeAccountSelect();
+    populateIncomeTypeSelect();
+  }
+}
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-overlay').forEach(o => {
   o.addEventListener('click', e => { if (e.target===o) o.classList.remove('open'); });
@@ -757,7 +951,7 @@ async function initApp() {
   document.getElementById('crypto-date').value = today;
   document.getElementById('income-date').value = today;
   if (!isDemoMode) await loadCategoriesData();
-  else categories = ['Groceries','Dining Out','Transport','Subscriptions','Shopping','Utilities','Health'].map((n,i) => ({id:'c'+i,name:n}));
+  else categories = DEFAULT_EXPENSE_CATEGORIES.map((n,i) => ({id:'c'+i, name:n}));
   populateCategorySelects();
   loadNetWorth();
 }
@@ -841,16 +1035,77 @@ function loadIncome() {
   if (!list.length) { tbody.innerHTML='<tr><td colspan="5"><div class="empty"><div class="empty-icon">💰</div><p>No income logged yet.</p></div></td></tr>'; return; }
   tbody.innerHTML=list.map(i=>`<tr><td style="color:var(--muted)">${fmtDate(i.date)}</td><td style="font-weight:500">${i.source}</td><td><span class="badge badge-income">${i.type}</span></td><td style="font-weight:700;color:var(--accent2)">${fmt(i.amount)}</td><td style="text-align:right">${isDemoMode?'':`<button class="btn btn-danger btn-sm" onclick="deleteIncome('${i.id}')">Delete</button>`}</td></tr>`).join('');
 }
+function toggleIncomeCustomType() {
+  const type = document.getElementById('income-type').value;
+  const field = document.getElementById('income-custom-type-field');
+  field.style.display = type === 'Other' ? 'block' : 'none';
+  if (type !== 'Other') document.getElementById('income-custom-type').value = '';
+}
+
+function populateIncomeAccountSelect() {
+  const sel = document.getElementById('income-account');
+  const accounts = getAccounts();
+  sel.innerHTML = '<option value="">— No account (track only) —</option>';
+  accounts.forEach(a => {
+    const o = document.createElement('option');
+    o.value = a.id;
+    o.textContent = `${a.name} (${fmt(a.balance)})`;
+    sel.appendChild(o);
+  });
+}
+
 function saveIncome() {
   hideError('income-modal-error');
-  const amount=parseFloat(document.getElementById('income-amount').value), date=document.getElementById('income-date').value;
-  const source=document.getElementById('income-source').value.trim(), type=document.getElementById('income-type').value;
-  if (!amount||!date||!source) { showError('income-modal-error','Amount, date and source are required'); return; }
-  if (saveIncomeLine({id:'i'+Date.now(),date,source,type,amount})) {
-    toast('Income added'); closeModal('income-modal');
-    document.getElementById('income-amount').value=''; document.getElementById('income-source').value='';
-    loadIncome(); loadNetWorth();
+  const amount    = parseFloat(document.getElementById('income-amount').value);
+  const date      = document.getElementById('income-date').value;
+  const source    = document.getElementById('income-source').value.trim();
+  const typeSelect  = document.getElementById('income-type').value;
+  const customType  = document.getElementById('income-custom-type').value.trim();
+  const saveType    = document.getElementById('income-save-type').checked;
+  const type        = typeSelect === 'Other' && customType ? customType : typeSelect;
+  const accountId   = document.getElementById('income-account').value;
+
+  if (!amount || !date || !source) { showError('income-modal-error', 'Amount, date and source are required'); return; }
+  if (typeSelect === 'Other' && !customType) { showError('income-modal-error', 'Please specify the income type'); return; }
+
+  // Save as permanent type if checkbox is checked
+  if (typeSelect === 'Other' && customType && saveType) {
+    const existing = getIncomeTypes().map(t => (t.name||t).toLowerCase());
+    if (!existing.includes(customType.toLowerCase())) {
+      const custom = getLocal('income_types') || [];
+      custom.push({ id: 'it' + Date.now(), name: customType });
+      setLocal('income_types', custom);
+      toast(`"${customType}" saved as a permanent income type ✅`);
+    }
   }
+
+  // Save income entry
+  const saved = saveIncomeLine({ id:'i'+Date.now(), date, source, type, amount, accountId });
+  if (!saved) return;
+
+  // If account selected, update its balance
+  if (accountId) {
+    const accounts = getLocal('accounts') || [];
+    const idx = accounts.findIndex(a => a.id === accountId);
+    if (idx >= 0) {
+      accounts[idx].balance = parseFloat((accounts[idx].balance + amount).toFixed(2));
+      setLocal('accounts', accounts);
+      toast(`Income added — ${accounts[idx].name} updated to ${fmt(accounts[idx].balance)}`);
+    }
+  } else {
+    toast('Income added');
+  }
+
+  closeModal('income-modal');
+  document.getElementById('income-amount').value = '';
+  document.getElementById('income-source').value = '';
+  document.getElementById('income-account').value = '';
+  document.getElementById('income-type').value = 'Salary';
+  document.getElementById('income-custom-type').value = '';
+  document.getElementById('income-custom-type-field').style.display = 'none';
+  document.getElementById('income-save-type').checked = false;
+  loadIncome();
+  loadNetWorth();
 }
 function deleteIncome(id) { if (!confirm('Delete?')) return; if (deleteIncomeLine(id)) { toast('Deleted'); loadIncome(); loadNetWorth(); } }
 
@@ -890,37 +1145,213 @@ function saveAccount() {
 function deleteAccount(id) { if (!confirm('Delete this account?')) return; if (deleteAccountLocal(id)) { toast('Deleted'); loadAccounts(); loadNetWorth(); } }
 
 // ── Categories ───────────────────────────────────────────────
-async function loadCategoriesData() { try { categories=await apiCall('GET','/categories'); populateCategorySelects(); } catch { categories=[]; } }
-function populateCategorySelects() {
-  ['filter-cat','exp-category','budget-category'].forEach(id => {
-    const sel=document.getElementById(id), cur=sel.value;
-    sel.innerHTML=id==='filter-cat'?'<option value="">All Categories</option>':'<option value="">Select category…</option>';
-    categories.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.name; sel.appendChild(o); });
-    if (cur) sel.value=cur;
-  });
+// ── Default Expense Categories ────────────────────────────────
+const DEFAULT_EXPENSE_CATEGORIES = [
+  'Rent', 'Water Bill', 'Electricity Bill', 'Internet', 'Groceries',
+  'Dining Out', 'Transport', 'Fuel', 'Health', 'Subscriptions',
+  'Shopping', 'Education', 'Insurance', 'Entertainment', 'Clothing'
+];
+
+function getExpenseCategories() {
+  const custom = getLocal('custom_categories') || [];
+  return [
+    ...DEFAULT_EXPENSE_CATEGORIES.map((name, i) => ({ id: 'def_' + i, name, isDefault: true })),
+    ...custom.map(c => ({ ...c, isDefault: false })),
+    ...categories.filter(c => !DEFAULT_EXPENSE_CATEGORIES.map(d=>d.toLowerCase()).includes(c.name.toLowerCase()) && !custom.find(cu=>cu.name.toLowerCase()===c.name.toLowerCase())).map(c => ({ ...c, isDefault: false }))
+  ];
 }
-async function loadCategories() {
-  if (!isDemoMode) await loadCategoriesData();
-  const grid=document.getElementById('categories-grid');
-  if (!categories.length) { grid.innerHTML='<div class="empty"><p>No categories yet.</p></div>'; return; }
-  grid.innerHTML=categories.map(c=>`
+
+function loadExpenseCategoriesGrid() {
+  const grid   = document.getElementById('categories-grid');
+  const custom = getLocal('custom_categories') || [];
+
+  const defaultItems = DEFAULT_EXPENSE_CATEGORIES.map((name, i) => `
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:600">${name}</div>
+      <span class="badge badge-ok" style="font-size:11px">Default</span>
+    </div>`).join('');
+
+  const customItems = custom.map(c => `
     <div class="card" style="display:flex;align-items:center;justify-content:space-between">
       <div style="font-weight:600">${c.name}</div>
-      <div style="display:flex;gap:6px">${isDemoMode?'':`<button class="btn btn-outline btn-sm" onclick="editCategory('${c.id}','${c.name}')">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button>`}</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="editLocalCategory('${c.id}','${c.name}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteLocalCategory('${c.id}')">Delete</button>
+      </div>
     </div>`).join('');
+
+  const apiItems = categories
+    .filter(c => !DEFAULT_EXPENSE_CATEGORIES.map(d=>d.toLowerCase()).includes(c.name.toLowerCase()) && !custom.find(cu=>cu.name.toLowerCase()===c.name.toLowerCase()))
+    .map(c => `
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:600">${c.name}</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="editCategory('${c.id}','${c.name}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button>
+      </div>
+    </div>`).join('');
+
+  grid.innerHTML = defaultItems + customItems + apiItems || '<div class="empty"><p>No categories yet.</p></div>';
 }
-function editCategory(id,name) { document.getElementById('category-id').value=id; document.getElementById('cat-name').value=name; document.getElementById('cat-modal-title').textContent='Edit Category'; openModal('category-modal'); }
+
+function populateCategorySelects() {
+  const allCats = getExpenseCategories();
+  ['filter-cat','exp-category','budget-category'].forEach(id => {
+    const sel = document.getElementById(id), cur = sel.value;
+    sel.innerHTML = id==='filter-cat' ? '<option value="">All Categories</option>' : '<option value="">Select category\u2026</option>';
+    allCats.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.name; sel.appendChild(o); });
+    if (cur) sel.value = cur;
+  });
+}
+
+async function loadCategoriesData() {
+  try { categories = await apiCall('GET', '/categories'); }
+  catch { categories = []; }
+  populateCategorySelects();
+}
+
+function editLocalCategory(id, name) {
+  document.getElementById('category-id').value = id;
+  document.getElementById('cat-name').value = name;
+  document.getElementById('cat-modal-title').textContent = 'Edit Category';
+  hideError('cat-modal-error');
+  openModal('category-modal');
+}
+
+function deleteLocalCategory(id) {
+  if (!confirm('Delete this category?')) return;
+  const custom = (getLocal('custom_categories') || []).filter(c => c.id !== id);
+  setLocal('custom_categories', custom);
+  toast('Category deleted');
+  loadCategories();
+}
+
+// ── Income Types ─────────────────────────────────────────────
+const DEFAULT_INCOME_TYPES = ['Salary', 'Freelance', 'Investment', 'Rental', 'Business', 'Gift'];
+
+function getIncomeTypes() {
+  const custom = getLocal('income_types') || [];
+  return [...DEFAULT_INCOME_TYPES, ...custom];
+}
+
+function loadIncomeTypesGrid() {
+  const custom = getLocal('income_types') || [];
+  const grid   = document.getElementById('income-types-grid');
+  const defaultItems = DEFAULT_INCOME_TYPES.map(t => `
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:600">${t}</div>
+      <span class="badge badge-ok" style="font-size:11px">Default</span>
+    </div>`).join('');
+  const customItems = custom.length ? custom.map(t => `
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:600">${t.name}</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="editIncomeType('${t.id}','${t.name}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteIncomeType('${t.id}')">Delete</button>
+      </div>
+    </div>`).join('') : '';
+  grid.innerHTML = defaultItems + customItems;
+}
+
+function editIncomeType(id, name) {
+  document.getElementById('income-type-id').value = id;
+  document.getElementById('income-type-name').value = name;
+  document.getElementById('income-type-modal-title').textContent = 'Edit Income Type';
+  hideError('income-type-modal-error');
+  openModal('income-type-modal');
+}
+
+function saveIncomeType() {
+  hideError('income-type-modal-error');
+  const id   = document.getElementById('income-type-id').value;
+  const name = document.getElementById('income-type-name').value.trim();
+  if (!name) { showError('income-type-modal-error', 'Name is required'); return; }
+  if (getIncomeTypes().map(t => (t.name||t).toLowerCase()).includes(name.toLowerCase()) && !id) {
+    showError('income-type-modal-error', 'This income type already exists'); return;
+  }
+  const custom = getLocal('income_types') || [];
+  if (id) { const idx = custom.findIndex(t => t.id === id); if (idx >= 0) custom[idx].name = name; }
+  else { custom.push({ id: 'it' + Date.now(), name }); }
+  setLocal('income_types', custom);
+  toast(id ? 'Income type updated' : 'Income type added');
+  document.getElementById('income-type-id').value = '';
+  document.getElementById('income-type-name').value = '';
+  document.getElementById('income-type-modal-title').textContent = 'New Income Type';
+  closeModal('income-type-modal');
+  loadIncomeTypesGrid();
+  populateIncomeTypeSelect();
+}
+
+function deleteIncomeType(id) {
+  if (!confirm('Delete this income type?')) return;
+  const custom = (getLocal('income_types') || []).filter(t => t.id !== id);
+  setLocal('income_types', custom);
+  toast('Income type deleted');
+  loadIncomeTypesGrid();
+  populateIncomeTypeSelect();
+}
+
+function populateIncomeTypeSelect() {
+  const sel   = document.getElementById('income-type');
+  const types = getIncomeTypes();
+  const cur   = sel.value;
+  sel.innerHTML = types.map(t => { const val = t.name || t; return `<option value="${val}">${val}</option>`; }).join('') + '<option value="Other">Other</option>';
+  if (cur) sel.value = cur;
+}
+
+async function loadCategories() {
+  if (!isDemoMode) await loadCategoriesData();
+  else {
+    categories = DEFAULT_EXPENSE_CATEGORIES.map((n,i) => ({id:'c'+i, name:n}));
+    populateCategorySelects();
+  }
+  loadExpenseCategoriesGrid();
+  loadIncomeTypesGrid();
+}
+
+function editCategory(id, name) {
+  document.getElementById('category-id').value = id;
+  document.getElementById('cat-name').value = name;
+  document.getElementById('cat-modal-title').textContent = 'Edit Category';
+  hideError('cat-modal-error');
+  openModal('category-modal');
+}
+
 async function saveCategory() {
   hideError('cat-modal-error');
-  const id=document.getElementById('category-id').value, name=document.getElementById('cat-name').value.trim();
-  if (!name) { showError('cat-modal-error','Name is required'); return; }
-  try {
-    if (id) await apiCall('PUT',`/categories/${id}`,{name}); else await apiCall('POST','/categories',{name});
-    toast(id?'Category updated':'Category created'); document.getElementById('category-id').value=''; document.getElementById('cat-name').value='';
-    closeModal('category-modal'); loadCategories();
-  } catch(e) { showError('cat-modal-error',e.message); }
+  const id   = document.getElementById('category-id').value;
+  const name = document.getElementById('cat-name').value.trim();
+  if (!name) { showError('cat-modal-error', 'Name is required'); return; }
+
+  const custom = getLocal('custom_categories') || [];
+  const isLocal = id && (id.startsWith('cc') || custom.find(c => c.id === id));
+
+  if (isLocal) {
+    const idx = custom.findIndex(c => c.id === id);
+    if (idx >= 0) custom[idx].name = name;
+    setLocal('custom_categories', custom);
+    toast('Category updated');
+  } else if (id && !id.startsWith('def_')) {
+    try { await apiCall('PUT', `/categories/${id}`, { name }); toast('Category updated'); }
+    catch(e) { showError('cat-modal-error', e.message); return; }
+  } else {
+    custom.push({ id: 'cc' + Date.now(), name });
+    setLocal('custom_categories', custom);
+    toast('Category created');
+  }
+  document.getElementById('category-id').value = '';
+  document.getElementById('cat-name').value = '';
+  closeModal('category-modal');
+  loadCategories();
+  populateCategorySelects();
 }
-async function deleteCategory(id) { if (!confirm('Delete?')) return; try { await apiCall('DELETE',`/categories/${id}`); toast('Deleted'); loadCategories(); } catch(e) { toast(e.message,'err'); } }
+
+async function deleteCategory(id) {
+  if (!confirm('Delete this category?')) return;
+  if (id.startsWith('def_') || id.startsWith('cc')) { deleteLocalCategory(id); return; }
+  try { await apiCall('DELETE', `/categories/${id}`); toast('Deleted'); loadCategories(); }
+  catch(e) { toast(e.message, 'err'); }
+}
 
 // ── Expenses ─────────────────────────────────────────────────
 async function loadExpenses() {
