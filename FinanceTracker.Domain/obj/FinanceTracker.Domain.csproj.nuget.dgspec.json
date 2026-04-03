@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj": {}
+    "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj": {}
   },
   "projects": {
-    "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj": {
+    "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj",
+        "projectUniqueName": "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj",
         "projectName": "FinanceTracker.Domain",
-        "projectPath": "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj",
-        "packagesPath": "C:\\Users\\chery\\.nuget\\packages\\",
-        "outputPath": "D:\\Cambrian College - IT Buisness Analysis\\Software engineering concepts\\Capstone\\Expense_Tracking-Budget_Control_App\\FinanceTracker.Domain\\obj\\",
+        "projectPath": "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\FinanceTracker.Domain.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\FinanceTracker\\FinanceTracker.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\chery\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0": {
@@ -66,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

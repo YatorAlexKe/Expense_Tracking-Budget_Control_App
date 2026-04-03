@@ -180,6 +180,12 @@
   .about-privacy-item { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--border)44; }
   .about-privacy-icon { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 
+  /* Password toggle */
+  .password-wrap { position: relative; }
+  .password-wrap input { padding-right: 42px; width: 100%; }
+  .pwd-toggle { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); padding: 0; display: flex; align-items: center; transition: color .2s; }
+  .pwd-toggle:hover { color: var(--accent); }
+
   /* Forgot password link */
   .forgot-link { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; width: 100%; transition: color .2s; }
   .forgot-link:hover { color: var(--accent); }
@@ -209,7 +215,7 @@
       <!-- Login -->
       <div id="login-form">
         <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="you@example.com"/></div>
-        <div class="field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••"/></div>
+        <div class="field"><label>Password</label><div class="password-wrap"><input type="password" id="login-password" placeholder="••••••••"/><button class="pwd-toggle" type="button" onclick="togglePassword('login-password', this)" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
         <button class="btn btn-primary btn-full" onclick="login()">Sign In</button>
         <button class="forgot-link" onclick="showForgotPassword()">Forgot your password?</button>
         <div style="text-align:center;margin-top:8px">
@@ -222,7 +228,7 @@
       <!-- Register -->
       <div id="register-form" style="display:none">
         <div class="field"><label>Email</label><input type="email" id="reg-email" placeholder="you@example.com"/></div>
-        <div class="field"><label>Password</label><input type="password" id="reg-password" placeholder="Min 6 characters"/></div>
+        <div class="field"><label>Password</label><div class="password-wrap"><input type="password" id="reg-password" placeholder="Min 6 characters"/><button class="pwd-toggle" type="button" onclick="togglePassword('reg-password', this)" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
         <button class="btn btn-primary btn-full" onclick="register()">Create Account</button>
       </div>
     </div>
@@ -247,8 +253,8 @@
       <div style="color:var(--muted);font-size:14px;margin-bottom:24px">Enter your new password below.</div>
       <div id="reset-error" class="error-msg" style="display:none"></div>
       <div id="reset-success" class="success-msg" style="display:none"></div>
-      <div class="field"><label>New Password</label><input type="password" id="reset-password" placeholder="Min 6 characters"/></div>
-      <div class="field"><label>Confirm Password</label><input type="password" id="reset-confirm" placeholder="Repeat password"/></div>
+      <div class="field"><label>New Password</label><div class="password-wrap"><input type="password" id="reset-password" placeholder="Min 6 characters"/><button class="pwd-toggle" type="button" onclick="togglePassword('reset-password', this)" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+      <div class="field"><label>Confirm Password</label><div class="password-wrap"><input type="password" id="reset-confirm" placeholder="Repeat password"/><button class="pwd-toggle" type="button" onclick="togglePassword('reset-confirm', this)" tabindex="-1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
       <button class="btn btn-primary btn-full" onclick="resetPassword()">Reset Password</button>
     </div>
   </div>
@@ -803,8 +809,25 @@ function toast(msg, type='ok') {
   setTimeout(() => el.className = '', 3000);
 }
 function showError(id, msg)   { const el=document.getElementById(id); el.textContent=msg; el.style.display='block'; }
-function hideError(id)        { document.getElementById(id).style.display='none'; }
+function hideError(id) {
+    const el = document.getElementById(id);
+    el.style.display     = 'none';
+    el.style.background  = '';
+    el.style.borderColor = '';
+    el.style.color       = '';
+}
 function showSuccess(id, msg) { const el=document.getElementById(id); el.textContent=msg; el.style.display='block'; }
+
+// ── Password Toggle ───────────────────────────────────────────
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const show  = input.type === 'password';
+  input.type  = show ? 'text' : 'password';
+  btn.innerHTML = show
+    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+  btn.style.color = show ? 'var(--accent)' : '';
+}
 
 // ── Auth screens ─────────────────────────────────────────────
 function showAuthMain() {
@@ -830,14 +853,40 @@ function switchAuthTab(tab) {
 
 // ── Auth actions ─────────────────────────────────────────────
 async function login() {
-  hideError('auth-error');
-  try {
-    const data = await apiCall('POST', '/auth/login', {
-      email: document.getElementById('login-email').value,
-      password: document.getElementById('login-password').value
-    });
-    setSession(data.token, data.email, false);
-  } catch(e) { showError('auth-error', e.message); }
+    hideError('auth-error');
+
+    const email    = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    // Basic frontend validation
+    if (!email || !password) {
+        showError('auth-error', 'Please enter your email and password.');
+        return;
+    }
+
+    // Disable button while request is in progress
+    const btn = document.querySelector('#login-form .btn-primary');
+    btn.disabled    = true;
+    btn.textContent = 'Signing in…';
+
+    try {
+        const data = await apiCall('POST', '/auth/login', { email, password });
+        setSession(data.token, data.email, false);
+    } catch(e) {
+        const isLocked   = e.message.toLowerCase().includes('locked');
+        const isAttempts = e.message.toLowerCase().includes('remaining');
+        const errEl      = document.getElementById('auth-error');
+
+        errEl.textContent = e.message;
+        errEl.style.display     = 'block';
+        errEl.style.background  = isLocked  ? 'var(--warn)18'   : isAttempts ? 'var(--warn)18'   : '';
+        errEl.style.borderColor = isLocked  ? 'var(--warn)66'   : isAttempts ? 'var(--warn)44'   : '';
+        errEl.style.color       = isLocked  ? 'var(--warn)'     : isAttempts ? 'var(--warn)'     : '';
+    } finally {
+        // Re-enable button regardless of success or failure
+        btn.disabled    = false;
+        btn.textContent = 'Sign In';
+    }
 }
 
 async function register() {

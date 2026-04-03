@@ -6,10 +6,15 @@ public class User
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? LastLoginAt { get; set; }
 
     // Password Reset
     public string? PasswordResetToken { get; set; }
     public DateTime? PasswordResetTokenExpiry { get; set; }
+
+    // Login Lockout
+    public int FailedLoginAttempts { get; set; } = 0;
+    public DateTime? LockoutUntil { get; set; }
 
     // Navigation
     public ICollection<Category> Categories { get; set; } = new List<Category>();
