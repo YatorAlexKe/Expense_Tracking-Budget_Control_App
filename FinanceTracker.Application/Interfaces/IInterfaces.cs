@@ -10,6 +10,7 @@ public interface IUserRepository
     Task<User?> GetByEmailAsync(string email);
     Task<User?> GetByIdAsync(Guid id);
     Task<User?> GetByResetTokenAsync(string token);
+    Task<User?> GetByVerificationTokenAsync(string token);
     Task AddAsync(User user);
     Task SaveChangesAsync();
 }
@@ -64,6 +65,8 @@ public interface IAuthService
     Task<AuthResponse> LoginAsync(LoginRequest request);
     Task ForgotPasswordAsync(ForgotPasswordRequest request);
     Task ResetPasswordAsync(ResetPasswordRequest request);
+    Task VerifyEmailAsync(string token);
+    Task ResendVerificationEmailAsync(string email);
 }
 
 public interface ICategoryService
@@ -116,4 +119,5 @@ public interface ICryptoPriceService
 public interface IEmailService
 {
     Task SendPasswordResetEmailAsync(string toEmail, string resetLink);
+    Task SendVerificationEmailAsync(string toEmail, string verifyLink);
 }

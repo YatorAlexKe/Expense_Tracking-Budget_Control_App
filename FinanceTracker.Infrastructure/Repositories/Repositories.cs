@@ -24,6 +24,9 @@ public class UserRepository : IUserRepository
     public async Task AddAsync(User user) => await _db.Users.AddAsync(user);
 
     public Task SaveChangesAsync() => _db.SaveChangesAsync();
+
+    public Task<User?> GetByVerificationTokenAsync(string token) =>
+    _db.Users.FirstOrDefaultAsync(u => u.EmailVerificationToken == token);
 }
 
 // ── Category ─────────────────────────────────────────────────────────────────

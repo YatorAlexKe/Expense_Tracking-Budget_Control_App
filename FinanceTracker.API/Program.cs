@@ -85,4 +85,14 @@ app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "FinanceTr
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.Run();
+
+try
+{
+    app.Run();
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"\n\n STARTUP ERROR: {ex.Message}");
+    Console.WriteLine(ex.StackTrace);
+    Console.ReadLine();
+}

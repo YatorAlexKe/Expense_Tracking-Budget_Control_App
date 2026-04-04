@@ -54,4 +54,20 @@ public class AuthController : ControllerBase
         await _auth.ResetPasswordAsync(request);
         return Ok(new { message = "Password reset successfully. You can now log in." });
     }
+
+    /// <summary>Verify email address using token from email link.</summary>
+    [HttpGet("verify-email")]
+    public async Task<IActionResult> VerifyEmail([FromQuery] string token)
+    {
+        await _auth.VerifyEmailAsync(token);
+        return Ok(new { message = "Email verified successfully. You can now log in." });
+    }
+
+    /// <summary>Resend verification email.</summary>
+    [HttpPost("resend-verification")]
+    public async Task<IActionResult> ResendVerification([FromBody] ForgotPasswordRequest request)
+    {
+        await _auth.ResendVerificationEmailAsync(request.Email);
+        return Ok(new { message = "If that email exists and is unverified, a new link has been sent." });
+    }
 }

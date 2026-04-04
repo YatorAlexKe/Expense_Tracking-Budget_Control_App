@@ -36,11 +36,12 @@ public class ExceptionMiddleware
     {
         var (status, message) = ex switch
         {
-            NotFoundException     e => (HttpStatusCode.NotFound, e.Message),
-            ForbiddenException    e => (HttpStatusCode.Forbidden, e.Message),
-            ConflictException     e => (HttpStatusCode.Conflict, e.Message),
+            NotFoundException           e => (HttpStatusCode.NotFound, e.Message),
+            ForbiddenException          e => (HttpStatusCode.Forbidden, e.Message),
+            ConflictException           e => (HttpStatusCode.Conflict, e.Message),
             UnauthorizedAccessException e => (HttpStatusCode.Unauthorized, e.Message),
-            _                         => (HttpStatusCode.InternalServerError, "An unexpected error occurred.")
+            ArgumentException           e => (HttpStatusCode.BadRequest, e.Message),
+            _                             => (HttpStatusCode.InternalServerError, "An unexpected error occurred.")
         };
 
         context.Response.ContentType = "application/json";

@@ -12,8 +12,7 @@ public record LoginRequest(
     [Required, EmailAddress] string Email,
     [Required] string Password);
 
-public record AuthResponse(string Token, string Email, Guid UserId);
-
+public record AuthResponse(string Token, string Email, Guid UserId, bool IsEmailVerified = true);
 // ── Category ────────────────────────────────────────────────────────────────
 
 public record CategoryRequest([Required, MaxLength(100)] string Name);

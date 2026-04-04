@@ -872,32 +872,91 @@ async function login() {
     try {
         const data = await apiCall('POST', '/auth/login', { email, password });
         setSession(data.token, data.email, false);
-    } catch(e) {
-        const isLocked   = e.message.toLowerCase().includes('locked');
-        const isAttempts = e.message.toLowerCase().includes('remaining');
-        const errEl      = document.getElementById('auth-error');
+} catch(e) {
+    const isLocked     = e.message.toLowerCase().includes('locked');
+    const isAttempts   = e.message.toLowerCase().includes('remaining');
+    const isUnverified = e.message.toLowerCase().includes('verify');
+    const errEl        = document.getElementById('auth-error');
 
-        errEl.textContent = e.message;
-        errEl.style.display     = 'block';
-        errEl.style.background  = isLocked  ? 'var(--warn)18'   : isAttempts ? 'var(--warn)18'   : '';
-        errEl.style.borderColor = isLocked  ? 'var(--warn)66'   : isAttempts ? 'var(--warn)44'   : '';
-        errEl.style.color       = isLocked  ? 'var(--warn)'     : isAttempts ? 'var(--warn)'     : '';
-    } finally {
-        // Re-enable button regardless of success or failure
-        btn.disabled    = false;
-        btn.textContent = 'Sign In';
+    errEl.style.display     = 'block';
+    errEl.style.background  = isLocked || isAttempts || isUnverified ? 'var(--warn)18' : '';
+    errEl.style.borderColor = isLocked || isAttempts || isUnverified ? 'var(--warn)66' : '';
+    errEl.style.color       = isLocked || isAttempts || isUnverified ? 'var(--warn)'   : '';
+
+    if (isUnverified) {
+      const loginEmail = document.getElementById('login-email').value.trim();
+      errEl.innerHTML = `
+        ${e.message}
+        <br/><br/>
+        <button onclick="resendVerification('${loginEmail}')"
+          style="background:none;border:1px solid var(--warn)66;color:var(--warn);
+                 padding:6px 14px;border-radius:8px;cursor:pointer;font-size:12px;font-family:var(--font-body)">
+          Resend verification email
+        </button>`;
+    } else {
+      errEl.textContent = e.message;
     }
+  } finally {
+    btn.disabled    = false;
+    btn.textContent = 'Sign In';
+  }
 }
 
 async function register() {
   hideError('auth-error');
+
+  const email    = document.getElementById('reg-email').value.trim();
+  const password = document.getElementById('reg-password').value;
+
+  if (!email || !password) {
+    showError('auth-error', 'Please enter your email and password.');
+    return;
+  }
+
+  const btn = document.querySelector('#register-form .btn-primary');
+  btn.disabled    = true;
+  btn.textContent = 'Creating account…';
+
   try {
-    const data = await apiCall('POST', '/auth/register', {
-      email: document.getElementById('reg-email').value,
-      password: document.getElementById('reg-password').value
-    });
-    setSession(data.token, data.email, false);
-  } catch(e) { showError('auth-error', e.message); }
+    const data = await apiCall('POST', '/auth/register', { email, password });
+
+    // If email verification is required show inbox message
+    if (data.isEmailVerified === false) {
+      document.getElementById('register-form').innerHTML = `
+        <div style="text-align:center;padding:16px 0">
+          <div style="font-size:2.5rem;margin-bottom:12px">📧</div>
+          <div style="font-family:var(--font-head);font-size:1.2rem;color:var(--accent);margin-bottom:8px">
+            Check your inbox!
+          </div>
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px">
+            We sent a verification link to <strong style="color:var(--text)">${email}</strong>.
+            Click it to activate your account.
+          </p>
+          <button class="btn btn-outline btn-full" onclick="switchAuthTab('login')" style="margin-bottom:8px">
+            Go to Sign In
+          </button>
+          <button class="btn btn-outline btn-full btn-sm" style="margin-top:8px" onclick="resendVerification('${email}')">
+            Resend verification email
+          </button>
+        </div>`;
+    } else {
+      // Verification not required — log in immediately
+      setSession(data.token, data.email, false);
+    }
+  } catch(e) {
+    showError('auth-error', e.message);
+    btn.disabled    = false;
+    btn.textContent = 'Create Account';
+  }
+}
+
+async function resendVerification(email) {
+  try {
+    await apiCall('POST', '/auth/resend-verification', { email });
+    toast('Verification email resent! Check your inbox.');
+  } catch(e) {
+    toast(e.message, 'err');
+  }
 }
 
 async function forgotPassword() {
@@ -1535,13 +1594,68 @@ async function deleteCryptoBySymbol(symbol) {
 }
 
 // ── Boot ─────────────────────────────────────────────────────
-// Check if opened from a reset link
-const resetToken = new URLSearchParams(window.location.search).get('token');
-if (resetToken) {
-  document.getElementById('auth-main').style.display  = 'none';
-  document.getElementById('forgot-form').style.display = 'none';
-  document.getElementById('reset-form').style.display  = 'block';
-  document.querySelector('.auth-sub').style.display    = 'none';
+const urlParams   = new URLSearchParams(window.location.search);
+const resetToken  = urlParams.get('token');
+const verifyToken = urlParams.get('verify');
+
+if (verifyToken) {
+  // Handle email verification link
+  document.getElementById('auth-main').style.display   = 'none';
+  document.getElementById('forgot-form').style.display  = 'none';
+  document.getElementById('reset-form').style.display   = 'none';
+  document.querySelector('.auth-sub').style.display     = 'none';
+
+  // Show verifying screen
+  const authBox = document.querySelector('.auth-box');
+  const verifyDiv = document.createElement('div');
+  verifyDiv.id = 'verify-screen';
+  verifyDiv.style.cssText = 'text-align:center;padding:16px 0';
+  verifyDiv.innerHTML = `
+    <div style="font-size:2.5rem;margin-bottom:12px">⏳</div>
+    <div style="font-family:var(--font-head);font-size:1.2rem;margin-bottom:8px">
+      Verifying your email…
+    </div>`;
+  authBox.appendChild(verifyDiv);
+
+  // Call verify endpoint
+  apiCall('GET', `/auth/verify-email?token=${verifyToken}`)
+    .then(() => {
+      verifyDiv.innerHTML = `
+        <div style="font-size:2.5rem;margin-bottom:12px">✅</div>
+        <div style="font-family:var(--font-head);font-size:1.2rem;color:var(--accent);margin-bottom:8px">
+          Email Verified!
+        </div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px">
+          Your account is now active. You can sign in.
+        </p>
+        <button class="btn btn-primary btn-full" onclick="
+          window.history.replaceState({}, document.title, window.location.pathname);
+          location.reload();">
+          Go to Sign In
+        </button>`;
+    })
+    .catch(e => {
+      verifyDiv.innerHTML = `
+        <div style="font-size:2.5rem;margin-bottom:12px">❌</div>
+        <div style="font-family:var(--font-head);font-size:1.2rem;color:var(--danger);margin-bottom:8px">
+          Verification Failed
+        </div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px">
+          ${e.message}
+        </p>
+        <button class="btn btn-outline btn-full" onclick="
+          window.history.replaceState({}, document.title, window.location.pathname);
+          location.reload();">
+          Back to Sign In
+        </button>`;
+    });
+
+} else if (resetToken) {
+  document.getElementById('auth-main').style.display   = 'none';
+  document.getElementById('forgot-form').style.display  = 'none';
+  document.getElementById('reset-form').style.display   = 'block';
+  document.querySelector('.auth-sub').style.display     = 'none';
+
 } else if (token) {
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app-screen').style.display  = 'block';
