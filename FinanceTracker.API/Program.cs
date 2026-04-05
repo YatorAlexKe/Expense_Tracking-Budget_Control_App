@@ -39,7 +39,11 @@ builder.Services.AddScoped<IBudgetService,    BudgetService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<ICryptoService,    CryptoService>();
 // Mock price service — swap for a real HTTP client in production
-builder.Services.AddSingleton<ICryptoPriceService, MockCryptoPriceService>();
+builder.Services.AddHttpClient<ICryptoPriceService, CoinGeckoPriceService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(10);
+    client.DefaultRequestHeaders.Add("User-Agent", "FinanceTracker/1.0");
+});
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 // JWT

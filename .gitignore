@@ -10,6 +10,7 @@ obj/
 # Sensitive config - API keys
 appsettings.json
 appsettings.Development.json
+appsettings.Example.json
 
 # Visual Studio
 .vs/
