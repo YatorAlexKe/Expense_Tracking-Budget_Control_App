@@ -173,16 +173,16 @@ The user visits the **Net Worth** page to see total assets, monthly income vs ex
 | README documentation |  In Progress | 3 |
 | Notifications (budget warnings, monthly summary) |  To Do | 3 |
 | Deploy application to production |  To Do | 3 |
-| Login lockout after failed attempts [High Priority] | To Do | 4 |
+| Login lockout after failed attempts [High Priority] | Done | 4 |
 | Refresh token implementation [High Priority] | To Do | 4 |
-| Email verification on registration [High Priority] | To Do | 4 |
+| Email verification on registration [High Priority] | Done | 4 |
 | Recurring transactions support [Medium Priority] | To Do | 4 |
 | Budget overspend notifications [Medium Priority] | To Do | 4 |
-| Monthly summary email report [Medium Priority] | To Do | 4 |
+| Monthly summary email report [Medium Priority] | Done | 4 |
 | Savings goals tracking [Medium Priority] | To Do | 4 |
 | Pagination for expenses & transactions [Low Priority] | To Do | 4 |
 | Unit & integration tests [Low Priority] | To Do | 4 |
-| Real-time crypto prices integration [Low Priority] | To Do | 4 |
+| Real-time crypto prices integration [Low Priority] | Done | 4 |
 | Soft delete for expenses & records [Low Priority] | To Do | 4 |
 | Audit logging for key actions [Low Priority] | To Do | 4 |
 
