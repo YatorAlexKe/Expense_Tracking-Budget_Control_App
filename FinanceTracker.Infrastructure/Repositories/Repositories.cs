@@ -27,6 +27,10 @@ public class UserRepository : IUserRepository
 
     public Task<User?> GetByVerificationTokenAsync(string token) =>
     _db.Users.FirstOrDefaultAsync(u => u.EmailVerificationToken == token);
+    public async Task<IEnumerable<User>> GetAllVerifiedUsersAsync() =>
+    await _db.Users
+        .Where(u => u.IsEmailVerified)
+        .ToListAsync();
 }
 
 // ── Category ─────────────────────────────────────────────────────────────────

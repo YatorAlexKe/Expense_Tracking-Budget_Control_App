@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using FinanceTracker.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,9 @@ builder.Services.AddHttpClient<ICryptoPriceService, CoinGeckoPriceService>(clien
     client.DefaultRequestHeaders.Add("User-Agent", "FinanceTracker/1.0");
 });
 builder.Services.AddScoped<IEmailService, EmailService>();
+// Monthly report background job
+builder.Services.AddHostedService<MonthlyReportJob>();
+
 
 // JWT
 var jwt = builder.Configuration.GetSection("Jwt");

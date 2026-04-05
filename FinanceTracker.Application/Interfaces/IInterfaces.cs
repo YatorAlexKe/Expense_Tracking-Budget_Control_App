@@ -11,6 +11,7 @@ public interface IUserRepository
     Task<User?> GetByIdAsync(Guid id);
     Task<User?> GetByResetTokenAsync(string token);
     Task<User?> GetByVerificationTokenAsync(string token);
+    Task<IEnumerable<User>> GetAllVerifiedUsersAsync();
     Task AddAsync(User user);
     Task SaveChangesAsync();
 }
@@ -120,4 +121,25 @@ public interface IEmailService
 {
     Task SendPasswordResetEmailAsync(string toEmail, string resetLink);
     Task SendVerificationEmailAsync(string toEmail, string verifyLink);
+    Task SendMonthlySummaryEmailAsync(string toEmail, MonthlySummaryEmailData data);
+}
+// ── Monthly Summary Email Data ────────────────────────────────
+public class MonthlySummaryEmailData
+{
+    public string UserEmail       { get; set; } = string.Empty;
+    public string MonthName       { get; set; } = string.Empty;
+    public int    Year            { get; set; }
+    public decimal TotalSpending  { get; set; }
+    public decimal TotalBudget    { get; set; }
+    public decimal TotalIncome    { get; set; }
+    public decimal NetSavings     { get; set; }
+    public decimal UtilizationPct { get; set; }
+    public string BudgetStatus    { get; set; } = string.Empty;
+    public List<CategorySpendItem> TopCategories { get; set; } = new();
+}
+
+public class CategorySpendItem
+{
+    public string  Name   { get; set; } = string.Empty;
+    public decimal Amount { get; set; }
 }
