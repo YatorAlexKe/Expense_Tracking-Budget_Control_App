@@ -14,15 +14,21 @@ namespace FinanceTracker.Application.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly IUserRepository _users;
-    private readonly IConfiguration  _config;
-    private readonly IEmailService   _email;
+    private readonly IUserRepository     _users;
+    private readonly IConfiguration      _config;
+    private readonly IEmailService       _email;
+    private readonly ICategoryRepository _categories;
 
-    public AuthService(IUserRepository users, IConfiguration config, IEmailService email)
+    public AuthService(
+        IUserRepository users,
+        IConfiguration config,
+        IEmailService email,
+        ICategoryRepository categories)
     {
-        _users  = users;
-        _config = config;
-        _email  = email;
+        _users      = users;
+        _config     = config;
+        _email      = email;
+        _categories = categories;
     }
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
@@ -44,12 +50,31 @@ public class AuthService : IAuthService
         {
             Email                  = request.Email,
             PasswordHash           = BCrypt.Net.BCrypt.HashPassword(request.Password),
-            IsEmailVerified        = !requireVerification, // auto verified if feature is off
+            IsEmailVerified        = !requireVerification,
             EmailVerificationToken = requireVerification ? verificationToken : null
         };
 
         await _users.AddAsync(user);
         await _users.SaveChangesAsync();
+
+        // ── Seed default categories for new user ──────────────────
+        var defaultCategories = new[]
+        {
+            "Rent", "Water Bill", "Electricity Bill", "Internet",
+            "Groceries", "Dining Out", "Transport", "Fuel",
+            "Health", "Subscriptions", "Shopping", "Education",
+            "Insurance", "Entertainment", "Clothing"
+        };
+
+        foreach (var name in defaultCategories)
+        {
+            await _categories.AddAsync(new Category
+            {
+                Name   = name,
+                UserId = user.Id
+            });
+        }
+        await _categories.SaveChangesAsync();
 
         // Send verification email only if feature is enabled
         if (requireVerification)
@@ -115,7 +140,6 @@ public class AuthService : IAuthService
     public async Task VerifyEmailAsync(string token)
     {
         var user = await _users.GetByVerificationTokenAsync(token);
-
         if (user is null)
             throw new UnauthorizedAccessException("Invalid verification link.");
 

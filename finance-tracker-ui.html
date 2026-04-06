@@ -462,7 +462,7 @@
     <!-- CRYPTO PAGE -->
     <div class="page" id="page-crypto">
       <div class="page-title">Crypto Portfolio</div>
-      <div class="page-sub">Manual tracking with mock prices</div>
+      <div class="page-sub">Real-time prices powered by Binance API</div>
       <div class="grid-3" style="margin-bottom:24px">
         <div class="card"><div class="card-title">Total Invested</div><div class="card-value" id="crypto-invested">—</div></div>
         <div class="card"><div class="card-title">Current Value</div><div class="card-value" id="crypto-value">—</div></div>
@@ -472,7 +472,7 @@
       <div class="card">
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Symbol</th><th>Quantity</th><th>Avg Buy</th><th>Current Price</th><th>Value</th><th>P&L</th><th></th></tr></thead>
+            <thead><tr><th>Symbol</th><th>Quantity</th><th>Current Price</th><th>Value</th><th>P&L</th><th></th></tr></thead>
             <tbody id="crypto-tbody"><tr><td colspan="7"><div class="loading">Loading…</div></td></tr></tbody>
           </table>
         </div>
@@ -1028,8 +1028,11 @@ function showPage(name, btn) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   if (btn) btn.classList.add('active');
-  const loaders = { networth:'loadNetWorth', dashboard:'loadDashboard', income:'loadIncome', expenses:'loadExpenses', accounts:'loadAccounts', crypto:'loadCrypto', categories:'loadCategories' };
-  if (loaders[name]) window[loaders[name]]();
+  const loaders = { networth:'loadNetWorth', dashboard:'loadDashboard', income:'loadIncome', expenses:'loadExpenses', accounts:'loadAccounts', crypto:'loadCrypto', categories:'loadCategories', budgets:'loadBudgets' };
+  // Small delay ensures page is rendered before loading data
+  setTimeout(() => {
+    if (loaders[name]) window[loaders[name]]();
+  }, 50);
 }
 
 function openModal(id) {
@@ -1059,7 +1062,6 @@ async function initApp() {
   document.getElementById('crypto-date').value = today;
   document.getElementById('income-date').value = today;
   if (!isDemoMode) await loadCategoriesData();
-  else categories = DEFAULT_EXPENSE_CATEGORIES.map((n,i) => ({id:'c'+i, name:n}));
   populateCategorySelects();
   loadNetWorth();
 }
@@ -1259,47 +1261,31 @@ const DEFAULT_EXPENSE_CATEGORIES = [
   'Dining Out', 'Transport', 'Fuel', 'Health', 'Subscriptions',
   'Shopping', 'Education', 'Insurance', 'Entertainment', 'Clothing'
 ];
+// Note: these are seeded into the database on registration
+// They are kept here only for demo mode reference
 
 function getExpenseCategories() {
-  const custom = getLocal('custom_categories') || [];
-  return [
-    ...DEFAULT_EXPENSE_CATEGORIES.map((name, i) => ({ id: 'def_' + i, name, isDefault: true })),
-    ...custom.map(c => ({ ...c, isDefault: false })),
-    ...categories.filter(c => !DEFAULT_EXPENSE_CATEGORIES.map(d=>d.toLowerCase()).includes(c.name.toLowerCase()) && !custom.find(cu=>cu.name.toLowerCase()===c.name.toLowerCase())).map(c => ({ ...c, isDefault: false }))
-  ];
+  // Only use real API categories — no local def_ IDs
+  return categories.map(c => ({ id: c.id, name: c.name, isDefault: false }));
 }
 
 function loadExpenseCategoriesGrid() {
-  const grid   = document.getElementById('categories-grid');
-  const custom = getLocal('custom_categories') || [];
+  const grid = document.getElementById('categories-grid');
 
-  const defaultItems = DEFAULT_EXPENSE_CATEGORIES.map((name, i) => `
-    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
-      <div style="font-weight:600">${name}</div>
-      <span class="badge badge-ok" style="font-size:11px">Default</span>
-    </div>`).join('');
+  if (!categories.length) {
+    grid.innerHTML = '<div class="empty"><p>No categories yet.</p></div>';
+    return;
+  }
 
-  const customItems = custom.map(c => `
+  grid.innerHTML = categories.map(c => `
     <div class="card" style="display:flex;align-items:center;justify-content:space-between">
       <div style="font-weight:600">${c.name}</div>
       <div style="display:flex;gap:6px">
-        <button class="btn btn-outline btn-sm" onclick="editLocalCategory('${c.id}','${c.name}')">Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteLocalCategory('${c.id}')">Delete</button>
-      </div>
-    </div>`).join('');
-
-  const apiItems = categories
-    .filter(c => !DEFAULT_EXPENSE_CATEGORIES.map(d=>d.toLowerCase()).includes(c.name.toLowerCase()) && !custom.find(cu=>cu.name.toLowerCase()===c.name.toLowerCase()))
-    .map(c => `
-    <div class="card" style="display:flex;align-items:center;justify-content:space-between">
-      <div style="font-weight:600">${c.name}</div>
-      <div style="display:flex;gap:6px">
+        ${isDemoMode ? `<span class="badge badge-ok" style="font-size:11px">Default</span>` : `
         <button class="btn btn-outline btn-sm" onclick="editCategory('${c.id}','${c.name}')">Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCategory('${c.id}')">Delete</button>`}
       </div>
     </div>`).join('');
-
-  grid.innerHTML = defaultItems + customItems + apiItems || '<div class="empty"><p>No categories yet.</p></div>';
 }
 
 function populateCategorySelects() {
@@ -1467,8 +1453,16 @@ async function loadExpenses() {
     document.getElementById('expenses-tbody').innerHTML=DEMO.expenses.map(e=>`<tr><td style="color:var(--muted)">${fmtDate(e.date)}</td><td>${e.description}</td><td><span class="badge badge-ok">${e.categoryName}</span></td><td style="font-weight:600">${fmt(e.amount)}</td><td></td></tr>`).join('');
     return;
   }
-  const from=document.getElementById('filter-from').value, to=document.getElementById('filter-to').value, cat=document.getElementById('filter-cat').value;
-  let url='/expenses?'; if (from) url+=`from=${from}&`; if (to) url+=`to=${to}&`; if (cat) url+=`categoryId=${cat}&`;
+  const from = document.getElementById('filter-from').value;
+  const to   = document.getElementById('filter-to').value;
+  const cat  = document.getElementById('filter-cat').value;
+  let url = '/expenses?';
+  if (from) url += `from=${from}&`;
+  if (to)   url += `to=${to}&`;
+  // Only send categoryId if it's a real API Guid (not a local default/custom id)
+  if (cat && !cat.startsWith('def_') && !cat.startsWith('cc')) {
+      url += `categoryId=${cat}&`;
+  }
   const tbody=document.getElementById('expenses-tbody');
   tbody.innerHTML='<tr><td colspan="5"><div class="loading">Loading…</div></td></tr>';
   try {
@@ -1498,7 +1492,7 @@ async function deleteExpense(id) { if (!confirm('Delete?')) return; try { await 
 async function exportCsv() {
   if (isDemoMode) { toast('Export not available in demo mode','err'); return; }
   const from=document.getElementById('filter-from').value, to=document.getElementById('filter-to').value, cat=document.getElementById('filter-cat').value;
-  let url=`${API}/expenses/export?`; if (from) url+=`from=${from}&`; if (to) url+=`to=${to}&`; if (cat) url+=`categoryId=${cat}&`;
+  let url=`${API}/expenses/export?`; if (from) url+=`from=${from}&`; if (to) url+=`to=${to}&`; if (cat && !cat.startsWith('def_') && !cat.startsWith('cc')) url+=`categoryId=${cat}&`;
   const res=await fetch(url,{headers:{Authorization:`Bearer ${token}`}});
   const blob=await res.blob(), a=document.createElement('a');
   a.href=URL.createObjectURL(blob); a.download=`expenses_${new Date().toISOString().split('T')[0]}.csv`; a.click();
@@ -1568,7 +1562,7 @@ async function loadCrypto() {
     const total=DEMO.crypto.reduce((s,c)=>s+c.currentValue,0), invested=DEMO.crypto.reduce((s,c)=>s+c.avgBuyPrice*c.quantity,0), pl=total-invested;
     document.getElementById('crypto-invested').textContent=fmt(invested); document.getElementById('crypto-value').textContent=fmt(total);
     const plEl=document.getElementById('crypto-pl'); plEl.textContent=(pl>=0?'+':'')+fmt(pl); plEl.className='card-value '+(pl>=0?'green':'red');
-    document.getElementById('crypto-tbody').innerHTML=DEMO.crypto.map(p=>`<tr><td style="font-weight:700">${p.symbol}</td><td>${p.quantity}</td><td style="color:var(--muted)">${fmt(p.avgBuyPrice)}</td><td>${fmt(p.currentPrice)}</td><td style="font-weight:600">${fmt(p.currentValue)}</td><td class="${p.profitLoss>=0?'pl-positive':'pl-negative'}" style="font-weight:600">${(p.profitLoss>=0?'+':'')+fmt(p.profitLoss)}</td><td></td></tr>`).join('');
+    document.getElementById('crypto-tbody').innerHTML=DEMO.crypto.map(p=>`<tr><td style="font-weight:700">${p.symbol}</td><td>${p.quantity}</td><td>${fmt(p.currentPrice)}</td><td style="font-weight:600">${fmt(p.currentValue)}</td><td class="${p.profitLoss>=0?'pl-positive':'pl-negative'}" style="font-weight:600">${(p.profitLoss>=0?'+':'')+fmt(p.profitLoss)}</td><td></td></tr>`).join('');
     return;
   }
   try {
@@ -1578,7 +1572,7 @@ async function loadCrypto() {
     plEl.textContent=(pl>=0?'+':'')+fmt(pl)+` (${summary.profitLossPercent}%)`; plEl.className='card-value '+(pl>=0?'green':'red');
     const tbody=document.getElementById('crypto-tbody');
     if (!summary.positions?.length) { tbody.innerHTML='<tr><td colspan="7"><div class="empty"><p>No assets yet.</p></div></td></tr>'; return; }
-    tbody.innerHTML=summary.positions.map(p=>`<tr><td style="font-weight:700">${p.symbol}</td><td>${p.quantity}</td><td style="color:var(--muted)">${fmt(p.avgBuyPrice)}</td><td>${fmt(p.currentPrice)}</td><td style="font-weight:600">${fmt(p.currentValue)}</td><td class="${p.profitLoss>=0?'pl-positive':'pl-negative'}" style="font-weight:600">${(p.profitLoss>=0?'+':'')+fmt(p.profitLoss)}</td><td style="text-align:right"><button class="btn btn-danger btn-sm" onclick="deleteCryptoBySymbol('${p.symbol}')">Delete</button></td></tr>`).join('');
+    tbody.innerHTML=summary.positions.map(p=>`<tr><td style="font-weight:700">${p.symbol}</td><td>${p.quantity}</td><td>${fmt(p.currentPrice)}</td><td style="font-weight:600">${fmt(p.currentValue)}</td><td class="${p.profitLoss>=0?'pl-positive':'pl-negative'}" style="font-weight:600">${(p.profitLoss>=0?'+':'')+fmt(p.profitLoss)}</td><td style="text-align:right"><button class="btn btn-danger btn-sm" onclick="deleteCryptoBySymbol('${p.symbol}')">Delete</button></td></tr>`).join('');
   } catch(e) { console.error(e); }
 }
 async function saveCrypto() {
